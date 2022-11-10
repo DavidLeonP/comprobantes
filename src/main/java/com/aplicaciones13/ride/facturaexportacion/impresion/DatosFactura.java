@@ -20,23 +20,22 @@ public class DatosFactura extends DatosDocumentosElectronicos {
 
     @Override
     public void setPathSource(String pathSource) {
-        super.setPathSource(pathSource);
+        try {            
+            JAXBContext jc = JAXBContext.newInstance(Factura.class);            
+            Unmarshaller unmarshaller = jc.createUnmarshaller();            
+            File file = new File("/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/EXP-002-001-000011599.XML");            
 
-        try {
-            JAXBContext jc = JAXBContext.newInstance(Factura.class);
-            
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
-            File file = new File(pathSource);
-            setFacturaXML((Factura) unmarshaller.unmarshal(file));
+            setFacturaXML((Factura) unmarshaller.unmarshal(file));            
         } catch (JAXBException e) {
             MainFiles.escribirLogDefault(this.getClass().getName(),
                     ".ImpresionElementos() ",
                     e.toString());
         }
+        super.setPathSource(pathSource);
     }
 
     public Factura getFacturaXML() {
-        return facturaXML;
+        return this.facturaXML;
     }
 
     public void setFacturaXML(Factura facturaXML) {

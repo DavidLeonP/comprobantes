@@ -1,18 +1,6 @@
 package com.aplicaciones13;
 
-
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.aplicaciones13.ride.Ejecutor;
-import com.aplicaciones13.ride.facturaexportacion.impresion.DatosFactura;
-import com.aplicaciones13.ride.facturaexportacion.impresion.ImpresionFactura;
-
 
 /** Objeto de test de Impresiones Factura
  *
@@ -20,14 +8,7 @@ import com.aplicaciones13.ride.facturaexportacion.impresion.ImpresionFactura;
  *
  */
 public class TestFacturaImpresiones {
-
-    /** Metodo para crear el objeto.
-     *
-     */
-    public TestFacturaImpresiones() {
-        super();
-    }
-
+    
     /** Metodo para ejecutar un main.
      *
      * @param args
