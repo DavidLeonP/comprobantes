@@ -283,8 +283,7 @@ public class Detalle {
          */
         public List<Detalle.DetallesAdicionales.DetAdicional> getDetAdicional() {
             if (detAdicional == null) {
-                detAdicional =
-                        new ArrayList<Detalle.DetallesAdicionales.DetAdicional>();
+                detAdicional = new ArrayList<>();
             }
             return this.detAdicional;
         }

@@ -1,10 +1,7 @@
 package com.aplicaciones13.impresion;
 
-//import com.lowagie.text.DocumentException;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPCell;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

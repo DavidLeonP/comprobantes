@@ -1,5 +1,8 @@
 package com.aplicaciones13.impresion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -26,8 +29,9 @@ public class H2 extends Elemento {
         try {
             getDocumento().add(getParagraph());
         } catch (DocumentException e) {
-            // MainFiles.escribirLogDefault(this.getClass().getName(),
-            //                            ".escribe()", e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                                                            e.toString());
+            
         }
     }
 

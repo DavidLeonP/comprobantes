@@ -19,6 +19,7 @@ public class DatosNotaDebito extends DatosDocumentosElectronicos {
         super();
     }
 
+    @Override
     public void setPathSource(String pathSource) {
         super.setPathSource(pathSource);
 

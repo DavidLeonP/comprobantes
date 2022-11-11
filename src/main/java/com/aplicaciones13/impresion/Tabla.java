@@ -1,22 +1,18 @@
 package com.aplicaciones13.impresion;
 
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import com.aplicaciones13.utilidades.MainFiles;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**Clase de escribir una tabla
+/**
+ * Clase de escribir una tabla
  *
  * @author omarv omargo33@JeremiasSoft.com
  *
@@ -30,9 +26,10 @@ public class Tabla extends Elemento {
     private List<String> listaAlineacion;
     private List<String> listaSumatorias;
     private List<String> listaTitulos;
-    private Vector vectorDatos;
+    private List<Object> listaDatos;
 
-    /**Metodo para crear la clase.
+    /**
+     * Metodo para crear la clase.
      * Inicializa MainSQL
      * Limpia datos de la tabla.
      */
@@ -41,7 +38,8 @@ public class Tabla extends Elemento {
         limpiarTabla();
     }
 
-    /**Metodo para limpiar los datos del sitema.
+    /**
+     * Metodo para limpiar los datos del sitema.
      *
      */
     public void limpiarTabla() {
@@ -54,10 +52,11 @@ public class Tabla extends Elemento {
         setTitulos(true);
         setColumnaTextoSumatoria(0);
         setListaTitulos(new ArrayList<>());
-        setVectorDatos(new Vector());
+        setListaDatos(new ArrayList<>());
     }
 
-    /**Metodo para escribir la tabla con un metodo comun.
+    /**
+     * Metodo para escribir la tabla con un metodo comun.
      *
      */
     public void escribe() {
@@ -67,11 +66,12 @@ public class Tabla extends Elemento {
                 getDocumento().add(tablaTemporal);
         } catch (DocumentException e) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
-                                                            e.toString());
+                    e.toString());
         }
     }
 
-    /**Metodo para escribir la tabla con un metodo comun.
+    /**
+     * Metodo para escribir la tabla con un metodo comun.
      *
      */
     public PdfPCell escribeCelda() {
@@ -84,37 +84,38 @@ public class Tabla extends Elemento {
 
     }
 
-    /**Metodo de escritura de una tabla.
+    /**
+     * Metodo de escritura de una tabla.
      *
      * Obtiene en numero de columnas
      * Si no estan formateadas todas las columnas
-     *  Notifica
-     *  Retorna
+     * Notifica
+     * Retorna
      * Si no estan dimensionadas todas las columnas
-     *  Notifica
-     *  Retorna
+     * Notifica
+     * Retorna
      * Si no hay datos
-     *  Retorna
+     * Retorna
      * Se agrega las columnas que puede totalizar
      * Se crea la tabla, se pone dimesiones, alineamiento y encabezado
      * Se verifica si hay encabezados
-     *  De haber encabezados se los escribe
+     * De haber encabezados se los escribe
      * Se llena los datos de las tablas
      * Si hay sumatorias se las realiza.
-     *  Se muestra las sumatorias de haberlas
+     * Se muestra las sumatorias de haberlas
      *
      */
     public PdfPTable escribeTabla() {
         try {
             if (getListaFormatos().size() != getListaTitulos().size()) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
-                                                                "No estan formateadas todas las columnas");
+                        "No estan formateadas todas las columnas");
                 return null;
             }
 
             if (getListaDimensiones().size() != getListaTitulos().size()) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
-                                                                "No estan dimensionadas todas las columnas");
+                        "No estan dimensionadas todas las columnas");
                 return null;
             }
 
@@ -124,7 +125,7 @@ public class Tabla extends Elemento {
             table.setTotalWidth(getArrayDimensiones());
             table.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.setHeaderRows(1);
-            //imprime los encabezados de una columna
+            // imprime los encabezados de una columna
             if (isTitulos())
                 for (String a : getListaTitulos()) {
                     setParagraphCapital(a, getFontTitulos());
@@ -135,13 +136,12 @@ public class Tabla extends Elemento {
                     cell.setBorderWidthTop(0);
                     table.addCell(cell);
                 }
-            //Se llena los datos
-            for (int k = 0; k < getVectorDatos().size(); k++) {
+            // Se llena los datos
+            for (Object a : getListaDatos()) {
                 for (int j = 0; j < getListaTitulos().size(); j++) {
-
-                    setParagraphCapital(datoFormato(((List<String>)getVectorDatos().get(k)).get(j),
-                                                    getListaFormatos().get(j),
-                                                    j + 1), getFontDatos());
+                    setParagraphCapital(datoFormato(((List<String>)a).get(j),
+                            getListaFormatos().get(j),
+                            j + 1), getFontDatos());
                     PdfPCell cell = new PdfPCell(getParagraph());
                     cell.setBorder(0);
                     alinear(getListaTitulos().size(), cell, j);
@@ -151,14 +151,14 @@ public class Tabla extends Elemento {
 
             return table;
         } catch (DocumentException e2) {
-            MainFiles.escribirLogDefault(this.getClass().getName(),
-                                         ".escribeTabla() e2", e2.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                    e2.toString());            
         }
         return null;
     }
 
-
-    /**Metodo para dar formato a la sumatoria de forma automática
+    /**
+     * Metodo para dar formato a la sumatoria de forma automática
      *
      * @param tipoFormato
      * @param dato
@@ -176,7 +176,9 @@ public class Tabla extends Elemento {
         return "";
     }
 
-    /** Formato del texto a poner, dependiendo del texto que se pone, hace sumatorias.
+    /**
+     * Formato del texto a poner, dependiendo del texto que se pone, hace
+     * sumatorias.
      *
      * @param valores
      * @param tipoFormato
@@ -185,30 +187,31 @@ public class Tabla extends Elemento {
      */
     public String datoFormato(String valores, String tipoFormato, int indice) {
         String dato = super.datoFormato(valores, tipoFormato);
-        if (dato.trim().length() == 0){
+        if (dato.trim().length() == 0) {
             return dato;
         }
 
-        if (tipoFormato.equalsIgnoreCase(FORMATO_ENTERO)){
-            getListaTotales()[indice - 1] =
-                    getListaTotales()[indice - 1] + Double.parseDouble(valores.replace(".",","));
+        if (tipoFormato.equalsIgnoreCase(FORMATO_ENTERO)) {
+            getListaTotales()[indice - 1] = getListaTotales()[indice - 1]
+                    + Double.parseDouble(valores.replace(".", ","));
         }
-        if (tipoFormato.equalsIgnoreCase(FORMATO_DOUBLE)){
-            getListaTotales()[indice - 1] =
-                    getListaTotales()[indice - 1] + Double.parseDouble(valores.replace(".", ","));
+        if (tipoFormato.equalsIgnoreCase(FORMATO_DOUBLE)) {
+            getListaTotales()[indice - 1] = getListaTotales()[indice - 1]
+                    + Double.parseDouble(valores.replace(".", ","));
         }
-        if (tipoFormato.equalsIgnoreCase(FORMATO_MONEDA)){
-            getListaTotales()[indice - 1] =
-                    getListaTotales()[indice - 1] + Double.parseDouble(valores.replace(".",","));
+        if (tipoFormato.equalsIgnoreCase(FORMATO_MONEDA)) {
+            getListaTotales()[indice - 1] = getListaTotales()[indice - 1]
+                    + Double.parseDouble(valores.replace(".", ","));
         }
-        if (tipoFormato.equalsIgnoreCase(FORMATO_MONEDA_SIGNO)){
-            getListaTotales()[indice - 1] =
-                    getListaTotales()[indice - 1] + Double.parseDouble(valores.replace(".",","));
+        if (tipoFormato.equalsIgnoreCase(FORMATO_MONEDA_SIGNO)) {
+            getListaTotales()[indice - 1] = getListaTotales()[indice - 1]
+                    + Double.parseDouble(valores.replace(".", ","));
         }
         return dato;
     }
 
-    /**Alinear los datos del sistema.
+    /**
+     * Alinear los datos del sistema.
      *
      * @param columnas
      * @param cell
@@ -221,7 +224,7 @@ public class Tabla extends Elemento {
             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
     }
 
-    //Propiedades
+    // Propiedades
     public List<String> getListaAlineacion() {
         return this.listaAlineacion;
     }
@@ -232,13 +235,13 @@ public class Tabla extends Elemento {
 
     public void setListaAlineacion(Object... formatos) {
         this.listaAlineacion = new ArrayList<>();
-        for (int i = 0; i < formatos.length; i++){
+        for (int i = 0; i < formatos.length; i++) {
             this.listaAlineacion.add(formatos[i].toString());
         }
     }
 
     public List<String> getListaSumatorias() {
-        if (this.listaSumatorias == null){
+        if (this.listaSumatorias == null) {
             this.listaSumatorias = new ArrayList<>();
         }
         return this.listaSumatorias;
@@ -250,7 +253,7 @@ public class Tabla extends Elemento {
 
     public void setListaSumatorias(Object... formatos) {
         this.listaSumatorias = new ArrayList<>();
-        for (int i = 0; i < formatos.length; i++){
+        for (int i = 0; i < formatos.length; i++) {
             this.listaSumatorias.add(formatos[i].toString());
         }
     }
@@ -265,14 +268,14 @@ public class Tabla extends Elemento {
 
     public void setListaTotales(int celdas) {
         this.listaTotales = new double[celdas];
-        for (int i = 0; i < celdas; i++){
+        for (int i = 0; i < celdas; i++) {
             this.listaTotales[i] = 0;
         }
     }
 
     public boolean esVisible(int i) {
-        for (String valor : this.listaSumatorias){
-            if (valor.equalsIgnoreCase(String.valueOf(i))){
+        for (String valor : this.listaSumatorias) {
+            if (valor.equalsIgnoreCase(String.valueOf(i))) {
                 return true;
             }
         }
@@ -313,16 +316,23 @@ public class Tabla extends Elemento {
 
     public void setListaTitulos(Object... formatos) {
         this.listaTitulos = new ArrayList<>();
-        for (int i = 0; i < formatos.length; i++){
+        for (int i = 0; i < formatos.length; i++) {
             this.listaTitulos.add(formatos[i].toString());
         }
     }
 
-    public Vector getVectorDatos() {
-        return vectorDatos;
+    public void setListaTitulos(String[] formatos) {
+        this.listaTitulos = new ArrayList<>();
+        for (int i = 0; i < formatos.length; i++) {
+            this.listaTitulos.add(String.valueOf(formatos[i]));
+        }
     }
 
-    public void setVectorDatos(Vector vectorDatos) {
-        this.vectorDatos = vectorDatos;
+    public List<Object> getListaDatos() {
+        return this.listaDatos;
+    }
+
+    public void setListaDatos(List<Object> listaDatos) {
+        this.listaDatos = listaDatos;
     }
 }

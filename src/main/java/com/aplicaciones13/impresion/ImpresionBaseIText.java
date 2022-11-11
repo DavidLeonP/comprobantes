@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 
 public class ImpresionBaseIText {
 
-    public static String BOX_SIZE_NOMBRE = "ART_BOX_SIZE";
+    public static final  String BOX_SIZE_NOMBRE = "ART_BOX_SIZE";
 
     private ImpresionBaseElementos impresionBaseElementos;
-    private ByteArrayOutputStream _byteArrayOutputStream;
-    private PdfWriter _pdfWriter;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private PdfWriter pdfWriter;
 
 
     public ImpresionBaseIText() {
@@ -28,6 +28,7 @@ public class ImpresionBaseIText {
      * @param codigoConsulta
      */
     public void ejecutar(String codigoConsulta) {
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,codigoConsulta);
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
                                                         "Falta sobrecargar el mentodo");
     }
@@ -43,18 +44,18 @@ public class ImpresionBaseIText {
     }
 
     public PdfWriter getPdfWriter() {
-        return _pdfWriter;
+        return this.pdfWriter;
     }
 
     public void setPdfWriter(PdfWriter pdfWriter) {
-        _pdfWriter = pdfWriter;
+        this.pdfWriter = pdfWriter;
     }
 
     public ByteArrayOutputStream getByteArrayOutputStream() {
-        return _byteArrayOutputStream;
+        return this.byteArrayOutputStream;
     }
 
     public void setByteArrayOutputStream(ByteArrayOutputStream byteArrayOutputStream) {
-        _byteArrayOutputStream = byteArrayOutputStream;
+        this.byteArrayOutputStream = byteArrayOutputStream;
     }
 }

@@ -46,6 +46,7 @@ public class P extends Elemento {
         return pdfPCell;
     }
 
+    @Override
     public void setTexto(String texto) {
         super.setTexto(texto);
         getFontDatos().setSize(8);

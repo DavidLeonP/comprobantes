@@ -1,6 +1,5 @@
 package com.aplicaciones13.impresion;
 
-
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -8,8 +7,6 @@ import java.awt.Color;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import com.itextpdf.barcodes.Barcode128;
-import com.itextpdf.kernel.pdf.PdfDocument;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

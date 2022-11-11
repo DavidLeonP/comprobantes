@@ -45,6 +45,7 @@ public class H3 extends Elemento {
         return pdfPCell;
     }
 
+    @Override
     public void setTexto(String texto) {
         super.setTexto(texto);
         getFontTitulos().setSize(9);

@@ -76,8 +76,7 @@ public class DetalleImpuestos {
      */
     public List<DetalleImpuestos.DetalleImpuesto> getDetalleImpuesto() {
         if (detalleImpuesto == null) {
-            detalleImpuesto =
-                    new ArrayList<DetalleImpuestos.DetalleImpuesto>();
+            detalleImpuesto = new ArrayList<>();
         }
         return this.detalleImpuesto;
     }

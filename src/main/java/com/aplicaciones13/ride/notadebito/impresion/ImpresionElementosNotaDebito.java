@@ -2,10 +2,9 @@ package com.aplicaciones13.ride.notadebito.impresion;
 
 import com.aplicaciones13.sri.contenedores.TablasSRI;
 import com.aplicaciones13.sri.contenedores.TotalDocumento;
+import com.aplicaciones13.Constantes;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
-import com.aplicaciones13.impresion.MarcaAgua;
-import com.aplicaciones13.impresion.Pie;
 import com.aplicaciones13.ride.notadebito.Impuesto;
 import com.aplicaciones13.ride.notadebito.NotaDebito;
 import com.aplicaciones13.ride.notadebito.ObligadoContabilidad;
@@ -15,15 +14,8 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,13 +23,13 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
     private static final String TXT_3_1 = "Nota D\u00e9bito";
     private static final String TXT_3_2 = "No. %s-%s-%s";
-    private static final String[] TXT_3_3 = { "No.: Autorizaci\u00f3n", "Fecha Autorizaci\u00f3n", "Ambiente",
-            "Emisi\u00f3n" };
+    private static final String[] TXT_3_3 = { Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE,
+    Constantes.EMISION };
     private static final String TXT_4_1 = "Clave de Acceso";
-    private static final String[] TXT_5_1 = { "RUC", "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento",
-            "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
-    private static final String[] TXT_5_2 = { "RUC", "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento",
-            "Contribuyente especial Nro.", "" };
+    private static final String[] TXT_5_1 = { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+            Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
+    private static final String[] TXT_5_2 = { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+            Constantes.CONTRIBUYENTE_ESPECIAL_NO, "" };
     private static final String[] TXT_6_10 = { "Raz\u00f3n Social", "RUC / CI.", "Fecha Emisi\u00f3n" };
 
     private static final String[] TXT_6_11_1 = { "Comprobante (Modifica)", "N\u00famero", "Fecha", "RISE" };
@@ -51,14 +43,14 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String[] TXT_11_3 = { "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento" };
-    private static final String[] TXT_11_4 = { "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
+    private static final String[] TXT_11_3 = { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
+    private static final String[] TXT_11_4 = { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
     private static final String TXT_11_5 = "RUC: ";
     private static final String TXT_11_6 = "Nota D\u00e9bito";
     private static final String TXT_11_7 = "No.: %s-%s-%s";
     private static final String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
     private static final String TXT_11_9 = "Fecha Autorizaci\u00f3n";
-    private static final String TXT_11_10 = "Ambiente";
+    private static final String TXT_11_10 = Constantes.AMBIENTE;
     private static final String TXT_11_11 = "Emisi\u00f3n";
     private static final String TXT_11_12 = "Clave de Acceso";
     private static final String TXT_11_13 = "Normal";
@@ -66,22 +58,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     private static final String TXT_14_1 = "Formas de Pago";
 
     private DatosNotaDebito datosNotaDebito;
-    List<TotalDocumento> totales;
-
-    /**
-     * Metodo para agregar la marca de agua al sistema.
-     *
-     */
-    @Override
-    protected synchronized void elemento0() {
-        getPdfWriter().setPageEvent(new MarcaAgua(getDatosNotaDebito().getAmbienteAutorizacion()));
-    }
-
-    @Override
-    protected synchronized void elemento1() {
-        Pie pie = new Pie();
-        getPdfWriter().setPageEvent(pie);
-    }
+    private List<TotalDocumento> totalesCalculados;
 
     /**
      * Metodo para generar el logo del documento.
@@ -412,7 +389,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         if (rise != null && rise.trim().length() > 0) {
             getForm().setListaTitulos(TXT_6_11_1);
             getForm().setListaValores(
-                    TablasSRI.Tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
+                    TablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getNumDocModificado(),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getFechaEmisionDocSustento(),
                     rise);
@@ -425,7 +402,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         } else {
             getForm().setListaTitulos(TXT_6_11_2);
             getForm().setListaValores(
-                    TablasSRI.Tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
+                    TablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getNumDocModificado(),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getFechaEmisionDocSustento());
             getForm().setListaFormatos(Elemento.FORMATO_STRING,
@@ -440,7 +417,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para imprimir el detalle de la notaDebito
      *
      * Si los datos en la notaDebito existen
-     * Llena el vector de datos a ser recorridos
+     * Llena el Lista de datos a ser recorridos
      * Si existe codigo auxiliar
      * Agrega los datos para la ubicacion en pantalla
      * Caso contrario
@@ -472,14 +449,15 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      *
      */
     public void detalleNotaDebitoCompleta() {
-        Vector vector = new Vector();
-        List<String> listaValores = new ArrayList();
+
+        List<Object> listaDatos = new ArrayList<>();
+        
 
         for (NotaDebito.Motivos.Motivo a : getDatosNotaDebito().getNotaDebitoXML().getMotivos().getMotivo()) {
-            listaValores = new ArrayList<>();
+            List<String> listaValores  = new ArrayList<>();
             listaValores.add(0, a.getRazon());
             listaValores.add(1, a.getValor().toString());
-            vector.add(listaValores);
+            listaDatos.add(listaValores);
 
         }
         getTabla().setListaTitulos(TXT_7_1);
@@ -487,7 +465,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                 Elemento.FORMATO_STRING);
         getTabla().setListaDimensiones("80", "20");
         getTabla().setListaAlineacion(Element.ALIGN_LEFT, Element.ALIGN_RIGHT);
-        getTabla().setVectorDatos(vector);
+        getTabla().setListaDatos(listaDatos);
         getTabla().setAncho(100);
 
     }
@@ -581,7 +559,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                         + ((a.getPago().get(0).getUnidadTiempo() == null) ? "" : a.getPago().get(0).getUnidadTiempo());
 
                 getForm().getListaTitulos().add((size + 1) + ".- Forma pago");
-                getForm().getListaValores().add(TablasSRI.Tabla24(a.getPago().get(0).getFormaPago()) +
+                getForm().getListaValores().add(TablasSRI.tabla24(a.getPago().get(0).getFormaPago()) +
                         tiempoPago +
                         " por un valor de " +
                         a.getPago().get(0).getTotal());
@@ -649,7 +627,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      *
      */
     private void subTotales() {
-        setTotales(new ArrayList());
+        this.totalesCalculados = new ArrayList<>();
         inicializaTotales();
 
         cargarTotales(getDatosNotaDebito().getNotaDebitoXML());
@@ -816,10 +794,10 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     }
 
     public List<TotalDocumento> getTotales() {
-        return totales;
+        return this.totalesCalculados;
     }
 
     public void setTotales(List<TotalDocumento> totales) {
-        this.totales = totales;
+        this.totalesCalculados = totales;
     }
 }

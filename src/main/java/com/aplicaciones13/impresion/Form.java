@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  */
 public class Form extends Elemento {
-    private List<String> listaPaneles;    
+    private List<String> listaPaneles;
     private List<String> listaCamposAlineadosDerecha;
     private List<String> listaTitulos;
     private List<String> listaValores;
@@ -31,7 +31,7 @@ public class Form extends Elemento {
      *
      */
     public Form() {
-        super();        
+        super();
         getFontDatos().setSize(8);
         getFontTitulos().setSize(8);
         getFontTitulos().setStyle(Font.BOLD);
@@ -53,7 +53,6 @@ public class Form extends Elemento {
             PdfPTable tablaTemporal = escribeForm();
             if (tablaTemporal != null)
                 getDocumento().add(tablaTemporal);
-
         } catch (DocumentException e) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
                     e.toString());
@@ -75,12 +74,13 @@ public class Form extends Elemento {
      *
      */
     public PdfPCell escribeCelda() {
+        PdfPTable tablaTemporal = escribeForm();
         PdfPCell pdfPCell = new PdfPCell();
         pdfPCell.setBorder(Rectangle.NO_BORDER);
-        PdfPTable tablaTemporal = escribeForm();
 
-        if (tablaTemporal != null)
+        if (tablaTemporal != null) {
             pdfPCell.addElement(tablaTemporal);
+        }
 
         listaPaneles = new ArrayList<>();
         listaCamposAlineadosDerecha = new ArrayList<>();
@@ -98,7 +98,7 @@ public class Form extends Elemento {
      */
     public void setListaPaneles(Object... paneles) {
         listaPaneles = new ArrayList<>();
-        for (int i = 0; i < paneles.length; i++){
+        for (int i = 0; i < paneles.length; i++) {
             listaPaneles.add(paneles[i].toString());
         }
     }
@@ -110,7 +110,7 @@ public class Form extends Elemento {
      */
     public void setListaCamposAlineadosDerecha(Object... campos) {
         listaCamposAlineadosDerecha = new ArrayList<>();
-        for (int i = 0; i < campos.length; i++){
+        for (int i = 0; i < campos.length; i++) {
             listaCamposAlineadosDerecha.add(campos[i].toString());
         }
     }
@@ -126,8 +126,8 @@ public class Form extends Elemento {
      * @return
      */
     private boolean esDerecha(int columna) {
-        for (String a : listaCamposAlineadosDerecha){
-            if (a.equalsIgnoreCase( String.valueOf(columna))){
+        for (String a : listaCamposAlineadosDerecha) {
+            if (a.equalsIgnoreCase(String.valueOf(columna))) {
                 return true;
             }
         }
@@ -178,16 +178,15 @@ public class Form extends Elemento {
             generaTablas();
 
             for (int i = 0; i < getListaFormatos().size(); i++) {
-                setParagraphCapital(getListaTitulos().get(i),
-                        getFontTitulos());
-                Paragraph titulo = getParagraph();
+                if (getListaTitulos().get(i).compareTo("[]") != 0) {
+                    setParagraphCapital(getListaTitulos().get(i), getFontTitulos());
 
-                setParagraph(datoFormato(getListaValores().get(i),
-                        getListaFormatos().get(i)),
-                        getFontDatos());
+                    Paragraph titulo = getParagraph();
+                    setParagraph(datoFormato(getListaValores().get(i), getListaFormatos().get(i)), getFontDatos());
 
-                Paragraph dato = getParagraph();
-                ingresaDatosTabla(i, titulo, dato);
+                    Paragraph dato = getParagraph();
+                    ingresaDatosTabla(i, titulo, dato);
+                }
             }
             return generaRespuesta();
         } catch (DocumentException e) {
@@ -207,8 +206,15 @@ public class Form extends Elemento {
 
     public void setListaTitulos(Object... formatos) {
         this.listaTitulos = new ArrayList<>();
-        for (int i = 0; i < formatos.length; i++){
+        for (int i = 0; i < formatos.length; i++) {
             this.listaTitulos.add(formatos[i].toString());
+        }
+    }
+
+    public void setListaTitulos(String[] formatos) {
+        this.listaTitulos = new ArrayList<>();
+        for (int i = 0; i < formatos.length; i++) {
+            this.listaTitulos.add(String.valueOf(formatos[i]));
         }
     }
 
@@ -233,8 +239,9 @@ public class Form extends Elemento {
      * @return
      */
     private PdfPTable generaRespuesta() throws DocumentException {
-        if (listaPaneles.isEmpty())
+        if (listaPaneles.isEmpty()) {
             return listaPdfPTable.get(0);
+        }
 
         PdfPTable tablaRespuesta = new PdfPTable(listaPaneles.size());
         tablaRespuesta.setWidthPercentage(100);
@@ -269,14 +276,14 @@ public class Form extends Elemento {
     private void generaTablas() throws DocumentException {
         listaPdfPTable = new ArrayList<>();
 
-        if (listaPaneles.isEmpty()) {
+        if (listaPaneles == null || listaPaneles.isEmpty()) {
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(getAncho());
             table.setTotalWidth(getArrayDimensiones());
             table.setHorizontalAlignment(Element.ALIGN_LEFT);
             listaPdfPTable.add(table);
-        } else{            
-            for (int i=0; i< listaPaneles.size(); i++) {            
+        } else {
+            for (int i = 0; i < listaPaneles.size(); i++) {
                 PdfPTable table = new PdfPTable(2);
                 table.setTotalWidth(getArrayDimensiones());
                 table.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -319,7 +326,7 @@ public class Form extends Elemento {
         int i = 0;
         int j = 0;
         for (String a : listaPaneles) {
-            if (columna >  Integer.parseInt(a)){
+            if (columna > Integer.parseInt(a)) {
                 j = i + 1;
             }
             i++;

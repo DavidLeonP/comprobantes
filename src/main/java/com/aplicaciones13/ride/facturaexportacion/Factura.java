@@ -562,7 +562,7 @@ public class Factura {
          */
         public List<Factura.Detalles.Detalle> getDetalle() {
             if (detalle == null) {
-                detalle = new ArrayList<Factura.Detalles.Detalle>();
+                detalle = new ArrayList<>();
             }
             return this.detalle;
         }
@@ -982,8 +982,7 @@ public class Factura {
                  */
                 public List<Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional> getDetAdicional() {
                     if (detAdicional == null) {
-                        detAdicional =
-                                new ArrayList<Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional>();
+                        detAdicional = new ArrayList<>();
                     }
                     return this.detAdicional;
                 }
@@ -1135,7 +1134,7 @@ public class Factura {
                  */
                 public List<Impuesto> getImpuesto() {
                     if (impuesto == null) {
-                        impuesto = new ArrayList<Impuesto>();
+                        impuesto = new ArrayList<>();
                     }
                     return this.impuesto;
                 }
@@ -1205,8 +1204,7 @@ public class Factura {
          */
         public List<Factura.InfoAdicional.CampoAdicional> getCampoAdicional() {
             if (campoAdicional == null) {
-                campoAdicional =
-                        new ArrayList<Factura.InfoAdicional.CampoAdicional>();
+                campoAdicional = new ArrayList<>();
             }
             return this.campoAdicional;
         }
@@ -2342,8 +2340,7 @@ public class Factura {
              */
             public List<Factura.InfoFactura.TotalConImpuestos.TotalImpuesto> getTotalImpuesto() {
                 if (totalImpuesto == null) {
-                    totalImpuesto =
-                            new ArrayList<Factura.InfoFactura.TotalConImpuestos.TotalImpuesto>();
+                    totalImpuesto = new ArrayList<>();
                 }
                 return this.totalImpuesto;
             }
@@ -2631,7 +2628,7 @@ public class Factura {
          */
         public List<Factura.Retenciones.Retencion> getRetencion() {
             if (retencion == null) {
-                retencion = new ArrayList<Factura.Retenciones.Retencion>();
+                retencion = new ArrayList<>();
             }
             return this.retencion;
         }

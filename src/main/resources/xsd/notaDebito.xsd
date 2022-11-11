@@ -348,7 +348,7 @@
 			<xsd:documentation>Contiene la informacion tributaria generica</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ambiente" type="ambiente"> </xsd:element>
+			<xsd:element name="ambiente"> </xsd:element>
 			<xsd:element name="tipoEmision" type="tipoEmision"/>
 			<xsd:element name="razonSocial" type="razonSocial"/>
 			<xsd:element name="nombreComercial" minOccurs="0" type="nombreComercial"/>

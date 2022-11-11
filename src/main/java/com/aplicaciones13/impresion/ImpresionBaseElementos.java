@@ -17,7 +17,6 @@ import java.util.logging.Logger;
  */
 public class ImpresionBaseElementos {
 
-    protected static final String ELEMENTO_0 = "0";
     protected static final String ELEMENTO_1 = "1";
     protected static final String ELEMENTO_2 = "2";
     protected static final String ELEMENTO_3 = "3";
@@ -86,7 +85,8 @@ public class ImpresionBaseElementos {
         getP().setDocumento(getDocumento());
         setTabla(new Tabla());
         getTabla().setDocumento(getDocumento());
-        setElementos(new ArrayList<String>());
+        
+        this.elementos = new ArrayList<>();        
         setPdfWriter(null);
     }
 
@@ -126,9 +126,6 @@ public class ImpresionBaseElementos {
     public void imprimirElemento(String valor) {
         try {
             switch (valor) {
-                case ELEMENTO_0:
-                    elemento0();
-                    break;
                 case ELEMENTO_1:
                     elemento1();
                     break;
@@ -202,7 +199,7 @@ public class ImpresionBaseElementos {
                     elemento18();
                     break;
                 default:
-                    elemento0();
+                    elemento1();
                     break;
             }
         } catch (Exception e) {
@@ -210,13 +207,10 @@ public class ImpresionBaseElementos {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
         }
     }
-
-    protected void elemento0() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 0");
-    }
-
-    protected void elemento1() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 1");
+    
+    private synchronized void elemento1() {
+        Pie pie = new Pie();
+        getPdfWriter().setPageEvent(pie);
     }
 
     protected void elemento2() {

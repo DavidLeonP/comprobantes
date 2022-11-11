@@ -80,7 +80,7 @@ public class Reembolsos {
      */
     public List<Reembolsos.ReembolsoDetalle> getReembolsoDetalle() {
         if (reembolsoDetalle == null) {
-            reembolsoDetalle = new ArrayList<Reembolsos.ReembolsoDetalle>();
+            reembolsoDetalle = new ArrayList<>();
         }
         return this.reembolsoDetalle;
     }

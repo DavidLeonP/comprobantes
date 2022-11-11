@@ -3,10 +3,9 @@ package com.aplicaciones13.ride.notacredito.impresion;
 
 import com.aplicaciones13.sri.contenedores.TablasSRI;
 import com.aplicaciones13.sri.contenedores.TotalDocumento;
+import com.aplicaciones13.Constantes;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
-import com.aplicaciones13.impresion.MarcaAgua;
-import com.aplicaciones13.impresion.Pie;
 import com.aplicaciones13.ride.notacredito.NotaCredito;
 import com.aplicaciones13.ride.notacredito.TotalConImpuestos;
 import com.itextpdf.text.DocumentException;
@@ -17,55 +16,54 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     private static final String TXT_3_1 = "Nota Cr\u00e9dito";
     private static final String TXT_3_2 = "No. %s-%s-%s";
-    private static final String TXT_3_3[] =
-    { "No.: Autorizaci\u00f3n", "Fecha Autorizaci\u00f3n", "Ambiente",
-      "Emisi\u00f3n" };
+    private static final String[] TXT_3_3 =
+    { Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE,
+      Constantes.EMISION };
     private static final String TXT_4_1 = "Clave de Acceso";
-    private static final String TXT_5_1[] =
-    { "RUC", "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento",
-      "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
-    private static final String TXT_5_2[] =
-    { "RUC", "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento",
-      "Contribuyente especial Nro.", "" };
-    private static final String TXT_6_10[] =
+    private static final String[] TXT_5_1 =
+    { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+      Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
+    private static final String[] TXT_5_2 =
+    { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+      Constantes.CONTRIBUYENTE_ESPECIAL_NO, "" };
+    private static final String[] TXT_6_10 =
     { "Raz\u00f3n Social", "RUC / CI.", "Fecha Emisi\u00f3n" };
 
-    private static final String TXT_6_11_1[] =
+    private static final String[] TXT_6_11_1 =
     { "Comprobante (Modifica)", "N\u00famero", "Fecha", "RISE", "Raz\u00f3n" };
 
-    private static final String TXT_6_11_2[] =
+    private static final String[] TXT_6_11_2 =
     { "Comprobante (Modifica)", "N\u00famero", "Fecha", "Raz\u00f3n" };
 
-    private static final String TXT_7_1[] =
+    private static final String[] TXT_7_1 =
     { "Cod.", "Descripci\u00f3n", "Cant.", "Precio Uni.", "Desc.", "Total" };
 
-    private static final String TXT_7_2[] =
+    private static final String[] TXT_7_2 =
     { "Cod.", "Descripci\u00f3n", "Cant.", "Precio Uni.", "Total" };
 
-    private static final String TOTALES[] =
+    private static final String[] TOTALES =
     { "SUBTOTAL 12%", "SUBTOTAL 0%", "SUBTOTAL No Objeto de IVA", "SUBTOTAL",
       "TOTAL DESCUENTO", "TOTAL Excento IVA", "IVA 12%", "ICE", "IRBPNR",
       "VALOR TOTAL" };
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String TXT_11_3[] =
-    { "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento" };
-    private static final String TXT_11_4[] =
-    { "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
+    private static final String[] TXT_11_3 =
+    { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
+    private static final String[] TXT_11_4 =
+    { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
     private static final String TXT_11_5 = "RUC: ";
     private static final String TXT_11_6 = "Nota Cr\u00e9dito";
     private static final String TXT_11_7 = "No.: %s-%s-%s";
     private static final String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
     private static final String TXT_11_9 = "Fecha Autorizaci\u00f3n";
-    private static final String TXT_11_10 = "Ambiente";
+    private static final String TXT_11_10 = Constantes.AMBIENTE;
     private static final String TXT_11_11 = "Emisi\u00f3n";
     private static final String TXT_11_12 = "Clave de Acceso";
     private static final String TXT_11_13 = "Normal";
@@ -75,20 +73,6 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     private double totalDescuento = 0;
     List<TotalDocumento> totales;
     
-    /** Metodo para agregar la marca de agua al sistema.
-     *
-     */
-    @Override
-    protected synchronized void elemento0() {
-        getPdfWriter().setPageEvent(new MarcaAgua(getDatosNotaCredito().getAmbienteAutorizacion()));
-    }
-
-    @Override
-    protected synchronized void elemento1() {
-        Pie pie = new Pie();
-        getPdfWriter().setPageEvent(pie);
-    }
-
     /**Metodo para generar el logo del documento.
      *
      * Si el archivo no existe
@@ -260,8 +244,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         espacios(2);
 
         if (getDatosNotaCredito().getNotaCreditoXML().getDetalles() != null &&
-            getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().size() >
-            0) {
+            !getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().isEmpty()) {
 
             detalleNotaCreditoCompleta();
 
@@ -412,7 +395,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         if (rise != null && rise.trim().length() > 0) {
 
             getForm().setListaTitulos(TXT_6_11_1);
-            getForm().setListaValores(TablasSRI.Tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
+            getForm().setListaValores(TablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getNumDocModificado(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmisionDocSustento(),
                                       rise,
@@ -426,7 +409,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
             getForm().setListaPaneles("5");
         } else {
             getForm().setListaTitulos(TXT_6_11_2);
-            getForm().setListaValores(TablasSRI.Tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
+            getForm().setListaValores(TablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getNumDocModificado(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmisionDocSustento(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getMotivo());
@@ -442,7 +425,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     /** Metodo para imprimir el detalle de la notaCredito
      *
      * Si los datos en la notaCredito existen
-     *  Llena el vector de datos a ser recorridos
+     *  Llena el lista de datos a ser recorridos
      *  Si existe codigo auxiliar
      *      Agrega los datos para la ubicacion en pantalla
      *  Caso contrario
@@ -454,8 +437,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         espacios(2);
 
         if (getDatosNotaCredito().getNotaCreditoXML().getDetalles() != null &&
-            getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().size() >
-            0) {
+            !getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().isEmpty()) {
 
             getLinea().escribe();
 
@@ -476,12 +458,12 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
 
         if (totalDescuento > 0) {
 
-            Vector vector = new Vector();
-            List<String> listaValores = new ArrayList<String>();
+            List<Object> listaDatos = new ArrayList<>();
+            
 
             for (NotaCredito.Detalles.Detalle a :
                  getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle()) {
-                listaValores = new ArrayList<String>();
+                    List<String> listaValores = new ArrayList<>();
                 listaValores.add(0, a.getCodigoInterno());
                 listaValores.add(1, a.getDescripcion());
                 listaValores.add(2, a.getCantidad().toString());
@@ -492,25 +474,25 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                 totalDescuento =
                         totalDescuento + a.getDescuento().doubleValue();
 
-                vector.add(listaValores);
+                listaDatos.add(listaValores);                
 
                 if (a.getCodigoAdicional() != null &&
                     a.getCodigoAdicional().trim().length() > 0) {
-                    listaValores = new ArrayList<String>();
+                    listaValores = new ArrayList<>();
                     listaValores.add(0, "");
                     listaValores.add(1, "Cod.: " + a.getCodigoAdicional());
                     listaValores.add(2, "");
                     listaValores.add(3, "");
                     listaValores.add(4, "");
                     listaValores.add(5, "");
-                    vector.add(listaValores);
+                    listaDatos.add(listaValores);  
                 }
 
                 if (a.getDetallesAdicionales() != null &&
-                    a.getDetallesAdicionales().getDetAdicional().size() > 0) {
+                    !a.getDetallesAdicionales().getDetAdicional().isEmpty()) {
                     for (NotaCredito.Detalles.Detalle.DetallesAdicionales.DetAdicional b :
                          a.getDetallesAdicionales().getDetAdicional()) {
-                        listaValores = new ArrayList<String>();
+                        listaValores = new ArrayList<>();
                         listaValores.add(0, "");
                         listaValores.add(1,
                                          b.getNombre() + ": " + b.getValor());
@@ -518,7 +500,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                         listaValores.add(3, "");
                         listaValores.add(4, "");
                         listaValores.add(5, "");
-                        vector.add(listaValores);
+                        listaDatos.add(listaValores);  
                     }
                 }
 
@@ -553,16 +535,15 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                                           Element.ALIGN_RIGHT,
                                           Element.ALIGN_RIGHT,
                                           Element.ALIGN_RIGHT);
-            getTabla().setVectorDatos(vector);
+            getTabla().setListaDatos(listaDatos);
             getTabla().setAncho(100);
         } else {
-
-            Vector vector = new Vector();
-            List<String> listaValores = new ArrayList<String>();
+            List<Object> listaDatos = new ArrayList<>();
+            
 
             for (NotaCredito.Detalles.Detalle a :
                  getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle()) {
-                listaValores = new ArrayList<String>();
+                List<String> listaValores = new ArrayList<>();
                 listaValores.add(0, a.getCodigoInterno());
                 listaValores.add(1, a.getDescripcion());
                 listaValores.add(2, a.getCantidad().toString());
@@ -572,31 +553,32 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                 totalDescuento =
                         totalDescuento + a.getDescuento().doubleValue();
 
-                vector.add(listaValores);
+                listaDatos.add(listaValores);
 
                 if (a.getCodigoAdicional() != null &&
                     a.getCodigoAdicional().trim().length() > 0) {
-                    listaValores = new ArrayList<String>();
+                    listaValores = new ArrayList<>();
                     listaValores.add(0, "");
                     listaValores.add(1, "Cod.: " + a.getCodigoAdicional());
                     listaValores.add(2, "");
                     listaValores.add(3, "");
                     listaValores.add(4, "");                    
-                    vector.add(listaValores);
+                    listaDatos.add(listaValores);
                 }
 
                 if (a.getDetallesAdicionales() != null &&
-                    a.getDetallesAdicionales().getDetAdicional().size() > 0) {
+                    !a.getDetallesAdicionales().getDetAdicional().isEmpty()) {
                     for (NotaCredito.Detalles.Detalle.DetallesAdicionales.DetAdicional b :
                          a.getDetallesAdicionales().getDetAdicional()) {
-                        listaValores = new ArrayList<String>();
+                        listaValores = new ArrayList<>();
                         listaValores.add(0, "");
                         listaValores.add(1,
                                          b.getNombre() + ": " + b.getValor());
                         listaValores.add(2, "");
                         listaValores.add(3, "");
                         listaValores.add(4, "");                        
-                        vector.add(listaValores);
+                        
+                        listaDatos.add(listaValores);
                     }
                 }
 
@@ -626,7 +608,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                                           Element.ALIGN_RIGHT,
                                           Element.ALIGN_RIGHT,                                          
                                           Element.ALIGN_RIGHT);
-            getTabla().setVectorDatos(vector);
+            getTabla().setListaDatos(listaDatos);
             getTabla().setAncho(100);
         }
     }
@@ -787,8 +769,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
 
         if (getDatosNotaCredito().getNotaCreditoXML().getInfoAdicional() !=
             null &&
-            getDatosNotaCredito().getNotaCreditoXML().getInfoAdicional().getCampoAdicional().size() >
-            0) {
+            !getDatosNotaCredito().getNotaCreditoXML().getInfoAdicional().getCampoAdicional().isEmpty()) {
 
             for (NotaCredito.InfoAdicional.CampoAdicional a :
                  getDatosNotaCredito().getNotaCreditoXML().getInfoAdicional().getCampoAdicional()) {
@@ -797,7 +778,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                     getForm().getListaTitulos().add(a.getNombre());
                     getForm().getListaValores().add((a.getValue() == null) ?
                                                     "" :
-                                                    a.getValue().toString());
+                                                    String.valueOf(a.getValue()));
                     getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
                     size++;
                 }

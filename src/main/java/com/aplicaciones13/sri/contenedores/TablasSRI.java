@@ -7,16 +7,16 @@ package com.aplicaciones13.sri.contenedores;
  */
 public class TablasSRI {
 
-    private static String TAB_IVA = "IVA";
-    private static String TAB_ICE = "ICE";
-    private static String TAB_CERO = "0%";
-    private static String TAB_12 = "12%";
-    private static String TAB_NO_IMPUESTO = "No Objeto de impuesto";
+    private static final String TAB_IVA = "IVA";
+    private static final String TAB_ICE = "ICE";
+    private static final String TAB_CERO = "0%";
+    private static final String TAB_12 = "12%";
+    private static final String TAB_NO_IMPUESTO = "No Objeto de impuesto";
 
     /** Metodo para crear el objeto.
      *
      */
-    public TablasSRI() {
+    protected TablasSRI() {
         super();
     }
 
@@ -25,7 +25,7 @@ public class TablasSRI {
      * @param codigo
      * @return
      */
-    public static String Tabla15(String codigo) {
+    public static String tabla15(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
 
         if (codigo.compareTo("2") == 0)
@@ -43,7 +43,7 @@ public class TablasSRI {
      * @param codigoPorcentaje
      * @return
      */
-    public static String Tabla16_17(String codigo, String codigoPorcentaje) {
+    public static String tabla16a17(String codigo, String codigoPorcentaje) {
         codigo = (codigo == null) ? "" : codigo;
 
         if ((codigo + "-" + codigoPorcentaje).compareTo("2-0") == 0)
@@ -65,7 +65,7 @@ public class TablasSRI {
     /**Metodo que permite generar la tabla 4.
      *
      */
-    public static String Tabla4(String codigo) {
+    public static String tabla4(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
 
         if (codigo.compareTo("01") == 0)
@@ -87,7 +87,7 @@ public class TablasSRI {
     /**Metodo que permite generar la tabla 18.
      *
      */
-    public static String Tabla18(String codigo) {
+    public static String tabla18(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
 
         if (codigo.compareTo("1") == 0)
@@ -102,7 +102,7 @@ public class TablasSRI {
     /**Metodo que permite generar la tabla 19.
      *
      */
-    public static String Tabla19(String codigo) {
+    public static String tabla19(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
 
         if (codigo.compareTo("1") == 0)
@@ -366,7 +366,7 @@ public class TablasSRI {
     /**Metodo que permite generar la tabla 24.
      *
      */
-    public static String Tabla24(String codigo) {
+    public static String tabla24(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
 
 
@@ -408,7 +408,7 @@ public class TablasSRI {
     /**Metodo que permite generar la tabla 25.
      *
      */
-    public static String Tabla25(String codigo) {
+    public static String tabla25(String codigo) {
         codigo = (codigo == null) ? "" : codigo;
         if (codigo.compareTo("016") == 0)
             return "AMERICAN SAMOA";

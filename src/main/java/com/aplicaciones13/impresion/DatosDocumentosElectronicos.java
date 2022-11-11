@@ -70,10 +70,8 @@ public class DatosDocumentosElectronicos {
     }
 
     public String getAmbienteAutorizacion() {
-        if (this.ambienteAutorizacion != null){
-            if (this.ambienteAutorizacion.toUpperCase().startsWith("PRODUCC")){
-                return "PRODUCCION";
-            }
+        if (this.ambienteAutorizacion != null && this.ambienteAutorizacion.toUpperCase().startsWith("PRODUCC")){
+            return "PRODUCCION";            
         }
 
         return ambienteAutorizacion;

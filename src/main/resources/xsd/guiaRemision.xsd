@@ -222,7 +222,7 @@
 			<xsd:documentation>Contiene la informacion tributaria generica</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ambiente" type="ambiente"> </xsd:element>
+			<xsd:element name="ambiente"> </xsd:element>
 			<xsd:element name="tipoEmision" type="tipoEmision"/>
 			<xsd:element name="razonSocial" type="razonSocial"> </xsd:element>
 			<xsd:element name="nombreComercial" minOccurs="0" type="nombreComercial"> </xsd:element>
@@ -231,8 +231,7 @@
 			<xsd:element name="codDoc" type="codDoc"> </xsd:element>
 			<xsd:element name="estab" type="establecimiento"/>
 			<xsd:element name="ptoEmi" type="puntoEmision"/>
-			<xsd:element name="secuencial" type="secuencial"> </xsd:element>
-			<!--            <xsd:element name="docAduaneroUnico" type="numeroRucType" minOccurs="0"/>  -->
+			<xsd:element name="secuencial" type="secuencial"> </xsd:element>			
 			<xsd:element name="dirMatriz" type="dirMatriz"> </xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>

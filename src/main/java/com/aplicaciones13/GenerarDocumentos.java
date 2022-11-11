@@ -7,7 +7,7 @@ import com.aplicaciones13.ride.Ejecutor;
  * @author omar velez omargo33@jeremiassoft.com
  *
  */
-public class TestFacturaImpresiones {
+public class GenerarDocumentos {
 
     /** Metodo para ejecutar un main.
      *
@@ -16,12 +16,11 @@ public class TestFacturaImpresiones {
     public static void main(String[] args) {
         Ejecutor ejecutor = new Ejecutor();
         if(ejecutor.ejecutarFactura(
-            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/EXP-002-001-000011599.XML",
-            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/test.pdf",
-            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/logoTest.jpg", 
-            //"/home/omarv/jeremias/firmaCompleta.jpg",  
-            null,
-            "PRODUCCION", 
+            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/facturaProdigy.xml",
+            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/facturaProdigy.pdf",
+            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/logoTest.jpg",             
+            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/firmaFisica.jpg", 
+            "1001 PRODUCCION", 
             "20022015123453139170166700130440000",
              "AUTORIZADO", 
             "2015-02-20T12:34:53.685-05:00",

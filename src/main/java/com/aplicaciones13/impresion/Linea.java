@@ -9,13 +9,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- *
- * import com.lowagie.text.DocumentException;
- * import com.lowagie.text.Graphic;
- *
- * */
-
 /**Metodo para mostrar una linea.
  *
  * @author omarv omargo33@JeremiasSoft.com

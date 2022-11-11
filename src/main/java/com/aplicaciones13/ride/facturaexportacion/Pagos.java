@@ -75,7 +75,7 @@ public class Pagos {
      */
     public List<Pagos.Pago> getPago() {
         if (pago == null) {
-            pago = new ArrayList<Pagos.Pago>();
+            pago = new ArrayList<>();
         }
         return this.pago;
     }

@@ -377,8 +377,7 @@ public class GuiaRemision {
          */
         public List<GuiaRemision.InfoAdicional.CampoAdicional> getCampoAdicional() {
             if (campoAdicional == null) {
-                campoAdicional =
-                        new ArrayList<GuiaRemision.InfoAdicional.CampoAdicional>();
+                campoAdicional = new ArrayList<>();
             }
             return this.campoAdicional;
         }
