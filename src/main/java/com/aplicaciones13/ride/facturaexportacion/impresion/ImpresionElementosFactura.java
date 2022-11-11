@@ -789,29 +789,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento18() {
         String firmaGrafica = getDatosFactura().getPathFirmaGrafica();
-
-        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-            if (getPdfWriter().getVerticalPosition(true) < 105) {
-                getDocumento().newPage();
-            }
-
-            PdfPTable table = new PdfPTable(1);
-            table.setWidthPercentage(100);
-            getImagen1().setPath(firmaGrafica);
-            getImagen1().setScala(30f);
-
-            PdfPCell celda = getImagen1().escribeCelda();
-            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            table.addCell(celda);
-
-            try {
-                espacios(1);
-                getDocumento().add(table);
-            } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        }
+        firmarGraficamente(firmaGrafica);
     }
 
     /**

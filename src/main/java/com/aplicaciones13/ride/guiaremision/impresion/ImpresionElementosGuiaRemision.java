@@ -29,14 +29,17 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
         private static final String TXT_3_1 = "Guia Remisi\u00f3n";
         private static final String TXT_3_2 = "No. %s-%s-%s";
         private static final String[] TXT_3_3 = {
-                        Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION,  Constantes.AMBIENTE, Constantes.EMISION };
+                        Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE,
+                        Constantes.EMISION };
         private static final String TXT_4_1 = "Clave de Acceso";
         private static final String[] TXT_5_1 = {
-                        "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO, Constantes.CONTRIBUYENTE_ESPECIAL_NO,
+                        "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+                        Constantes.CONTRIBUYENTE_ESPECIAL_NO,
                         "Obligado a llevar contabilidad"
         };
         private static final String[] TXT_5_2 = {
-                        "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO, Constantes.CONTRIBUYENTE_ESPECIAL_NO,
+                        "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
+                        Constantes.CONTRIBUYENTE_ESPECIAL_NO,
                         ""
         };
         private static final String[] TXT_6_1 = {
@@ -61,7 +64,8 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
         private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
         private static final String[] TXT_11_3 = { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
-        private static final String[] TXT_11_4 = { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
+        private static final String[] TXT_11_4 = { Constantes.CONTRIBUYENTE_ESPECIAL_NO,
+                        "Obligado a llevar contabilidad" };
         private static final String TXT_11_5 = "RUC: ";
         private static final String TXT_11_6 = "Gu\u00eda Remisi\u00f3n";
         private static final String TXT_11_7 = "No.: %s-%s-%s";
@@ -74,23 +78,6 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
 
         private DatosGuiaRemision datosGuiaRemision;
         List<TotalDocumento> totales;
-
-        /**
-         * Metodo para generar el logo del documento.
-         *
-         * Si el archivo no existe
-         * Agrega un logo temporal
-         * Imprime el logo.
-         *
-         */
-        @Override
-        protected synchronized void elemento2() {
-                getImagen().setPath(getDatosGuiaRemision().getPathLogo());
-                getImagen().setScala(50f);
-                getImagen().setX(400);
-                getImagen().setY(690);
-                getImagen().escribe();
-        }
 
         /**
          * Metodo para generar el panel superior en un formato semejante al SRI.
@@ -107,7 +94,7 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
 
                 // Logotipo lado Izquierdo
                 getImagen().setPath(getDatosGuiaRemision().getPathLogo());
-                getImagen().setScala(50f);
+                getImagen().setScala(33f);
                 tableIzquierda.addCell(getImagen().escribeCelda());
 
                 // Nombre de la empresa
@@ -314,29 +301,7 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
         @Override
         protected synchronized void elemento13() {
                 String firmaGrafica = getDatosGuiaRemision().getPathFirmaGrafica();
-
-                if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-                        if (getPdfWriter().getVerticalPosition(true) < 105) {
-                                getDocumento().newPage();
-                        }
-
-                        PdfPTable table = new PdfPTable(1);
-                        table.setWidthPercentage(100);
-                        getImagen1().setPath(firmaGrafica);
-                        getImagen1().setScala(30f);
-
-                        PdfPCell celda = getImagen1().escribeCelda();
-                        celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-                        celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                        table.addCell(celda);
-
-                        try {
-                                espacios(1);
-                                getDocumento().add(table);
-                        } catch (DocumentException e) {
-                                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-                        }
-                }
+                firmarGraficamente(firmaGrafica);
         }
 
         /**

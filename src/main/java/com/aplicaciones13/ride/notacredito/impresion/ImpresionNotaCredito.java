@@ -76,7 +76,7 @@ public class ImpresionNotaCredito extends ImpresionBaseIText {
         ((ImpresionElementosNotaCredito)getImpresionBaseElementos()).setDatosNotaCredito(datosNotaCredito);
 
         getImpresionBaseElementos().elementosAImprimir("0", "1", "10", "11",
-                                                       "12", "13", "15", "9","14");
+                                                       "12", "13", "9","14");
 
         getImpresionBaseElementos().escribir();
     }

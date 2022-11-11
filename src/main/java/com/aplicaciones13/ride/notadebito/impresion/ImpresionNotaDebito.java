@@ -75,7 +75,7 @@ public class ImpresionNotaDebito extends ImpresionBaseIText {
         ((ImpresionElementosNotaDebito)getImpresionBaseElementos()).setDatosNotaDebito(datosNotaDebito);
 
         getImpresionBaseElementos().elementosAImprimir("0", "1", "10", "11",
-                                                       "12",  "13",  "9", "14");
+                                                       "12",  "13",  "9", "14", "15");
 
         getImpresionBaseElementos().escribir();
     }

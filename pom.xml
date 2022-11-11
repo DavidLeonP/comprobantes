@@ -23,6 +23,7 @@
       <artifactId>itextpdf</artifactId>
       <version>5.5.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
     <dependency>
       <groupId>com.itextpdf</groupId>
       <artifactId>barcodes</artifactId>
@@ -43,6 +44,7 @@
       <scope>system</scope>
       <systemPath>${basedir}/lib/jai_codec.jar</systemPath>
     </dependency>
+    <!-- JABX para lectura de datos-->
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-core</artifactId>
@@ -70,5 +72,29 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>com.aplicaciones13.GenerarDocumentos</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

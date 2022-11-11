@@ -1,6 +1,10 @@
 package com.aplicaciones13.impresion;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.util.ArrayList;
@@ -85,8 +89,8 @@ public class ImpresionBaseElementos {
         getP().setDocumento(getDocumento());
         setTabla(new Tabla());
         getTabla().setDocumento(getDocumento());
-        
-        this.elementos = new ArrayList<>();        
+
+        this.elementos = new ArrayList<>();
         setPdfWriter(null);
     }
 
@@ -207,7 +211,7 @@ public class ImpresionBaseElementos {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
         }
     }
-    
+
     private synchronized void elemento1() {
         Pie pie = new Pie();
         getPdfWriter().setPageEvent(pie);
@@ -385,6 +389,37 @@ public class ImpresionBaseElementos {
 
     public void setPdfWriter(PdfWriter pdfWriter) {
         this.pdfWriter = pdfWriter;
+    }
+
+    /**
+     * Metodo para agregar la firma grafica.
+     * 
+     * @param firmaGrafica
+     */
+    public void firmarGraficamente(String firmaGrafica) {
+        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
+            if (getPdfWriter().getVerticalPosition(true) < 105) {
+                getDocumento().newPage();
+            }
+
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            getImagen1().setPath(firmaGrafica);
+            getImagen1().setScala(30f);
+
+            PdfPCell celda = getImagen1().escribeCelda();
+            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(celda);
+
+            try {
+                espacios(1);
+                getDocumento().add(table);
+            } catch (DocumentException e) {
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            }
+        }
+
     }
 
     /**

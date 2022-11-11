@@ -30,7 +30,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     private static final String TXT_3_2 = "No. %s-%s-%s";
     private static final String[] TXT_3_3 = {
         Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE, Constantes.EMISION };
-    private static final String TXT_4_1 = "Clave de Acceso";
+    
     private static final String[] TXT_5_1 = {
             "RUC",Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO , Constantes.CONTRIBUYENTE_ESPECIAL_NO,
             "Obligado a llevar contabilidad"
@@ -66,23 +66,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     private DatosComprobanteRetencion datosComprobanteRetencion;
     List<TotalDocumento> totales;
 
-    /**
-     * Metodo para generar el logo del documento.
-     *
-     * Si el archivo no existe
-     * Agrega un logo temporal
-     * Imprime el logo.
-     *
-     */
-    @Override
-    protected synchronized void elemento2() {
-        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo());
-        getImagen().setScala(50f);
-        getImagen().setX(400);
-        getImagen().setY(690);
-        getImagen().escribe();
-    }
-
+    
     /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
@@ -98,7 +82,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
 
         // Logotipo lado Izquierdo
         getImagen().setPath(getDatosComprobanteRetencion().getPathLogo());
-        getImagen().setScala(50f);
+        getImagen().setScala(33f);
         tableIzquierda.addCell(getImagen().escribeCelda());
 
         // Nombre de la empresa
@@ -307,26 +291,6 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     }
 
     /**
-     * Metodo para escribir el codigo de barras de la clave de acceso.
-     *
-     */
-    @Override
-    protected synchronized void elemento4() {
-        getForm().setListaTitulos(TXT_4_1);
-
-        getForm().setListaValores("");
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("1");
-        getForm().escribe();
-
-        getImagen().procesarCode128(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
-        getImagen().setX(165);
-        getImagen().setY(680);
-        getImagen().escribe();
-    }
-
-    /**
      * Metodo para escribir la informacion de la empresa
      *
      * @throws Exception
@@ -532,24 +496,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     @Override
     protected synchronized void elemento14() {
         String firmaGrafica = getDatosComprobanteRetencion().getPathFirmaGrafica();
-
-        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-            if (getPdfWriter().getVerticalPosition(true) < 350) {
-                getDocumento().newPage();
-            }
-
-            PdfPTable table = new PdfPTable(1);
-            table.setWidthPercentage(100);
-            getImagen().setPath(firmaGrafica);
-            getImagen().setScala(50f);
-            table.addCell(getImagen().escribeCelda());
-
-            try {
-                getDocumento().add(table);
-            } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        }
+        firmarGraficamente(firmaGrafica);
     }
 
     /**

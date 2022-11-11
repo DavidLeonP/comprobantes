@@ -62,23 +62,6 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     TablasSRI tablasSRI = new TablasSRI();
 
     /**
-     * Metodo para generar el logo del documento.
-     *
-     * Si el archivo no existe
-     * Agrega un logo temporal
-     * Imprime el logo.
-     *
-     */
-    @Override
-    protected synchronized void elemento2() {
-        getImagen().setPath(getDatosNotaDebito().getPathLogo());
-        getImagen().setScala(50f);
-        getImagen().setX(400);
-        getImagen().setY(690);
-        getImagen().escribe();
-    }
-
-    /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
@@ -93,7 +76,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
         // Logotipo lado Izquierdo        
         getImagen().setPath(getDatosNotaDebito().getPathLogo());
-        getImagen().setScala(50f);
+        getImagen().setScala(33f);
         tableIzquierda.addCell(getImagen().escribeCelda());
 
         // Nombre de la empresa
@@ -597,30 +580,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento15() {
         String firmaGrafica = getDatosNotaDebito().getPathFirmaGrafica();
-
-        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-            if (getPdfWriter().getVerticalPosition(true) < 105) {
-                getDocumento().newPage();
-            }
-
-            PdfPTable table = new PdfPTable(1);
-            table.setWidthPercentage(100);
-            getImagen1().setPath(firmaGrafica);
-            getImagen1().setScala(30f);
-
-            PdfPCell celda = getImagen1().escribeCelda();
-            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            table.addCell(celda);
-
-            try {
-                espacios(1);
-                getDocumento().add(table);
-            } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-
-        }
+        firmarGraficamente(firmaGrafica);               
     }
 
     /**

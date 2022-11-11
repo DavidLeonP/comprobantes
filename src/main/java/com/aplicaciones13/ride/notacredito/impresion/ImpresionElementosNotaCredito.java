@@ -71,24 +71,8 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
 
     private DatosNotaCredito datosNotaCredito;
     private double totalDescuento = 0;
-    List<TotalDocumento> totales;
+    List<TotalDocumento> totalesCalculados;
     
-    /**Metodo para generar el logo del documento.
-     *
-     * Si el archivo no existe
-     *  Agrega un logo temporal
-     * Imprime el logo.
-     *
-     */
-    @Override
-    protected synchronized void elemento2() {
-        getImagen().setPath(getDatosNotaCredito().getPathLogo());
-        getImagen().setScala(50f);
-        getImagen().setX(400);
-        getImagen().setY(690);
-        getImagen().escribe();
-    }
-
     /**Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
@@ -103,7 +87,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
 
         //Logotipo lado Izquierdo
         getImagen().setPath(getDatosNotaCredito().getPathLogo());
-        getImagen().setScala(50f);
+        getImagen().setScala(33f);
         tableIzquierda.addCell(getImagen().escribeCelda());
 
         //Nombre de la empresa
@@ -689,28 +673,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     @Override
     protected  synchronized void elemento14()  {
         String firmaGrafica = getDatosNotaCredito().getPathFirmaGrafica();
-
-        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-            if (getPdfWriter().getVerticalPosition(true) < 105) {
-                getDocumento().newPage();
-            }
-            PdfPTable table = new PdfPTable(1);
-            table.setWidthPercentage(100);
-            getImagen1().setPath(firmaGrafica);
-            getImagen1().setScala(30f);
-            
-            PdfPCell celda = getImagen1().escribeCelda();
-            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            celda.setVerticalAlignment(Element.ALIGN_MIDDLE);            
-            table.addCell(celda);
-            
-            try {
-                espacios(1);
-                getDocumento().add(table);
-            } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        }
+        firmarGraficamente(firmaGrafica);        
     }
 
 
@@ -718,7 +681,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      *
      */
     private void subTotales() {
-        setTotales(new ArrayList<TotalDocumento>());
+        this.totalesCalculados = new ArrayList<>();
         inicializaTotales();
 
         cargarTotales(getDatosNotaCredito().getNotaCreditoXML());
@@ -903,10 +866,10 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     }
 
     public List<TotalDocumento> getTotales() {
-        return totales;
+        return this.totalesCalculados;
     }
 
     public void setTotales(List<TotalDocumento> totales) {
-        this.totales = totales;
+        this.totalesCalculados = totales;
     }
 }
