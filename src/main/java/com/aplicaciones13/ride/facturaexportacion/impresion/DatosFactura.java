@@ -2,9 +2,10 @@ package com.aplicaciones13.ride.facturaexportacion.impresion;
 
 import com.aplicaciones13.impresion.DatosDocumentosElectronicos;
 import com.aplicaciones13.ride.facturaexportacion.Factura;
-import com.aplicaciones13.utilidades.MainFiles;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -29,9 +30,7 @@ public class DatosFactura extends DatosDocumentosElectronicos {
                 File file = new File(pathSource);
                 this.facturaXML = (Factura) unmarshaller.unmarshal(file);
             } catch (JAXBException e) {
-                MainFiles.escribirLogDefault(this.getClass().getName(),
-                        ".ImpresionElementos() ",
-                        e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
             }
         }
     }

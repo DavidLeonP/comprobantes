@@ -16,7 +16,7 @@ public class GenerarDocumentos {
     public static void main(String[] args) {
         Ejecutor ejecutor = new Ejecutor();
         if(ejecutor.ejecutarFactura(
-            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/facturaProdigy.xml",
+            "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/facturaExportacion.xml",
             "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/facturaProdigy.pdf",
             "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/logoTest.jpg",             
             "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/firmaFisica.jpg", 

@@ -468,9 +468,10 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
          *
          */
         private void informacionDestinanario1(int i) {
+                TablasSRI tablasSRI = new TablasSRI();
                 getForm().setListaTitulos(TXT_7_10);
                 getForm()
-                                .setListaValores(TablasSRI.tabla4(getDatosGuiaRemision().getGuiaRemisionXML()
+                                .setListaValores(tablasSRI.tabla4(getDatosGuiaRemision().getGuiaRemisionXML()
                                                 .getDestinatarios()
                                                 .getDestinatario()
                                                 .get(i)

@@ -451,19 +451,20 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      */
     public void detalleComprobanteRetencionCompleta() {
         List<Object> listaDatos = new ArrayList<>();
+        TablasSRI tablasSRI = new TablasSRI();
 
         for (Impuesto a : getDatosComprobanteRetencion().getComprobanteRetencionXML()
                 .getImpuestos()
                 .getImpuesto()) {
 
             List<String> listaValores = new ArrayList<>();
-
-            listaValores.add(0, TablasSRI.tabla4(a.getCodDocSustento()));
+            
+            listaValores.add(0, tablasSRI.tabla4(a.getCodDocSustento()));
             listaValores.add(1, a.getNumDocSustento());
             listaValores.add(2, a.getFechaEmisionDocSustento());
             listaValores.add(3, String.valueOf(a.getBaseImponible()));
-            listaValores.add(4, TablasSRI.tabla18(a.getCodigo()));
-            listaValores.add(5, TablasSRI.tabla19(a.getCodigoRetencion()));
+            listaValores.add(4, tablasSRI.tabla18(a.getCodigo()));
+            listaValores.add(5, tablasSRI.tabla19(a.getCodigoRetencion()));
             listaValores.add(6, String.format("%.2f", a.getPorcentajeRetener().doubleValue()));
             listaValores.add(7, String.valueOf(a.getValorRetenido()));
 

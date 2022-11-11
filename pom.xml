@@ -27,7 +27,7 @@
       <groupId>com.itextpdf</groupId>
       <artifactId>barcodes</artifactId>
       <version>7.0.0</version>
-    </dependency>    
+    </dependency>
     <!-- Dependencia de codigo de barras -->
     <dependency>
       <groupId>org</groupId>
@@ -35,16 +35,14 @@
       <version>1.0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}/lib/JBARS.jar</systemPath>
-    </dependency>    
-<dependency>
+    </dependency>
+    <dependency>
       <groupId>com.sun</groupId>
       <artifactId>media</artifactId>
       <version>1.0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}/lib/jai_codec.jar</systemPath>
-    </dependency>    
-
-
+    </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-core</artifactId>
@@ -66,4 +64,11 @@
       <version>3.25.0-GA</version>
     </dependency>
   </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+  </build>
 </project>

@@ -59,6 +59,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
     private DatosNotaDebito datosNotaDebito;
     private List<TotalDocumento> totalesCalculados;
+    TablasSRI tablasSRI = new TablasSRI();
 
     /**
      * Metodo para generar el logo del documento.
@@ -385,11 +386,11 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      *
      */
     private void informacionCliente2() {
-        String rise = getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getRise();
+        String rise = getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getRise();        
         if (rise != null && rise.trim().length() > 0) {
             getForm().setListaTitulos(TXT_6_11_1);
             getForm().setListaValores(
-                    TablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
+                    tablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getNumDocModificado(),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getFechaEmisionDocSustento(),
                     rise);
@@ -402,7 +403,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         } else {
             getForm().setListaTitulos(TXT_6_11_2);
             getForm().setListaValores(
-                    TablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
+                    tablasSRI.tabla4(getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getCodDocModificado()),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getNumDocModificado(),
                     getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito().getFechaEmisionDocSustento());
             getForm().setListaFormatos(Elemento.FORMATO_STRING,
@@ -544,7 +545,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento14() {
         int size = 0;
-
+        
         List<NotaDebito.InfoNotaDebito.Pagos> pagos = getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito()
                 .getPagos();
 
@@ -559,7 +560,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                         + ((a.getPago().get(0).getUnidadTiempo() == null) ? "" : a.getPago().get(0).getUnidadTiempo());
 
                 getForm().getListaTitulos().add((size + 1) + ".- Forma pago");
-                getForm().getListaValores().add(TablasSRI.tabla24(a.getPago().get(0).getFormaPago()) +
+                getForm().getListaValores().add(tablasSRI.tabla24(a.getPago().get(0).getFormaPago()) +
                         tiempoPago +
                         " por un valor de " +
                         a.getPago().get(0).getTotal());

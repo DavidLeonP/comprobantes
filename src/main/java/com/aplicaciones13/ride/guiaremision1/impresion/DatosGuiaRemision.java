@@ -3,9 +3,11 @@ package com.aplicaciones13.ride.guiaremision1.impresion;
 
 import com.aplicaciones13.impresion.DatosDocumentosElectronicos;
 import com.aplicaciones13.ride.guiaremision1.GuiaRemision;
-import com.aplicaciones13.utilidades.MainFiles;
+
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,6 +26,7 @@ public class DatosGuiaRemision extends DatosDocumentosElectronicos {
     public void setPathSource(String pathSource) {
         super.setPathSource(pathSource);
 
+        if (pathSource != null && !pathSource.isEmpty()) {
         try {
             JAXBContext jc =
                 JAXBContext.newInstance("com.aplicaciones13.ride.guiaremision1");
@@ -33,10 +36,9 @@ public class DatosGuiaRemision extends DatosDocumentosElectronicos {
             setGuiaRemisionXML((GuiaRemision)unmarshaller.unmarshal(file));
 
         } catch (JAXBException e) {
-            MainFiles.escribirLogDefault(this.getClass().getName(),
-                                         ".ImpresionElementos() ",
-                                         e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
         }
+    }
     }
 
     public GuiaRemision getGuiaRemisionXML() {

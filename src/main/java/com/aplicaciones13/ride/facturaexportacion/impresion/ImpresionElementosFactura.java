@@ -715,6 +715,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento14() {
         int size = 0;
+        TablasSRI tablasSRI = new TablasSRI();
 
         if (getDatosFactura().getFacturaXML()
                 .getInfoFactura()
@@ -731,7 +732,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
 
                 getForm().getListaTitulos().add((size + 1) + ".- Forma pago");
                 getForm().getListaValores()
-                        .add(TablasSRI.tabla24(a.getFormaPago()) + " a " + a.getPlazo() + " " + a.getUnidadTiempo() +
+                        .add(tablasSRI.tabla24(a.getFormaPago()) + " a " + a.getPlazo() + " " + a.getUnidadTiempo() +
                                 " por un valor de " + a.getTotal());
                 getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
                 size++;
@@ -869,6 +870,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento16() {
         int size = 0;
+        TablasSRI tablasSRI = new TablasSRI();
 
         if (getDatosFactura().getFacturaXML()
                 .getInfoFactura()
@@ -885,7 +887,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
 
                 getForm().getListaTitulos().add((size + 1) + ".- Forma pago");
                 getForm().getListaValores()
-                        .add(TablasSRI.tabla24(a.getFormaPago()) + " a " + a.getPlazo() + " " + a.getUnidadTiempo() +
+                        .add(tablasSRI.tabla24(a.getFormaPago()) + " a " + a.getPlazo() + " " + a.getUnidadTiempo() +
                                 " por un valor de " + a.getTotal());
                 getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
                 size++;
@@ -944,6 +946,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     }
 
     private void informacionExportacion() {
+        TablasSRI tablasSRI = new TablasSRI();
         getForm().setListaTitulos(TXT_15_2);
         getForm()
                 .setListaValores(getDatosFactura().getFacturaXML()
@@ -952,19 +955,19 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
                         getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getLugarIncoTerm(),
-                        TablasSRI.tabla25(getDatosFactura().getFacturaXML()
+                        tablasSRI.tabla25(getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getPaisOrigen()),
                         getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getPuertoEmbarque(),
-                        TablasSRI.tabla25(getDatosFactura().getFacturaXML()
+                        tablasSRI.tabla25(getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getPaisDestino()),
                         getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getPuertoDestino(),
-                        TablasSRI.tabla25(getDatosFactura().getFacturaXML()
+                        tablasSRI.tabla25(getDatosFactura().getFacturaXML()
                                 .getInfoFactura()
                                 .getPaisAdquisicion()));
         getForm()

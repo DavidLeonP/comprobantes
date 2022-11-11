@@ -387,7 +387,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      *
      */
     private void informacionCliente2() {
-
+        TablasSRI tablasSRI = new TablasSRI();
 
         String rise =
             getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getRise();
@@ -395,7 +395,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         if (rise != null && rise.trim().length() > 0) {
 
             getForm().setListaTitulos(TXT_6_11_1);
-            getForm().setListaValores(TablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
+            getForm().setListaValores(tablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getNumDocModificado(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmisionDocSustento(),
                                       rise,
@@ -409,7 +409,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
             getForm().setListaPaneles("5");
         } else {
             getForm().setListaTitulos(TXT_6_11_2);
-            getForm().setListaValores(TablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
+            getForm().setListaValores(tablasSRI.tabla4(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getCodDocModificado()),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getNumDocModificado(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmisionDocSustento(),
                                       getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getMotivo());

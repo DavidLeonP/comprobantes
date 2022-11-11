@@ -1,16 +1,15 @@
 package com.aplicaciones13.ride.comprobanteretencion.impresion;
 
-
 import com.aplicaciones13.impresion.DatosDocumentosElectronicos;
 import com.aplicaciones13.ride.comprobanteretencion.ComprobanteRetencion;
-import com.aplicaciones13.utilidades.MainFiles;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
 
 public class DatosComprobanteRetencion extends DatosDocumentosElectronicos {
 
@@ -24,18 +23,16 @@ public class DatosComprobanteRetencion extends DatosDocumentosElectronicos {
     public void setPathSource(String pathSource) {
         super.setPathSource(pathSource);
 
-        try {
-            JAXBContext jc =
-                JAXBContext.newInstance("com.aplicaciones13.ride.comprobanteretencion");
+        if (pathSource != null && !pathSource.isEmpty()) {
+            try {
+                JAXBContext jc = JAXBContext.newInstance(ComprobanteRetencion.class);
+                Unmarshaller unmarshaller = jc.createUnmarshaller();
+                File file = new File(getPathSource());
+                setComprobanteRetencionXML((ComprobanteRetencion) unmarshaller.unmarshal(file));
 
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
-            File file = new File(getPathSource());
-            setComprobanteRetencionXML((ComprobanteRetencion)unmarshaller.unmarshal(file));
-
-        } catch (JAXBException e) {
-            MainFiles.escribirLogDefault(this.getClass().getName(),
-                                         ".ImpresionElementos() ",
-                                         e.toString());
+            } catch (JAXBException e) {
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            }
         }
     }
 
