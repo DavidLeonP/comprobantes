@@ -4,13 +4,15 @@ package com.aplicaciones13.impresion;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfPCell;
-
-import com.aplicaciones13.utilidades.MainFiles;
-
 import java.awt.Color;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.itextpdf.barcodes.Barcode128;
+import com.itextpdf.kernel.pdf.PdfDocument;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +24,11 @@ import java.util.logging.Logger;
  *
  */
 public class Imagen extends Elemento {
-    private byte _bites[];
+    private byte[] bites;
     private String path;
     private URL url;
     private float scala;
-    private Image imagen;
+    private Image imagenTrabajo;
 
     /**Metodo para crear la imagen.
      *
@@ -83,19 +85,19 @@ public class Imagen extends Elemento {
     }
 
     public byte[] getBites() {
-        return _bites;
+        return this.bites;
     }
 
     public void setBites(byte[] bites) {
-        _bites = bites;
+        this.bites = bites;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String URL) {
-        path = URL;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public float getScala() {
@@ -106,15 +108,38 @@ public class Imagen extends Elemento {
         this.scala = scala;
     }
 
+    /**
+     * Metodo para procesar un code 128.
+     * 
+     * @param code
+     */
+    public void procesarCode128(String code){
+        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = imagenBarras.createGraphics();
+        g.setPaint(Color.WHITE);
+        g.fillRect(0, 0, 640, 100);        
+        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
+        code128.setCodeType(org.jbars.Barcode.CODE128);
+        code128.setCode(code );
+        code128.placeBarcode(imagenBarras, Color.black, Color.blue);        
+        setImagen(imagenBarras);
+        setScala(40f);
+    }
+    
+    /**
+     * Metodo para obtener la imagen.
+     * 
+     * 
+     * @return
+     */
     public Image getImagen() {
         if (getPath() == null && getUrl() == null)
-            return imagen;
-
+            return this.imagenTrabajo;
 
         if (getPath() != null) {
             try {
-                if (imagen == null)
-                    imagen = Image.getInstance(getPath());
+                if (imagenTrabajo == null)
+                    imagenTrabajo = Image.getInstance(getPath());
 
             } catch (Exception e) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
@@ -125,8 +150,8 @@ public class Imagen extends Elemento {
 
         if (getUrl() != null) {
             try {
-                if (imagen == null)
-                    imagen = Image.getInstance(getUrl());
+                if (imagenTrabajo == null)
+                    imagenTrabajo = Image.getInstance(getUrl());
 
             } catch (Exception e) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
@@ -134,19 +159,19 @@ public class Imagen extends Elemento {
                 return null;
             }
         }
-        return imagen;
+        return imagenTrabajo;
     }
 
-    public void setImagen(Image imagen) {
-        this.imagen = imagen;
+    public void setImagenTrabajo(Image imagen) {
+        this.imagenTrabajo = imagen;
     }
 
     public void setImagen(java.awt.Image i) {
         try {
-            this.imagen = Image.getInstance(i, Color.WHITE);
+            this.imagenTrabajo = Image.getInstance(i, Color.WHITE);
         } catch (Exception e) {
-            MainFiles.escribirLogDefault(this.getClass().getName(),
-                                         ".setImagen()", e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                                                            e.toString());            
         }
     }
 
@@ -158,8 +183,7 @@ public class Imagen extends Elemento {
         try {
             this.url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            MainFiles.escribirLogDefault(this.getClass().getName(),
-                                         ".setUrl(stringUrl)", e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
         }
     }
 

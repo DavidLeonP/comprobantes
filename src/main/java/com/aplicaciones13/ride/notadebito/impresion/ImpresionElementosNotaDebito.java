@@ -27,29 +27,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.jbars.Barcode;
-
 public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
-    protected static final String ELEMENTO_0 = "0";
-    protected static final String ELEMENTO_1 = "1";
-    protected static final String ELEMENTO_2 = "2";
-    protected static final String ELEMENTO_3 = "3";
-    protected static final String ELEMENTO_4 = "4";
-    protected static final String ELEMENTO_5 = "5";
-    protected static final String ELEMENTO_6 = "6";
-    protected static final String ELEMENTO_7 = "7";
-    protected static final String ELEMENTO_8 = "8";
-    protected static final String ELEMENTO_9 = "9";
-    protected static final String ELEMENTO_10 = "10";
-    protected static final String ELEMENTO_11 = "11";
-    protected static final String ELEMENTO_12 = "12";
-    protected static final String ELEMENTO_13 = "13";
-    protected static final String ELEMENTO_14 = "14";
-    protected static final String ELEMENTO_15 = "15";
-
-    private static final String TXT_2_1 = "JeremiasLogo";
-    private static final String TXT_2_2 = ".jpg";
     private static final String TXT_3_1 = "Nota D\u00e9bito";
     private static final String TXT_3_2 = "No. %s-%s-%s";
     private static final String[] TXT_3_3 = { "No.: Autorizaci\u00f3n", "Fecha Autorizaci\u00f3n", "Ambiente",
@@ -72,8 +51,6 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String TXT_11_1 = "JeremiasLogo";
-    private static final String TXT_11_2 = ".jpg";
     private static final String[] TXT_11_3 = { "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento" };
     private static final String[] TXT_11_4 = { "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
     private static final String TXT_11_5 = "RUC: ";
@@ -89,132 +66,20 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
     private static final String TXT_14_1 = "Formas de Pago";
 
     private DatosNotaDebito datosNotaDebito;
-
     List<TotalDocumento> totales;
-
-    /**
-     * Metod para imprimir los elementos en el orden solicitado.
-     *
-     * @param valor
-     */
-    @Override
-    public void imprimirElemento(String valor) {
-        if (valor.equalsIgnoreCase(ELEMENTO_0))
-            try {
-                elemento0();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_1))
-            try {
-                elemento1();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_2))
-            try {
-                elemento2();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-
-        if (valor.equalsIgnoreCase(ELEMENTO_3))
-            try {
-                elemento3();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_4))
-            try {
-                elemento4();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_5))
-            try {
-                elemento5();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-
-        if (valor.equalsIgnoreCase(ELEMENTO_6))
-            try {
-                elemento6();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_7))
-            try {
-                elemento7();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_8))
-            try {
-                elemento8();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_9))
-            try {
-                elemento9();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_10))
-            try {
-                elemento10();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_11))
-            try {
-                elemento11();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_12))
-            try {
-                elemento12();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_13))
-            try {
-                elemento13();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_14))
-            try {
-                elemento14();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_15))
-            try {
-                elemento15();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-    }
 
     /**
      * Metodo para agregar la marca de agua al sistema.
      *
      */
-    private synchronized void elemento0() {
+    @Override
+    protected synchronized void elemento0() {
         getPdfWriter().setPageEvent(new MarcaAgua(getDatosNotaDebito().getAmbienteAutorizacion()));
     }
 
-    private synchronized void elemento1() {
-        Pie pie = new Pie(TXT_3_1);
-        pie.setNumeroDocumento(getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getEstab() +
-                "-" +
-                getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getPtoEmi() +
-                "-" +
-                getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getSecuencial());
-
+    @Override
+    protected synchronized void elemento1() {
+        Pie pie = new Pie();
         getPdfWriter().setPageEvent(pie);
     }
 
@@ -226,16 +91,9 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Imprime el logo.
      *
      */
-    private synchronized void elemento2() {
-        String logoFileName = TXT_2_1;
-
-        if (new File(getDatosNotaDebito().getPathLogo() +
-                getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getRuc() +
-                TXT_2_2).isFile())
-            logoFileName = getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getRuc();
-
-        getImagen().setPath(getDatosNotaDebito().getPathLogo() + logoFileName +
-                TXT_2_2);
+    @Override
+    protected synchronized void elemento2() {
+        getImagen().setPath(getDatosNotaDebito().getPathLogo());
         getImagen().setScala(50f);
         getImagen().setX(400);
         getImagen().setY(690);
@@ -246,7 +104,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
-    private synchronized void elemento10() {
+    @Override
+    protected synchronized void elemento10() {
         PdfPTable table = new PdfPTable(2);
 
         table.setWidthPercentage(100);
@@ -254,15 +113,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         // Lado Izquierdo
         PdfPTable tableIzquierda = new PdfPTable(1);
 
-        // Logotipo lado Izquierdo
-        String logoFileName = TXT_11_1;
-        if (new File(getDatosNotaDebito().getPathLogo() +
-                getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getRuc() +
-                TXT_11_2).isFile())
-            logoFileName = getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getRuc();
-
-        getImagen().setPath(getDatosNotaDebito().getPathLogo() + logoFileName +
-                TXT_11_2);
+        // Logotipo lado Izquierdo        
+        getImagen().setPath(getDatosNotaDebito().getPathLogo());
         getImagen().setScala(50f);
         tableIzquierda.addCell(getImagen().escribeCelda());
 
@@ -351,19 +203,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         getH2().setTexto(TXT_11_12);
         tableDerecha.addCell(getH2().escribeCelda());
 
-        // Codigo barras
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);
-
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setCode(getDatosNotaDebito().getClaveAccesoAutorizacion());
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);
-
-        getImagen().setImagen(imagenBarras);
-        getImagen().setScala(35f);
+        // Codigo de barras
+        getImagen().procesarCode128(getDatosNotaDebito().getClaveAccesoAutorizacion());
         tableDerecha.addCell(getImagen().escribeCelda());
 
         table.addCell(tableIzquierda);
@@ -380,7 +221,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento11() throws Exception {
+    @Override
+    protected synchronized void elemento11(){
         espacios(2);
 
         PdfPTable table1 = new PdfPTable(1);
@@ -410,7 +252,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento12() throws Exception {
+    @Override
+    protected synchronized void elemento12() {
         espacios(2);
 
         if (getDatosNotaDebito().getNotaDebitoXML().getMotivos() != null &&
@@ -441,7 +284,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para agregar la informaci\u00f3n del documento
      *
      */
-    private synchronized void elemento3() {
+    @Override
+    protected synchronized void elemento3() {
         getH1().setTexto(TXT_3_1);
         getH1().escribe();
 
@@ -471,7 +315,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para escribir el codigo de barras de la clave de acceso.
      *
      */
-    private synchronized void elemento4() {
+    @Override
+    protected synchronized void elemento4() {
 
         getForm().setListaTitulos(TXT_4_1);
 
@@ -481,21 +326,10 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         getForm().setListaPaneles("1");
         getForm().escribe();
 
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);
-
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setCode(getDatosNotaDebito().getClaveAccesoAutorizacion());
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);
-
-        getImagen().setImagen(imagenBarras);
-        getImagen().setScala(35f);
+        getImagen().procesarCode128(getDatosNotaDebito().getClaveAccesoAutorizacion());
         getImagen().setX(165);
         getImagen().setY(680);
-        getImagen().escribe();
+        getImagen().escribe();       
     }
 
     /**
@@ -503,7 +337,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      *
      * @throws Exception
      */
-    private synchronized void elemento5() throws Exception {
+    @Override
+    protected synchronized void elemento5() {
         espacios(5);
         getLinea().escribe();
         getH2().setTexto(getDatosNotaDebito().getNotaDebitoXML().getInfoTributaria().getRazonSocial());
@@ -539,7 +374,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento6() throws Exception {
+    @Override
+    protected synchronized void elemento6() {
         espacios(2);
         getLinea().escribe();
 
@@ -611,7 +447,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
      *
      */
-    private synchronized void elemento7() throws Exception {
+    @Override
+    protected synchronized void elemento7(){
         espacios(2);
 
         if (getDatosNotaDebito().getNotaDebitoXML().getMotivos() != null &&
@@ -659,7 +496,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para agregar los totales de la notaDebito
      *
      */
-    private synchronized void elemento8() throws Exception {
+    @Override
+    protected synchronized void elemento8() {
         espacios(2);
 
         subTotales();
@@ -676,7 +514,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para agregar los totales de la notaDebito
      *
      */
-    private synchronized void elemento13() throws Exception {
+    @Override
+    protected synchronized void elemento13(){
         espacios(2);
 
         PdfPTable table = new PdfPTable(1);
@@ -724,7 +563,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para agregar Formas de pago exportaciones.
      *
      */
-    private synchronized void elemento14() throws Exception {
+    @Override
+    protected synchronized void elemento14() {
         int size = 0;
 
         List<NotaDebito.InfoNotaDebito.Pagos> pagos = getDatosNotaDebito().getNotaDebitoXML().getInfoNotaDebito()
@@ -762,7 +602,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                 espacios(2);
 
                 getForm().setListaDimensiones("15", "85");
-                getForm().setListaPaneles(size + "");
+                getForm().setListaPaneles(String.valueOf(size));
                 getForm().escribe();
             }
         }
@@ -775,7 +615,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      *
      * @throws Exception
      */
-    private synchronized void elemento15() throws Exception {
+    @Override
+    protected synchronized void elemento15() {
         String firmaGrafica = getDatosNotaDebito().getPathFirmaGrafica();
 
         if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
@@ -821,12 +662,12 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
             getForm().getListaTitulos().add(a.getTitulo());
             getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
             getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-            getForm().getListaCamposAlineadosDerecha().add(j++ + "");
+            getForm().getListaCamposAlineadosDerecha().add(String.valueOf(j++));
 
             i++;
         }
         getForm().setListaDimensiones("70", "30");
-        getForm().setListaPaneles("-1", "-1", i + "");
+        getForm().setListaPaneles("-1", "-1", String.valueOf(i));
     }
 
     /**
@@ -851,7 +692,8 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
      * Metodo para agregar informaci\u00f3n adicional.
      *
      */
-    private synchronized void elemento9() throws Exception {
+    @Override
+    protected synchronized void elemento9() {
         int size = 0;
 
         if (getDatosNotaDebito().getNotaDebitoXML().getInfoAdicional() != null &&
@@ -879,7 +721,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                 espacios(2);
 
                 getForm().setListaDimensiones("25", "75");
-                getForm().setListaPaneles(size + "");
+                getForm().setListaPaneles(String.valueOf(size));
                 getForm().escribe();
             }
         }

@@ -19,9 +19,6 @@ import java.util.logging.Logger;
  */
 public class ImpresionFactura extends ImpresionBaseIText {
 
-    public static final int FORMATO_JEREMIAS = 1;
-    public static final int FORMATO_SRI = 2;
-
     /**
      * Metodo para iniciar el objeto.
      *
@@ -35,22 +32,7 @@ public class ImpresionFactura extends ImpresionBaseIText {
      *
      * @param datosFactura
      */
-    public void ejecutar(DatosFactura datosFactura, int formato) {
-        imprimirGenerico(datosFactura, formato);
-    }
-
-    /**
-     * Metodo para realizar la impresion de cualquier documento o orden del mismo.
-     *
-     * Configura la pagina
-     * Prepara documento sobre el Sream de salida
-     * Abre el documento
-     * De acuerdo al tipo de impresion ejecuta
-     * Cierra el documento (contiene el Stream).
-     *
-     * @param datosFactura
-     */
-    private void imprimirGenerico(DatosFactura datosFactura, int formato) {
+    public void ejecutar(DatosFactura datosFactura) {
         Document documento = new Document();
         documento.setPageSize(PageSize.A4);
         documento.setMargins(36, 28, 28, 28);
@@ -66,51 +48,9 @@ public class ImpresionFactura extends ImpresionBaseIText {
         }
         documento.open();
 
-        switch (formato) {
-            case FORMATO_JEREMIAS:
-                imprimirJeremias(datosFactura, documento);
-                break;
-
-            case FORMATO_SRI:
-                imprimirSRI(datosFactura, documento);
-                break;
-
-            default:
-                imprimirSRI(datosFactura, documento);
-                break;
-        }
+        imprimirSRI(datosFactura, documento);
 
         documento.close();
-    }
-
-    /**
-     * Formato de impresion completo.
-     *
-     * Inicializa un nuevo objeto de impresion de elementos
-     * Inicializa el documento (contiene Stream)
-     * Inicializa el PDFWriter
-     * Inicializa la conexion a la base de datos
-     * Inicializa el codigo que va ha consultar
-     * Configurar los elementos a ser impresos
-     * Ingresa el titulo
-     * Escribe la impresion
-     *
-     *
-     * @param datosFactura
-     * @param documento
-     */
-    private synchronized void imprimirJeremias(DatosFactura datosFactura,
-            Document documento) {
-        setImpresionBaseElementos(new ImpresionElementosFactura());
-        getImpresionBaseElementos().setDocumento(documento);
-        getImpresionBaseElementos().setPdfWriter(getPdfWriter());
-
-        ((ImpresionElementosFactura) getImpresionBaseElementos()).setDatosFactura(datosFactura);
-
-        getImpresionBaseElementos().elementosAImprimir("0", "1", "2", "3", "4",
-                "5", "6", "7", "8", "15",
-                "14", "9", "18");
-        getImpresionBaseElementos().escribir();
     }
 
     /**

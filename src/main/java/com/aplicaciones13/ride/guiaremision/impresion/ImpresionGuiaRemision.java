@@ -19,9 +19,6 @@ import java.util.logging.Logger;
  */
 public class ImpresionGuiaRemision extends ImpresionBaseIText {
 
-    public static int FORMATO_JEREMIAS = 1;
-    public static int FORMATO_SRI = 2;
-
     /**Metodo para iniciar el objeto.
      *
      */
@@ -29,15 +26,9 @@ public class ImpresionGuiaRemision extends ImpresionBaseIText {
         super();
     }
 
-    /**Metodo para ejecutar la impresión
-     *
-     * @param datosGuiaRemision
-     */
-    public void ejecutar(DatosGuiaRemision datosGuiaRemision, int formato) {
-        imprimirGenerico(datosGuiaRemision, formato);
-    }
-
-    /** Metodo para realizar la impresion de cualquier documento o orden del mismo.
+    /**
+     * Metodo para ejecutar la impresión.
+     * 
      *
      *  Configura la pagina
      *  Prepara documento sobre el Sream de salida
@@ -47,7 +38,7 @@ public class ImpresionGuiaRemision extends ImpresionBaseIText {
      *
      * @param datosGuiaRemision
      */
-    private void imprimirGenerico(DatosGuiaRemision datosGuiaRemision, int formato) {
+    public void ejecutar(DatosGuiaRemision datosGuiaRemision) {
         Document documento = new Document();
         documento.setPageSize(PageSize.A4);
         documento.setMargins(36, 28, 28, 28);
@@ -63,45 +54,12 @@ public class ImpresionGuiaRemision extends ImpresionBaseIText {
         }
         documento.open();
 
-
-        if (FORMATO_JEREMIAS == formato)
-            imprimirJeremias(datosGuiaRemision, documento);
-
-        if (FORMATO_SRI == formato)
-            imprimirSRI(datosGuiaRemision, documento);
+        imprimirSRI(datosGuiaRemision, documento);
 
         documento.close();
     }
-
-    /** Formato de impresion completo.
-     *
-     * Inicializa un nuevo objeto de impresion de elementos
-     * Inicializa el documento (contiene Stream)
-     * Inicializa el PDFWriter
-     * Inicializa la conexion a la base de datos
-     * Inicializa el codigo que va ha consultar
-     * Configurar los elementos a ser impresos
-     * Ingresa el titulo
-     * Escribe la impresion
-     *
-     *
-     * @param datosGuiaRemision
-     * @param documento
-     */
-    private synchronized void imprimirJeremias(DatosGuiaRemision datosGuiaRemision,
-                                               Document documento) {
-        setImpresionBaseElementos(new com.aplicaciones13.ride.guiaremision.impresion.ImpresionElementosGuiaRemision());
-        getImpresionBaseElementos().setDocumento(documento);
-        getImpresionBaseElementos().setPdfWriter(getPdfWriter());
-
-        ((ImpresionElementosGuiaRemision)getImpresionBaseElementos()).setDatosGuiaRemision(datosGuiaRemision);
-
-        getImpresionBaseElementos().elementosAImprimir("0", "1", "2", "3", "4",
-                                                       "5", "6", "7", "8", "9","13");
-        getImpresionBaseElementos().escribir();
-    }
-
-    /** Formato de impresion completo.
+    /** 
+     * Formato de impresion completo.
      *
      * Inicializa un nuevo objeto de impresion de elementos
      * Inicializa el documento (contiene Stream)

@@ -41,6 +41,7 @@ public class H2 extends Elemento {
         return pdfPCeld;
     }
 
+    @Override
     public void setTexto(String texto) {
         super.setTexto(texto.toUpperCase());
         getFontTitulos().setSize(12);

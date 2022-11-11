@@ -39,7 +39,7 @@ public class TestGuiaRemisionImpresiones {
 
         ImpresionGuiaRemision impresionGuiaRemision =
             new ImpresionGuiaRemision();
-        impresionGuiaRemision.ejecutar(datosGuiaRemision, impresionGuiaRemision.FORMATO_JEREMIAS);
+        impresionGuiaRemision.ejecutar(datosGuiaRemision);
         impresionGuiaRemision.getByteArrayOutputStream();
 
         FileOutputStream fileOutputStream = null;

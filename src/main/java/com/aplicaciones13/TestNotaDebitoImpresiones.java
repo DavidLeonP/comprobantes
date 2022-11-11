@@ -39,7 +39,7 @@ public class TestNotaDebitoImpresiones {
         datosNotaDebito.setNumeroAutorizacion("12345678911234567892123456789312345678941234567895");
 
         ImpresionNotaDebito impresionNotaDebito = new ImpresionNotaDebito();
-        impresionNotaDebito.ejecutar(datosNotaDebito, impresionNotaDebito.FORMATO_SRI);
+        impresionNotaDebito.ejecutar(datosNotaDebito);
         impresionNotaDebito.getByteArrayOutputStream();
 
         FileOutputStream fileOutputStream = null;

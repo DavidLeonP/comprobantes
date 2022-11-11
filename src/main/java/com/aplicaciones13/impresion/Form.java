@@ -4,6 +4,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
@@ -19,11 +20,11 @@ import java.util.logging.Logger;
  *
  */
 public class Form extends Elemento {
-    private List<String> listaPaneles;
-    private List<PdfPTable> listaPdfPTable;
+    private List<String> listaPaneles;    
     private List<String> listaCamposAlineadosDerecha;
     private List<String> listaTitulos;
     private List<String> listaValores;
+    private List<PdfPTable> listaPdfPTable;
 
     /**
      * Metodo que crea la clase.
@@ -75,7 +76,7 @@ public class Form extends Elemento {
      */
     public PdfPCell escribeCelda() {
         PdfPCell pdfPCell = new PdfPCell();
-        pdfPCell.setBorder(0);
+        pdfPCell.setBorder(Rectangle.NO_BORDER);
         PdfPTable tablaTemporal = escribeForm();
 
         if (tablaTemporal != null)
@@ -148,7 +149,6 @@ public class Form extends Elemento {
      * Escribe la tabla
      *
      */
-
     public PdfPTable escribeForm() {
         try {
             if (getListaFormatos().size() != getListaTitulos().size()) {

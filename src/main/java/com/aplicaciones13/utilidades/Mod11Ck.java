@@ -56,6 +56,6 @@ public class Mod11Ck {
             return "0";
         if (i == 10)
             return "1";
-        return i + "";
+        return String.valueOf(i);
     }
 }

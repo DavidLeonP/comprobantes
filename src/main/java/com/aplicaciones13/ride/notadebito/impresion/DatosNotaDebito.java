@@ -13,9 +13,6 @@ import javax.xml.bind.Unmarshaller;
 
 
 public class DatosNotaDebito extends DatosDocumentosElectronicos {
-
-    
-
     private NotaDebito notaDebitoXML;
 
     public DatosNotaDebito() {

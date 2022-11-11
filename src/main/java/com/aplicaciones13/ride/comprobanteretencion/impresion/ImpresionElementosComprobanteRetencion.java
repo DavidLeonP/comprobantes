@@ -15,19 +15,11 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.jbars.Barcode;
 
 
 /** Objeto para crear un documento de comprobante de Retencion.
@@ -37,24 +29,6 @@ import org.jbars.Barcode;
  */
 public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElementos {
 
-    protected static final String ELEMENTO_0 = "0";
-    protected static final String ELEMENTO_1 = "1";
-    protected static final String ELEMENTO_2 = "2";
-    protected static final String ELEMENTO_3 = "3";
-    protected static final String ELEMENTO_4 = "4";
-    protected static final String ELEMENTO_5 = "5";
-    protected static final String ELEMENTO_6 = "6";
-    protected static final String ELEMENTO_7 = "7";
-    protected static final String ELEMENTO_8 = "8";
-    protected static final String ELEMENTO_9 = "9";
-    protected static final String ELEMENTO_10 = "10";
-    protected static final String ELEMENTO_11 = "11";
-    protected static final String ELEMENTO_12 = "12";
-    protected static final String ELEMENTO_13 = "13";
-    protected static final String ELEMENTO_14 = "14";
-
-    private static final String TXT_2_1 = "JeremiasLogo";
-    private static final String TXT_2_2 = ".jpg";
     private static final String TXT_3_1 = "Comprobante de Retenci\u00f3n";
     private static final String TXT_3_2 = "No. %s-%s-%s";
     private static final String[] TXT_3_3 = {
@@ -78,8 +52,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String TXT_11_1 = "JeremiasLogo";
-    private static final String TXT_11_2 = ".jpg";
+    
     private static final String[] TXT_11_3 = { "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento" };
     private static final String[] TXT_11_4 = { "Contribuyente especial Nro.", "Obligado a llevar contabilidad" };
     private static final String TXT_11_5 = "RUC: ";
@@ -95,125 +68,16 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     private DatosComprobanteRetencion datosComprobanteRetencion;
     List<TotalDocumento> totales;
 
-    /** Metod para imprimir los elementos en el orden solicitado.
-     *
-     * @param valor
-     */
-    @Override
-    public void imprimirElemento(String valor) {
-        if (valor.equalsIgnoreCase(ELEMENTO_0))
-            try {
-                elemento0();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_1))
-            try {
-                elemento1();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_2))
-            try {
-                elemento2();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-
-        if (valor.equalsIgnoreCase(ELEMENTO_3))
-            try {
-                elemento3();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_4))
-            try {
-                elemento4();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_5))
-            try {
-                elemento5();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-
-        if (valor.equalsIgnoreCase(ELEMENTO_6))
-            try {
-                elemento6();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_7))
-            try {
-                elemento7();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_8))
-            try {
-                elemento8();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_9))
-            try {
-                elemento9();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_10))
-            try {
-                elemento10();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_11))
-            try {
-                elemento11();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_12))
-            try {
-                elemento12();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_13))
-            try {
-                elemento13();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        if (valor.equalsIgnoreCase(ELEMENTO_14))
-            try {
-                elemento14();
-            } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-    }
-
     /** Metodo para agregar la marca de agua al sistema.
      *
      */
-    private synchronized void elemento0() {
+    @Override
+    protected synchronized void elemento0() {
         getPdfWriter().setPageEvent(new MarcaAgua(getDatosComprobanteRetencion().getAmbienteAutorizacion()));
     }
-
-    private synchronized void elemento1() {
-        Pie pie = new Pie(TXT_3_1);
-        pie.setNumeroDocumento(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                             .getInfoTributaria()
-                                                             .getEstab() + "-" +
-                               getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                                                                               .getInfoTributaria()
-                                                                                                               .getPtoEmi() +
-                                                               "-" + getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                                                                   .getInfoTributaria()
-                                                                                                   .getSecuencial());
-
+    @Override
+    protected synchronized void elemento1() {
+        Pie pie = new Pie();        
         getPdfWriter().setPageEvent(pie);
     }
 
@@ -224,18 +88,9 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      * Imprime el logo.
      *
      */
-    private synchronized void elemento2() {
-        String logoFileName = TXT_2_1;
-
-        if (new File(getDatosComprobanteRetencion().getPathLogo() + getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                                                                  .getInfoTributaria()
-                                                                                                  .getRuc() + TXT_2_2)
-            .isFile())
-            logoFileName = getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                         .getInfoTributaria()
-                                                         .getRuc();
-
-        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo() + logoFileName + TXT_2_2);
+    @Override
+    protected synchronized void elemento2() {
+        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo());
         getImagen().setScala(50f);
         getImagen().setX(400);
         getImagen().setY(690);
@@ -245,7 +100,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /**Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
-    private synchronized void elemento10() {
+    @Override
+    protected synchronized void elemento10() {
         PdfPTable table = new PdfPTable(2);
 
         table.setWidthPercentage(100);
@@ -254,16 +110,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         PdfPTable tableIzquierda = new PdfPTable(1);
 
         //Logotipo lado Izquierdo
-        String logoFileName = TXT_11_1;
-        if (new File(getDatosComprobanteRetencion().getPathLogo() + getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                                                                  .getInfoTributaria()
-                                                                                                  .getRuc() + TXT_11_2)
-            .isFile())
-            logoFileName = getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                                         .getInfoTributaria()
-                                                         .getRuc();
-
-        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo() + logoFileName + TXT_11_2);
+        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo());
         getImagen().setScala(50f);
         tableIzquierda.addCell(getImagen().escribeCelda());
 
@@ -370,19 +217,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         getH2().setTexto(TXT_11_12);
         tableDerecha.addCell(getH2().escribeCelda());
 
-        //Codigo barras
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);
-
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setCode(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);
-
-        getImagen().setImagen(imagenBarras);
-        getImagen().setScala(35f);
+        getImagen().procesarCode128(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
         tableDerecha.addCell(getImagen().escribeCelda());
 
         table.addCell(tableIzquierda);
@@ -397,7 +232,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento11() throws Exception {
+    @Override
+    protected synchronized void elemento11()  {
         espacios(2);
 
         informacionCliente();
@@ -420,7 +256,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento12() throws Exception {
+    @Override
+    protected synchronized void elemento12()  {
         espacios(2);
 
         if (getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos() != null &&
@@ -448,7 +285,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para agregar la informaci\u00f3n del documento
      *
      */
-    private synchronized void elemento3() {
+    @Override
+    protected synchronized void elemento3() {
         getH1().setTexto(TXT_3_1);
         getH1().escribe();
 
@@ -483,8 +321,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para escribir el codigo de barras de la clave de acceso.
      *
      */
-    private synchronized void elemento4() {
-
+    @Override
+    protected synchronized void elemento4() {
         getForm().setListaTitulos(TXT_4_1);
 
         getForm().setListaValores("");
@@ -493,28 +331,18 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         getForm().setListaPaneles("1");
         getForm().escribe();
 
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);
-
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setCode(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);
-
-        getImagen().setImagen(imagenBarras);
-        getImagen().setScala(35f);
+        getImagen().procesarCode128(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
         getImagen().setX(165);
         getImagen().setY(680);
-        getImagen().escribe();
+        getImagen().escribe();        
     }
 
     /** Metodo para escribir la informacion de la empresa
      *
      * @throws Exception
      */
-    private synchronized void elemento5() throws Exception {
+    @Override
+     protected synchronized void elemento5() {
         espacios(5);
         getLinea().escribe();
         getH2().setTexto(getDatosComprobanteRetencion().getComprobanteRetencionXML()
@@ -563,7 +391,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para escribir la informacion del cliente.
      *
      */
-    private synchronized void elemento6() throws Exception {
+    @Override
+    protected synchronized void elemento6() {
         espacios(2);
         getLinea().escribe();
 
@@ -607,7 +436,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      *      Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
      *
      */
-    private synchronized void elemento7() throws Exception {
+    @Override
+    protected synchronized void elemento7() {
         espacios(2);
 
         if (getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos() != null &&
@@ -640,11 +470,11 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
             listaValores.add(0, TablasSRI.Tabla4(a.getCodDocSustento()));
             listaValores.add(1, a.getNumDocSustento());
             listaValores.add(2, a.getFechaEmisionDocSustento());
-            listaValores.add(3, a.getBaseImponible() + "");
+            listaValores.add(3, String.valueOf(a.getBaseImponible()));
             listaValores.add(4, TablasSRI.Tabla18(a.getCodigo()));
             listaValores.add(5, TablasSRI.Tabla19(a.getCodigoRetencion()));
             listaValores.add(6, String.format("%.2f", a.getPorcentajeRetener().doubleValue()));
-            listaValores.add(7, a.getValorRetenido() + "");
+            listaValores.add(7, String.valueOf(a.getValorRetenido()));
 
             vector.add(listaValores);
 
@@ -667,7 +497,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para agregar los totales de la factura
      *
      */
-    private synchronized void elemento8() throws Exception {
+    @Override
+    protected synchronized void elemento8()  {
         espacios(2);
         totales();
         getForm().escribe();
@@ -676,7 +507,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para agregar los totales de la factura
      *
      */
-    private synchronized void elemento13() throws Exception {
+    @Override
+    protected synchronized void elemento13() {
         espacios(2);
 
         PdfPTable table = new PdfPTable(1);
@@ -703,7 +535,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      *
      * @throws Exception
      */
-    private synchronized void elemento14() throws Exception {
+    @Override
+    protected synchronized void elemento14() {
         String firmaGrafica = getDatosComprobanteRetencion().getPathFirmaGrafica();
 
         if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
@@ -717,7 +550,11 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
             getImagen().setScala(50f);
             table.addCell(getImagen().escribeCelda());
             
-            getDocumento().add(table);
+            try{
+                getDocumento().add(table);
+            }catch (DocumentException e) {
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            }
         }
     }
 
@@ -737,7 +574,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     /** Metodo para agregar informaci\u00f3n adicional.
      *
      */
-    private synchronized void elemento9() throws Exception {
+    @Override
+    protected synchronized void elemento9() {
         int size = 0;
 
         if (getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoAdicional() != null &&
@@ -767,7 +605,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
                 espacios(2);
 
                 getForm().setListaDimensiones("25", "75");
-                getForm().setListaPaneles(size + "");
+                getForm().setListaPaneles(String.valueOf(size));
                 getForm().escribe();
             }
         }

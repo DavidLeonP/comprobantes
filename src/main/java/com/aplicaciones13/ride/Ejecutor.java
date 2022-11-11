@@ -37,7 +37,7 @@ public class Ejecutor {
      * @param numeroAutorizacion
      * @param offline
      */
-    public boolean ejecutarFactura(String pathXML, String pathPDF, String pathLogo, String pathFirmaGrafica,
+    public  boolean ejecutarFactura(String pathXML, String pathPDF, String pathLogo, String pathFirmaGrafica,
             String ambienteAutorizacion, String claveAccesoAutorizacion, String emisionAutorizacion,
             String fechaAutorizacion, String numeroAutorizacion, boolean offline) {
         FileOutputStream fileOutputStream = null;
@@ -55,7 +55,7 @@ public class Ejecutor {
         datosFactura.setNumeroAutorizacion(numeroAutorizacion);
         datosFactura.setOffline(offline);
 
-        impresionFactura.ejecutar(datosFactura, ImpresionFactura.FORMATO_SRI);
+        impresionFactura.ejecutar(datosFactura);
         
         try {
             fileOutputStream = new FileOutputStream(pathPDF);        

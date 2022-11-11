@@ -8,15 +8,13 @@ import com.aplicaciones13.ride.Ejecutor;
  *
  */
 public class TestFacturaImpresiones {
-    
+
     /** Metodo para ejecutar un main.
      *
      * @param args
      */
     public static void main(String[] args) {
-
         Ejecutor ejecutor = new Ejecutor();
-
         if(ejecutor.ejecutarFactura(
             "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/EXP-002-001-000011599.XML",
             "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/test.pdf",

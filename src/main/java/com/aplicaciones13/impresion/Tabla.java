@@ -272,7 +272,7 @@ public class Tabla extends Elemento {
 
     public boolean esVisible(int i) {
         for (String valor : this.listaSumatorias){
-            if (valor.equalsIgnoreCase(i + "")){
+            if (valor.equalsIgnoreCase(String.valueOf(i))){
                 return true;
             }
         }
