@@ -7,42 +7,21 @@
   <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
-    <dependency>
-      <groupId>org.jasypt</groupId>
-      <artifactId>jasypt</artifactId>
-      <version>1.9.3</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
     <dependency>
       <groupId>com.itextpdf</groupId>
       <artifactId>itextpdf</artifactId>
       <version>5.5.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
+    <!-- https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j -->
     <dependency>
-      <groupId>com.itextpdf</groupId>
-      <artifactId>barcodes</artifactId>
-      <version>7.0.0</version>
-    </dependency>
-    <!-- Dependencia de codigo de barras -->
-    <dependency>
-      <groupId>org</groupId>
-      <artifactId>jbars</artifactId>
-      <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/JBARS.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>com.sun</groupId>
-      <artifactId>media</artifactId>
-      <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/jai_codec.jar</systemPath>
+      <groupId>net.sf.barcode4j</groupId>
+      <artifactId>barcode4j</artifactId>
+      <version>2.1</version>
     </dependency>
     <!-- JABX para lectura de datos-->
     <dependency>
@@ -74,11 +53,28 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.6</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
+          <finalName>${pom.artifactId}-${pom.version}-full</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
           <archive>
             <manifest>
               <mainClass>com.aplicaciones13.GenerarDocumentos</mainClass>
@@ -94,6 +90,19 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
     </plugins>
   </build>

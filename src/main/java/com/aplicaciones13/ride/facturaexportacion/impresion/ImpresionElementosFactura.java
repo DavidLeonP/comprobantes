@@ -2,7 +2,6 @@ package com.aplicaciones13.ride.facturaexportacion.impresion;
 
 import com.aplicaciones13.sri.contenedores.TablasSRI;
 import com.aplicaciones13.sri.contenedores.TotalDocumento;
-import com.aplicaciones13.Constantes;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.ride.facturaexportacion.Factura;
@@ -25,20 +24,7 @@ import java.util.logging.Logger;
  *
  */
 public class ImpresionElementosFactura extends ImpresionBaseElementos {
-    private static final String TXT_3_1 = "Factura";
-    private static final String TXT_3_2 = "No. %s-%s-%s";
-    private static final String[] TXT_3_3 = { Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION,
-            Constantes.AMBIENTE, Constantes.EMISION };
-    private static final String TXT_4_1 = "Clave de Acceso";
-    private static final String[] TXT_5_1 = { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
-            Constantes.CONTRIBUYENTE_ESPECIAL_NO,
-            "Obligado a llevar contabilidad"
-    };
-
-    private static final String[] TXT_5_2 = {
-            "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
-            Constantes.CONTRIBUYENTE_ESPECIAL_NO, ""
-    };
+    private static final String TXT_3_1 = "Factura";    
 
     private static final String[] TXT_6_1 = {
             "Raz\u00f3n Social", "RUC / CI.", "Fecha Emisi\u00f3n", "Gu\u00eda Remisi\u00f3n" };
@@ -61,18 +47,6 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String[] TXT_11_3 = { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
-    private static final String[] TXT_11_4 = { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
-    private static final String TXT_11_5 = "RUC: ";
-    private static final String TXT_11_6 = "Factura";
-    private static final String TXT_11_7 = "No.: %s-%s-%s";
-    private static final String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
-    private static final String TXT_11_9 = "Fecha Autorizaci\u00f3n";
-    private static final String TXT_11_10 = Constantes.AMBIENTE;
-    private static final String TXT_11_11 = "Emisi\u00f3n";
-    private static final String TXT_11_12 = "Clave de Acceso";
-    private static final String TXT_11_13 = "Normal";
-
     private static final String TXT_14_1 = "Formas de Pago";
 
     private static final String TXT_15_1 = "Informaci\u00f3n Exportaci\u00f3n";
@@ -85,153 +59,31 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     List<TotalDocumento> totalesCalculo;
 
     /**
-     * Metodo para generar el logo del documento.
-     *
-     * Si el archivo no existe
-     * Agrega un logo temporal
-     * Imprime el logo.
-     *
-     */
-    @Override
-    protected synchronized void elemento2() {
-        getImagen().setPath(getDatosFactura().getPathLogo());
-        getImagen().setScala(50f);
-        getImagen().setX(400);
-        getImagen().setY(690);
-        getImagen().escribe();
-    }
-
-    /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
     @Override
     protected synchronized void elemento10() {
-        PdfPTable table = new PdfPTable(2);
-
-        table.setWidthPercentage(100);
-
-        // Lado Izquierdo
-        PdfPTable tableIzquierda = new PdfPTable(1);
-
-        // Logotipo lado Izquierdo
-        getImagen().setPath(getDatosFactura().getPathLogo());
-        getImagen().setScala(33f);
-        tableIzquierda.addCell(getImagen().escribeCelda());
-
-        // Nombre de la empresa
-        getH1().setTexto(getDatosFactura().getFacturaXML()
-                .getInfoTributaria()
-                .getRazonSocial());
-        tableIzquierda.addCell(getH1().escribeCelda());
-
-        // Informacion de la empresa
-        getForm().setListaTitulos(TXT_11_3);
-        getForm().setListaValores(getDatosFactura().getFacturaXML()
-                .getInfoTributaria()
-                .getDirMatriz(),
-                getDatosFactura().getFacturaXML()
-                        .getInfoFactura()
-                        .getDirEstablecimiento());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("30", "70");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        // Informacion de contabilidad
-        getForm().setListaTitulos(TXT_11_4);
-        getForm()
-                .setListaValores(getDatosFactura().getFacturaXML()
-                        .getInfoFactura()
-                        .getContribuyenteEspecial(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoFactura()
-                                .getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("50", "50");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        // Lado Derecho
-        PdfPTable tableDerecha = new PdfPTable(1);
-
-        // Ruc
-        getH2().setTexto(TXT_11_5 + getDatosFactura().getFacturaXML()
-                .getInfoTributaria()
-                .getRuc());
-        tableDerecha.addCell(getH2().escribeCelda());
-
-        // Nombre del documento
-        getH1().setTexto(TXT_11_6);
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        // Numero del documento
-        getH1()
-                .setTexto(String.format(TXT_11_7, getDatosFactura().getFacturaXML()
-                        .getInfoTributaria()
-                        .getEstab(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoTributaria()
-                                .getSecuencial()));
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        // Numero de autorizacion
-        getH2().setTexto(TXT_11_8);
-        tableDerecha.addCell(getH2().escribeCelda());
-        if (getDatosFactura().isOffline())
-            getP().setTexto(getDatosFactura().getClaveAccesoAutorizacion());
-        else
-            getP().setTexto(getDatosFactura().getNumeroAutorizacion());
-
-        tableDerecha.addCell(getP().escribeCelda());
-
-        // Fecha Autorizacion - modo offline
-        if (!getDatosFactura().isOffline()) {
-            getForm().setListaTitulos(TXT_11_9);
-            getForm().setListaValores(getDatosFactura().getFechaAutorizacion());
-            getForm().setListaFormatos(Elemento.FORMATO_STRING);
-            getForm().setListaDimensiones("40", "60");
-            getForm().setListaPaneles("1");
-            tableDerecha.addCell(getForm().escribeCelda());
-        }
-
-        // Ambiente
-        getForm().setListaTitulos(TXT_11_10);
-        getForm().setListaValores(getDatosFactura().getAmbienteAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        // Emision
-        if (getDatosFactura().isOffline())
-            getDatosFactura().setEmisionAutorizacion(TXT_11_13);
-        getForm().setListaTitulos(TXT_11_11);
-        getForm().setListaValores(getDatosFactura().getEmisionAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        // Clave de acceso
-        getH2().setTexto(TXT_11_12);
-        tableDerecha.addCell(getH2().escribeCelda());
-
-        // Code 128
-        tableDerecha.addCell(getEspacio().escribeCelda());
-        getImagen().procesarCode128(getDatosFactura().getClaveAccesoAutorizacion());
-        tableDerecha.addCell(getImagen().escribeCelda());
-
-        table.addCell(tableIzquierda);
-        table.addCell(tableDerecha);
-        try {
-            getDocumento().add(table);
-        } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-        }
+        this.getElementosComunes().encabezado(
+                getDatosFactura().getPathLogo(),
+                getDatosFactura().getFacturaXML().getInfoTributaria().getRazonSocial(),
+                getDatosFactura().getFacturaXML().getInfoTributaria().getDirMatriz(),
+                getDatosFactura().getFacturaXML().getInfoFactura().getDirEstablecimiento(),
+                getDatosFactura().getFacturaXML().getInfoFactura().getContribuyenteEspecial(),
+                getDatosFactura().getFacturaXML().getInfoFactura().getObligadoContabilidad().value(),
+                getDatosFactura().getFacturaXML().getInfoTributaria().getRuc(),
+                TXT_3_1,
+                getDatosFactura().getFacturaXML().getInfoTributaria().getEstab()
+                        + "-" +
+                        getDatosFactura().getFacturaXML().getInfoTributaria().getPtoEmi()
+                        + "-" +
+                        getDatosFactura().getFacturaXML().getInfoTributaria().getSecuencial(),
+                getDatosFactura().getClaveAccesoAutorizacion(),
+                getDatosFactura().getNumeroAutorizacion(),
+                getDatosFactura().getFechaAutorizacion(),
+                getDatosFactura().getAmbienteAutorizacion(),
+                getDatosFactura().getEmisionAutorizacion(),
+                getDatosFactura().isOffline());
     }
 
     /**
@@ -240,7 +92,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      */
     @Override
     protected synchronized void elemento11() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         informacionCliente();
 
@@ -264,7 +116,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      */
     @Override
     protected synchronized void elemento12() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         if (getDatosFactura().getFacturaXML().getDetalles() != null && !getDatosFactura().getFacturaXML()
                 .getDetalles()
@@ -291,129 +143,6 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     }
 
     /**
-     * Metodo para agregar la informaci\u00f3n del documento
-     *
-     */
-    @Override
-    protected synchronized void elemento3() {
-        getH1().setTexto(TXT_3_1);
-        getH1().escribe();
-
-        getH1()
-                .setTexto(String.format(TXT_3_2, getDatosFactura().getFacturaXML()
-                        .getInfoTributaria()
-                        .getEstab(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoTributaria()
-                                .getSecuencial()));
-        getH1().escribe();
-
-        espacios(1);
-        getForm().setListaTitulos(TXT_3_3);
-
-        getForm()
-                .setListaValores(getDatosFactura().getNumeroAutorizacion(), getDatosFactura().getFechaAutorizacion(),
-                        getDatosFactura().getAmbienteAutorizacion(), getDatosFactura().getEmisionAutorizacion());
-        getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("4");
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para escribir el codigo de barras de la clave de acceso.
-     *
-     */
-    @Override
-    protected synchronized void elemento4() {
-
-        getForm().setListaTitulos(TXT_4_1);
-
-        getForm().setListaValores("");
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("1");
-        getForm().escribe();
-
-        getImagen().procesarCode128(getDatosFactura().getClaveAccesoAutorizacion());
-        getImagen().setX(165);
-        getImagen().setY(680);
-        getImagen().escribe();
-    }
-
-    /**
-     * Metodo para escribir la informacion de la empresa
-     *
-     * @throws Exception
-     */
-    @Override
-    protected synchronized void elemento5() {
-        espacios(5);
-        getLinea().escribe();
-        getH2().setTexto(getDatosFactura().getFacturaXML()
-                .getInfoTributaria()
-                .getRazonSocial());
-        getH2().escribe();
-
-        espacios(1);
-
-        if (getDatosFactura().getFacturaXML()
-                .getInfoFactura()
-                .getObligadoContabilidad() == null
-                || getDatosFactura().getFacturaXML()
-                        .getInfoFactura()
-                        .getObligadoContabilidad()
-                        .value()
-                        .trim()
-                        .length() == 0)
-            getForm().setListaTitulos(TXT_5_2);
-        else
-            getForm().setListaTitulos(TXT_5_1);
-
-        getForm()
-                .setListaValores(getDatosFactura().getFacturaXML()
-                        .getInfoTributaria()
-                        .getRuc(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoTributaria()
-                                .getDirMatriz(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoFactura()
-                                .getDirEstablecimiento(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoFactura()
-                                .getContribuyenteEspecial(),
-                        getDatosFactura().getFacturaXML()
-                                .getInfoFactura()
-                                .getObligadoContabilidad());
-        getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("5");
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para escribir la informacion del cliente.
-     *
-     */
-    @Override
-    protected synchronized void elemento6() {
-        espacios(2);
-        getLinea().escribe();
-
-        informacionCliente();
-
-        getForm().escribe();
-    }
-
-    /**
      * Metodo para crear la informacion del cliente
      *
      */
@@ -437,37 +166,6 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
                         Elemento.FORMATO_STRING);
         getForm().setListaDimensiones("25", "75");
         getForm().setListaPaneles("7");
-    }
-
-    /**
-     * Metodo para imprimir el detalle de la factura
-     *
-     * Si los datos en la factura existen
-     * Llena el lista de datos a ser recorridos
-     * Si existe codigo auxiliar
-     * Agrega los datos para la ubicacion en pantalla
-     * Caso contrario
-     * Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
-     *
-     */
-    @Override
-    protected synchronized void elemento7() {
-        espacios(2);
-
-        if (getDatosFactura().getFacturaXML().getDetalles() != null && !getDatosFactura().getFacturaXML()
-                .getDetalles()
-                .getDetalle().isEmpty()) {
-
-            getLinea().escribe();
-
-            detalleFacturaCompleta();
-
-            getTabla().escribe();
-
-            getLinea().escribe();
-            if (getPdfWriter().getVerticalPosition(true) < 140)
-                getDocumento().newPage();
-        }
     }
 
     /**
@@ -543,26 +241,8 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      *
      */
     @Override
-    protected synchronized void elemento8() {
-        espacios(2);
-
-        subTotales();
-        getForm().escribe();
-
-        getLinea().setWidthPercentage(34);
-        getLinea().escribe();
-
-        totales();
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para agregar los totales de la factura
-     *
-     */
-    @Override
     protected synchronized void elemento13() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         PdfPTable tableTotales = new PdfPTable(1);
         tableTotales.getDefaultCell().setBorder(0);
@@ -709,77 +389,6 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     }
 
     /**
-     * Metodo para agregar Formas de pago exportaciones.
-     *
-     */
-    @Override
-    protected synchronized void elemento14() {
-        int size = 0;
-        TablasSRI tablasSRI = new TablasSRI();
-
-        if (getDatosFactura().getFacturaXML()
-                .getInfoFactura()
-                .getPagos() != null
-                && !getDatosFactura().getFacturaXML()
-                        .getInfoFactura()
-                        .getPagos()
-                        .getPago().isEmpty()) {
-
-            for (Pago a : getDatosFactura().getFacturaXML()
-                    .getInfoFactura()
-                    .getPagos()
-                    .getPago()) {
-
-                getForm().getListaTitulos().add((size + 1) + ".- Forma pago");
-                getForm().getListaValores()
-                        .add(tablasSRI.tabla24(a.getFormaPago()) + " a " + a.getPlazo() + " " + a.getUnidadTiempo() +
-                                " por un valor de " + a.getTotal());
-                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
-                size++;
-            }
-
-            if (size > 0) {
-
-                int total = 74 + (12 * size);
-
-                if (getPdfWriter().getVerticalPosition(true) < total)
-                    getDocumento().newPage();
-
-                espacios(2);
-                getLinea().setWidthPercentage(100);
-                getLinea().escribe();
-                getH2().setTexto(TXT_14_1);
-                getH2().escribe();
-                espacios(2);
-
-                getForm().setListaDimensiones("15", "85");
-                getForm().setListaPaneles(String.valueOf(size));
-                getForm().escribe();
-            }
-        }
-    }
-
-    /**
-     * Metodo para agregar informaci\u00f3n de la exportacion.
-     *
-     */
-    @Override
-    protected synchronized void elemento15() {
-        if (isExportacion()) {
-            espacios(2);
-            getLinea().setWidthPercentage(100);
-            getLinea().escribe();
-            getH2().setTexto(TXT_15_1);
-            getH2().escribe();
-            espacios(2);
-
-            informacionExportacion();
-
-            getForm().escribe();
-        }
-    }
-
-    /**
      * Metodo para agregar una imagen con la firma de un documento
      *
      * Esta firma no es legal ni optima para el SRI.
@@ -787,9 +396,9 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      * @throws Exception
      */
     @Override
-    protected synchronized void elemento18() {
-        String firmaGrafica = getDatosFactura().getPathFirmaGrafica();
-        firmarGraficamente(firmaGrafica);
+    protected synchronized void elementoFirma() {
+        String firmaGrafica = getDatosFactura().getPathFirmaGrafica();        
+        getElementosComunes().firmarGraficamente(firmaGrafica);
     }
 
     /**
@@ -799,7 +408,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
     @Override
     protected synchronized void elemento17() {
         if (isExportacion()) {
-            espacios(2);
+            getElementosComunes().espacios(2);
 
             PdfPTable table = new PdfPTable(1);
             table.getDefaultCell().setBorder(0);
@@ -876,7 +485,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
                 if (getPdfWriter().getVerticalPosition(true) < total) {
                     getDocumento().newPage();
                 }
-                espacios(2);
+                getElementosComunes().espacios(2);
 
                 PdfPTable table = new PdfPTable(1);
                 table.getDefaultCell().setBorder(0);
@@ -967,12 +576,12 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
         int size = informacionAdicional();
 
         if (size > 0) {
-            espacios(2);
+            getElementosComunes().espacios(2);
             getLinea().setWidthPercentage(100);
             getLinea().escribe();
             getH2().setTexto(TXT_10_1);
             getH2().escribe();
-            espacios(2);
+            getElementosComunes().espacios(2);
             getForm().escribe();
         }
     }
@@ -1002,7 +611,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
 
             if (size > 0) {
                 int total = 74 + (12 * size);
-                if (getPdfWriter().getVerticalPosition(true) < total){
+                if (getPdfWriter().getVerticalPosition(true) < total) {
                     getDocumento().newPage();
                 }
                 getForm().setListaDimensiones("25", "75");
@@ -1076,7 +685,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      *
      * @param bus
      */
-    public void cargarTotales(com.aplicaciones13.ride.facturaexportacion.Factura bus) {
+    private void cargarTotales(com.aplicaciones13.ride.facturaexportacion.Factura bus) {
 
         if (bus.getInfoFactura().getTotalConImpuestos() != null && !bus.getInfoFactura()
                 .getTotalConImpuestos()

@@ -2,7 +2,6 @@ package com.aplicaciones13.ride.comprobanteretencion.impresion;
 
 import com.aplicaciones13.sri.contenedores.TablasSRI;
 import com.aplicaciones13.sri.contenedores.TotalDocumento;
-import com.aplicaciones13.Constantes;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.ride.comprobanteretencion.ComprobanteRetencion;
@@ -27,17 +26,7 @@ import java.util.logging.Logger;
 public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElementos {
 
     private static final String TXT_3_1 = "Comprobante de Retenci\u00f3n";
-    private static final String TXT_3_2 = "No. %s-%s-%s";
-    private static final String[] TXT_3_3 = {
-        Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE, Constantes.EMISION };
     
-    private static final String[] TXT_5_1 = {
-            "RUC",Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO , Constantes.CONTRIBUYENTE_ESPECIAL_NO,
-            "Obligado a llevar contabilidad"
-    };
-    private static final String[] TXT_5_2 = {
-            "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO, Constantes.CONTRIBUYENTE_ESPECIAL_NO, ""
-    };
     private static final String[] TXT_6_1 = { "Raz\u00f3n Social", "RUC / CI.", "Ejercicio Fiscal",
             "Fecha Emisi\u00f3n" };
     private static final String[] TXT_7_1 = {
@@ -50,19 +39,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
     private double totalGuia = 0;
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
-
-    private static final String[] TXT_11_3 = { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
-    private static final String[] TXT_11_4 = { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
-    private static final String TXT_11_5 = "RUC: ";
-    private static final String TXT_11_6 = "Comprobante de Retenci\u00f3n";
-    private static final String TXT_11_7 = "No.: %s-%s-%s";
-    private static final String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
-    private static final String TXT_11_9 = "Fecha Autorizaci\u00f3n";
-    private static final String TXT_11_10 = Constantes.AMBIENTE;
-    private static final String TXT_11_11 = "Emisi\u00f3n";
-    private static final String TXT_11_12 = "Clave de Acceso";
-    private static final String TXT_11_13 = "Normal";
-
+    
     private DatosComprobanteRetencion datosComprobanteRetencion;
     List<TotalDocumento> totales;
 
@@ -73,130 +50,28 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      */
     @Override
     protected synchronized void elemento10() {
-        PdfPTable table = new PdfPTable(2);
+        this.getElementosComunes().encabezado(
+            getDatosComprobanteRetencion().getPathLogo(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getRazonSocial(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getDirMatriz(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoCompRetencion().getDirEstablecimiento(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoCompRetencion().getContribuyenteEspecial(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoCompRetencion().getObligadoContabilidad(),
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getRuc(),
+            TXT_3_1,
+            getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getEstab()
+                    + "-" +
+                    getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getPtoEmi()
+                    + "-" +
+                    getDatosComprobanteRetencion().getComprobanteRetencionXML().getInfoTributaria().getSecuencial(),
+            getDatosComprobanteRetencion().getClaveAccesoAutorizacion(),
+            getDatosComprobanteRetencion().getNumeroAutorizacion(),
+            getDatosComprobanteRetencion().getFechaAutorizacion(),
+            getDatosComprobanteRetencion().getAmbienteAutorizacion(),
+            getDatosComprobanteRetencion().getEmisionAutorizacion(),
+            getDatosComprobanteRetencion().isOffline());
 
-        table.setWidthPercentage(100);
-
-        // Lado Izquierdo
-        PdfPTable tableIzquierda = new PdfPTable(1);
-
-        // Logotipo lado Izquierdo
-        getImagen().setPath(getDatosComprobanteRetencion().getPathLogo());
-        getImagen().setScala(33f);
-        tableIzquierda.addCell(getImagen().escribeCelda());
-
-        // Nombre de la empresa
-        getH1().setTexto(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                .getInfoTributaria()
-                .getRazonSocial());
-        tableIzquierda.addCell(getH1().escribeCelda());
-
-        // Informacion de la empresa
-        getForm().setListaTitulos(TXT_11_3);
-        getForm()
-                .setListaValores(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoTributaria()
-                        .getDirMatriz(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoCompRetencion()
-                                .getDirEstablecimiento());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("30", "70");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        // Informacion de contabilidad
-        getForm().setListaTitulos(TXT_11_4);
-        getForm()
-                .setListaValores(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoCompRetencion()
-                        .getContribuyenteEspecial(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoCompRetencion()
-                                .getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("50", "50");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        // Lado Derecho
-        PdfPTable tableDerecha = new PdfPTable(1);
-
-        // Ruc
-        getH2().setTexto(TXT_11_5 + getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                .getInfoTributaria()
-                .getRuc());
-        tableDerecha.addCell(getH2().escribeCelda());
-
-        // Nombre del documento
-        getH1().setTexto(TXT_11_6);
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        // Numero del documento
-        getH1()
-                .setTexto(String.format(TXT_11_7, getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoTributaria()
-                        .getEstab(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoTributaria()
-                                .getSecuencial()));
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        // Numero de autorizacion
-        getH2().setTexto(TXT_11_8);
-        tableDerecha.addCell(getH2().escribeCelda());
-        if (getDatosComprobanteRetencion().isOffline())
-            getP().setTexto(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
-        else
-            getP().setTexto(getDatosComprobanteRetencion().getNumeroAutorizacion());
-
-        tableDerecha.addCell(getP().escribeCelda());
-
-        // Fecha Autorizacion - modo offline
-        if (!getDatosComprobanteRetencion().isOffline()) {
-            getForm().setListaTitulos(TXT_11_9);
-            getForm().setListaValores(getDatosComprobanteRetencion().getFechaAutorizacion());
-            getForm().setListaFormatos(Elemento.FORMATO_STRING);
-            getForm().setListaDimensiones("40", "60");
-            getForm().setListaPaneles("1");
-            tableDerecha.addCell(getForm().escribeCelda());
-        }
-
-        // Ambiente
-        getForm().setListaTitulos(TXT_11_10);
-        getForm().setListaValores(getDatosComprobanteRetencion().getAmbienteAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        // Emision
-        if (getDatosComprobanteRetencion().isOffline())
-            getDatosComprobanteRetencion().setEmisionAutorizacion(TXT_11_13);
-        getForm().setListaTitulos(TXT_11_11);
-        getForm().setListaValores(getDatosComprobanteRetencion().getEmisionAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        // Clave de acceso
-        getH2().setTexto(TXT_11_12);
-        tableDerecha.addCell(getH2().escribeCelda());
-
-        getImagen().procesarCode128(getDatosComprobanteRetencion().getClaveAccesoAutorizacion());
-        tableDerecha.addCell(getImagen().escribeCelda());
-
-        table.addCell(tableIzquierda);
-        table.addCell(tableDerecha);
-        try {
-            getDocumento().add(table);
-        } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-        }
+        
     }
 
     /**
@@ -205,7 +80,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      */
     @Override
     protected synchronized void elemento11() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         informacionCliente();
 
@@ -229,7 +104,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      */
     @Override
     protected synchronized void elemento12() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         if (getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos() != null &&
                 !getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos().getImpuesto().isEmpty()) {
@@ -252,109 +127,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
                 getDocumento().newPage();
         }
     }
-
-    /**
-     * Metodo para agregar la informaci\u00f3n del documento
-     *
-     */
-    @Override
-    protected synchronized void elemento3() {
-        getH1().setTexto(TXT_3_1);
-        getH1().escribe();
-
-        getH1()
-                .setTexto(String.format(TXT_3_2, getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoTributaria()
-                        .getEstab(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoTributaria()
-                                .getSecuencial()));
-        getH1().escribe();
-
-        espacios(1);
-        getForm().setListaTitulos(TXT_3_3);
-
-        getForm()
-                .setListaValores(getDatosComprobanteRetencion().getNumeroAutorizacion(),
-                        getDatosComprobanteRetencion().getFechaAutorizacion(),
-                        getDatosComprobanteRetencion().getAmbienteAutorizacion(),
-                        getDatosComprobanteRetencion().getEmisionAutorizacion());
-        getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("4");
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para escribir la informacion de la empresa
-     *
-     * @throws Exception
-     */
-    @Override
-    protected synchronized void elemento5() {
-        espacios(5);
-        getLinea().escribe();
-        getH2().setTexto(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                .getInfoTributaria()
-                .getRazonSocial());
-        getH2().escribe();
-
-        espacios(1);
-
-        if (getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                .getInfoCompRetencion()
-                .getObligadoContabilidad() == null ||
-                getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoCompRetencion()
-                        .getObligadoContabilidad()
-                        .trim()
-                        .length() == 0)
-            getForm().setListaTitulos(TXT_5_2);
-        else
-            getForm().setListaTitulos(TXT_5_1);
-        getForm()
-                .setListaValores(getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                        .getInfoTributaria()
-                        .getRuc(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoTributaria()
-                                .getDirMatriz(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoCompRetencion()
-                                .getDirEstablecimiento(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoCompRetencion()
-                                .getContribuyenteEspecial(),
-                        getDatosComprobanteRetencion().getComprobanteRetencionXML()
-                                .getInfoCompRetencion()
-                                .getObligadoContabilidad());
-        getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("5");
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para escribir la informacion del cliente.
-     *
-     */
-    @Override
-    protected synchronized void elemento6() {
-        espacios(2);
-        getLinea().escribe();
-
-        informacionCliente();
-
-        getForm().escribe();
-    }
-
+    
     /**
      * Metodo para crear la informacion del cliente
      *
@@ -380,40 +153,12 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         getForm().setListaDimensiones("25", "75");
         getForm().setListaPaneles("7");
     }
-
-    /**
-     * Metodo para imprimir el detalle de la factura
-     *
-     * Si los datos en la factura existen
-     * Llena el Lista de datos a ser recorridos
-     * Si existe codigo auxiliar
-     * Agrega los datos para la ubicacion en pantalla
-     * Caso contrario
-     * Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
-     *
-     */
-    @Override
-    protected synchronized void elemento7() {
-        espacios(2);
-
-        if (getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos() != null &&
-                !getDatosComprobanteRetencion().getComprobanteRetencionXML().getImpuestos().getImpuesto().isEmpty()) {
-
-            getLinea().escribe();
-            detalleComprobanteRetencionCompleta();
-            getTabla().escribe();
-            getLinea().escribe();
-            if (getPdfWriter().getVerticalPosition(true) < 140) {
-                getDocumento().newPage();
-            }
-        }
-    }
-
+    
     /**
      * Metodo para detalle Factura completa.
      *
      */
-    public void detalleComprobanteRetencionCompleta() {
+    private void detalleComprobanteRetencionCompleta() {
         List<Object> listaDatos = new ArrayList<>();
         TablasSRI tablasSRI = new TablasSRI();
 
@@ -455,19 +200,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      *
      */
     @Override
-    protected synchronized void elemento8() {
-        espacios(2);
-        totales();
-        getForm().escribe();
-    }
-
-    /**
-     * Metodo para agregar los totales de la factura
-     *
-     */
-    @Override
     protected synchronized void elemento13() {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         PdfPTable table = new PdfPTable(1);
         table.getDefaultCell().setBorder(0);
@@ -494,9 +228,9 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
      * @throws Exception
      */
     @Override
-    protected synchronized void elemento14() {
-        String firmaGrafica = getDatosComprobanteRetencion().getPathFirmaGrafica();
-        firmarGraficamente(firmaGrafica);
+    protected synchronized void elementoFirma() {
+        String firmaGrafica = getDatosComprobanteRetencion().getPathFirmaGrafica();        
+        getElementosComunes().firmarGraficamente(firmaGrafica);
     }
 
     /**
@@ -541,11 +275,11 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
                 if (getPdfWriter().getVerticalPosition(true) < total)
                     getDocumento().newPage();
 
-                espacios(2);
+                getElementosComunes().espacios(2);
 
                 getH2().setTexto(TXT_10_1);
                 getH2().escribe();
-                espacios(2);
+                getElementosComunes().espacios(2);
 
                 getForm().setListaDimensiones("25", "75");
                 getForm().setListaPaneles(String.valueOf(size));

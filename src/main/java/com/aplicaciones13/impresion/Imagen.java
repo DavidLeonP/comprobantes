@@ -8,11 +8,18 @@ import java.awt.Color;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.awt.Graphics2D;
+
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.code128.Code128Constants;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
 
 /**Metodo para mostrar un titulo
@@ -111,16 +118,37 @@ public class Imagen extends Elemento {
      * @param code
      */
     public void procesarCode128(String code){
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);        
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(org.jbars.Barcode.CODE128);
-        code128.setCode(code );
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);        
-        setImagen(imagenBarras);
-        setScala(40f);
+        Code128Bean barcode128Bean = new Code128Bean();
+        barcode128Bean.setCodeset(Code128Constants.CODESET_B);
+        final int dpi = 600;
+
+        // Configure the barcode generator
+        // adjust barcode width here
+        barcode128Bean.setModuleWidth(UnitConv.in2mm(5.0f / dpi));
+        barcode128Bean.doQuietZone(false);
+
+        // Open output file
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            
+            BitmapCanvasProvider canvasProvider = new BitmapCanvasProvider(
+                baos, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+
+            barcode128Bean.generateBarcode(canvasProvider, code);
+            canvasProvider.finish();
+
+            this.imagenTrabajo = Image.getInstance(baos.toByteArray());
+        }catch(Exception e){
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
+        }
+        
+        finally {            
+            try{
+                baos.close();
+            }catch(Exception e){
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
+            }
+        }
     }
     
     /**

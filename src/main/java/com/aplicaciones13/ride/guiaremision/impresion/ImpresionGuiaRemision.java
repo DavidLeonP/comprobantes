@@ -1,6 +1,7 @@
 package com.aplicaciones13.ride.guiaremision.impresion;
 
 
+import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.impresion.ImpresionBaseIText;
 
 import com.itextpdf.text.Document;
@@ -82,8 +83,8 @@ public class ImpresionGuiaRemision extends ImpresionBaseIText {
 
         ((ImpresionElementosGuiaRemision)getImpresionBaseElementos()).setDatosGuiaRemision(datosGuiaRemision);
 
-        getImpresionBaseElementos().elementosAImprimir("0", "1", "10", "11",
-                                                       "12", "9","13");
+        getImpresionBaseElementos().elementosAImprimir(ImpresionBaseElementos.ELEMENTO_PIE, "10", "11",
+                                                       "12", "9",ImpresionBaseElementos.ELEMENTO_FIRMA);
 
         getImpresionBaseElementos().escribir();
     }

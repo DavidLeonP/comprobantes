@@ -1,6 +1,7 @@
 package com.aplicaciones13.ride.notadebito.impresion;
 
 
+import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.impresion.ImpresionBaseIText;
 
 import com.itextpdf.text.Document;
@@ -74,8 +75,8 @@ public class ImpresionNotaDebito extends ImpresionBaseIText {
         getImpresionBaseElementos().setPdfWriter(getPdfWriter());
         ((ImpresionElementosNotaDebito)getImpresionBaseElementos()).setDatosNotaDebito(datosNotaDebito);
 
-        getImpresionBaseElementos().elementosAImprimir("0", "1", "10", "11",
-                                                       "12",  "13",  "9", "14", "15");
+        getImpresionBaseElementos().elementosAImprimir(ImpresionBaseElementos.ELEMENTO_PIE, "10", "11",
+                                                       "12",  "13",  "9", "14", ImpresionBaseElementos.ELEMENTO_FIRMA);
 
         getImpresionBaseElementos().escribir();
     }

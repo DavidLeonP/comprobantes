@@ -1,9 +1,7 @@
 package com.aplicaciones13.ride.notacredito.impresion;
 
-
 import com.aplicaciones13.sri.contenedores.TablasSRI;
 import com.aplicaciones13.sri.contenedores.TotalDocumento;
-import com.aplicaciones13.Constantes;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.ride.notacredito.NotaCredito;
@@ -21,17 +19,8 @@ import java.util.logging.Logger;
 
 public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     private static final String TXT_3_1 = "Nota Cr\u00e9dito";
-    private static final String TXT_3_2 = "No. %s-%s-%s";
-    private static final String[] TXT_3_3 =
-    { Constantes.NUMERO_AUTORIZACION, Constantes.FECHA_AUTORIZACION, Constantes.AMBIENTE,
-      Constantes.EMISION };
-    private static final String TXT_4_1 = "Clave de Acceso";
-    private static final String[] TXT_5_1 =
-    { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
-      Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
-    private static final String[] TXT_5_2 =
-    { "RUC", Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO,
-      Constantes.CONTRIBUYENTE_ESPECIAL_NO, "" };
+    
+
     private static final String[] TXT_6_10 =
     { "Raz\u00f3n Social", "RUC / CI.", "Fecha Emisi\u00f3n" };
 
@@ -54,20 +43,6 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
 
     private static final String TXT_10_1 = "Informaci\u00f3n Adicional";
 
-    private static final String[] TXT_11_3 =
-    { Constantes.DIRECCION_MATRIZ, Constantes.DIRECCION_ESTABLECIMIENTO };
-    private static final String[] TXT_11_4 =
-    { Constantes.CONTRIBUYENTE_ESPECIAL_NO, "Obligado a llevar contabilidad" };
-    private static final String TXT_11_5 = "RUC: ";
-    private static final String TXT_11_6 = "Nota Cr\u00e9dito";
-    private static final String TXT_11_7 = "No.: %s-%s-%s";
-    private static final String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
-    private static final String TXT_11_9 = "Fecha Autorizaci\u00f3n";
-    private static final String TXT_11_10 = Constantes.AMBIENTE;
-    private static final String TXT_11_11 = "Emisi\u00f3n";
-    private static final String TXT_11_12 = "Clave de Acceso";
-    private static final String TXT_11_13 = "Normal";
-
 
     private DatosNotaCredito datosNotaCredito;
     private double totalDescuento = 0;
@@ -78,116 +53,26 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      */
     @Override
     protected synchronized void elemento10() {
-        PdfPTable table = new PdfPTable(2);
-
-        table.setWidthPercentage(100);
-
-        //Lado Izquierdo
-        PdfPTable tableIzquierda = new PdfPTable(1);
-
-        //Logotipo lado Izquierdo
-        getImagen().setPath(getDatosNotaCredito().getPathLogo());
-        getImagen().setScala(33f);
-        tableIzquierda.addCell(getImagen().escribeCelda());
-
-        //Nombre de la empresa
-        getH1().setTexto(getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRazonSocial());
-        tableIzquierda.addCell(getH1().escribeCelda());
-
-        //Informacion de la empresa
-        getForm().setListaTitulos(TXT_11_3);
-        getForm().setListaValores(getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getDirMatriz(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getDirEstablecimiento());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("30", "70");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        //Informacion de contabilidad
-        getForm().setListaTitulos(TXT_11_4);
-        getForm().setListaValores(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getContribuyenteEspecial(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("50", "50");
-        getForm().setListaPaneles("2");
-        tableIzquierda.addCell(getForm().escribeCelda());
-
-        //Lado Derecho
-        PdfPTable tableDerecha = new PdfPTable(1);
-
-
-        //Ruc
-        getH2().setTexto(TXT_11_5 +
-                         getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRuc());
-        tableDerecha.addCell(getH2().escribeCelda());
-
-        //Nombre del documento
-        getH1().setTexto(TXT_11_6);
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        //Numero del documento
-        getH1().setTexto(String.format(TXT_11_7,
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getEstab(),
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getPtoEmi(),
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getSecuencial()));
-        tableDerecha.addCell(getH1().escribeCelda());
-
-        //Numero de autorizacion
-        getH2().setTexto(TXT_11_8);
-        tableDerecha.addCell(getH2().escribeCelda());
-        if (getDatosNotaCredito().isOffline())
-            getP().setTexto(getDatosNotaCredito().getClaveAccesoAutorizacion());
-        else
-            getP().setTexto(getDatosNotaCredito().getNumeroAutorizacion());
-
-        tableDerecha.addCell(getP().escribeCelda());
-
-        //Fecha Autorizacion - modo offline
-        if (!getDatosNotaCredito().isOffline()) {
-            getForm().setListaTitulos(TXT_11_9);
-            getForm().setListaValores(getDatosNotaCredito().getFechaAutorizacion());
-            getForm().setListaFormatos(Elemento.FORMATO_STRING);
-            getForm().setListaDimensiones("40", "60");
-            getForm().setListaPaneles("1");
-            tableDerecha.addCell(getForm().escribeCelda());
-        }
-
-        //Ambiente
-        getForm().setListaTitulos(TXT_11_10);
-        getForm().setListaValores(getDatosNotaCredito().getAmbienteAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        //Emision
-        if (getDatosNotaCredito().isOffline())
-            getDatosNotaCredito().setEmisionAutorizacion(TXT_11_13);
-        getForm().setListaTitulos(TXT_11_11);
-        getForm().setListaValores(getDatosNotaCredito().getEmisionAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("40", "60");
-        getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().escribeCelda());
-
-        //Clave de acceso
-        getH2().setTexto(TXT_11_12);
-        tableDerecha.addCell(getH2().escribeCelda());
-        
-        //Codigo de barras
-        getImagen().procesarCode128(getDatosNotaCredito().getClaveAccesoAutorizacion());
-        tableDerecha.addCell(getImagen().escribeCelda());
-        
-        table.addCell(tableIzquierda);
-        table.addCell(tableDerecha);
-        try {
-            getDocumento().add(table);
-        } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
-                                                            e.toString());
-        }
+        this.getElementosComunes().encabezado(
+                getDatosNotaCredito().getPathLogo(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRazonSocial(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getDirMatriz(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getDirEstablecimiento(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getContribuyenteEspecial(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getObligadoContabilidad(),
+                getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRuc(),
+                TXT_3_1,
+                getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getEstab()
+                        + "-" +
+                        getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getPtoEmi()
+                        + "-" +
+                        getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getSecuencial(),
+                getDatosNotaCredito().getClaveAccesoAutorizacion(),
+                getDatosNotaCredito().getNumeroAutorizacion(),
+                getDatosNotaCredito().getFechaAutorizacion(),
+                getDatosNotaCredito().getAmbienteAutorizacion(),
+                getDatosNotaCredito().getEmisionAutorizacion(),
+                getDatosNotaCredito().isOffline());
     }
 
     /** Metodo para escribir la informacion del cliente.
@@ -195,12 +80,20 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      */
     @Override
     protected synchronized void elemento11()  {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         PdfPTable table1 = new PdfPTable(1);
         table1.setWidthPercentage(100f);
 
-        informacionCliente1();
+        getForm().setListaTitulos(TXT_6_10);
+        getForm().setListaValores(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getRazonSocialComprador(),
+                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getIdentificacionComprador(),
+                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmision());
+        getForm().setListaFormatos(Elemento.FORMATO_STRING,
+                                   Elemento.FORMATO_STRING,
+                                   Elemento.FORMATO_STRING);
+        getForm().setListaDimensiones("25", "75");
+        getForm().setListaPaneles("3");
         PdfPCell pdfPCell = getForm().escribeCelda();
         table1.addCell(pdfPCell);
 
@@ -225,7 +118,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      */
     @Override
     protected  synchronized void elemento12(){
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         if (getDatosNotaCredito().getNotaCreditoXML().getDetalles() != null &&
             !getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().isEmpty()) {
@@ -251,122 +144,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         }
     }
 
-    /** Metodo para agregar la informaci\u00f3n del documento
-     *
-     */
-    @Override
-    protected synchronized void elemento3() {
-        getH1().setTexto(TXT_3_1);
-        getH1().escribe();
-
-        getH1().setTexto(String.format(TXT_3_2,
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getEstab(),
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getPtoEmi(),
-                                       getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getSecuencial()));
-        getH1().escribe();
-
-        espacios(1);
-        getForm().setListaTitulos(TXT_3_3);
-
-        getForm().setListaValores(getDatosNotaCredito().getNumeroAutorizacion(),
-                                  getDatosNotaCredito().getFechaAutorizacion(),
-                                  getDatosNotaCredito().getAmbienteAutorizacion(),
-                                  getDatosNotaCredito().getEmisionAutorizacion());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("4");
-        getForm().escribe();
-    }
-
-    /** Metodo para escribir el codigo de barras de la clave de acceso.
-     *
-     */
-    @Override
-    protected synchronized void elemento4() {
-        getForm().setListaTitulos(TXT_4_1);
-
-        getForm().setListaValores("");
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("1");
-        getForm().escribe();
-
-        getImagen().procesarCode128(getDatosNotaCredito().getClaveAccesoAutorizacion());
-        getImagen().setX(165);
-        getImagen().setY(680);
-        getImagen().escribe();        
-    }
-
-    /** Metodo para escribir la informacion de la empresa
-     *
-     * @throws Exception
-     */
-    @Override
-    protected synchronized void elemento5() {
-        espacios(5);
-        getLinea().escribe();
-        getH2().setTexto(getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRazonSocial());
-        getH2().escribe();
-
-        espacios(1);
-
-        if (getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getObligadoContabilidad() ==
-            null ||
-            getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getObligadoContabilidad().trim().length() ==
-            0)
-            getForm().setListaTitulos(TXT_5_2);
-        else
-            getForm().setListaTitulos(TXT_5_1);
-        getForm().setListaValores(getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getRuc(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoTributaria().getDirMatriz(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getDirEstablecimiento(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getContribuyenteEspecial(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("5");
-        getForm().escribe();
-    }
-
-    /** Metodo para escribir la informacion del cliente.
-     *
-     */
-    @Override
-    protected synchronized void elemento6(){
-        espacios(2);
-        getLinea().escribe();
-
-        informacionCliente1();
-        getForm().escribe();
-
-        espacios(1);
-
-        informacionCliente2();
-        getForm().escribe();
-    }
-
-    /** Metodo para crear la informacion del cliente
-     *
-     */
-    private void informacionCliente1() {
-        getForm().setListaTitulos(TXT_6_10);
-        getForm().setListaValores(getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getRazonSocialComprador(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getIdentificacionComprador(),
-                                  getDatosNotaCredito().getNotaCreditoXML().getInfoNotaCredito().getFechaEmision());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING,
-                                   Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones("25", "75");
-        getForm().setListaPaneles("3");
-    }
-
+    
     /** Metodo para crear la informacion del cliente
      *
      */
@@ -405,45 +183,13 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
             getForm().setListaPaneles("4");
         }
     }
-
-    /** Metodo para imprimir el detalle de la notaCredito
-     *
-     * Si los datos en la notaCredito existen
-     *  Llena el lista de datos a ser recorridos
-     *  Si existe codigo auxiliar
-     *      Agrega los datos para la ubicacion en pantalla
-     *  Caso contrario
-     *      Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
-     *
-     */
-    @Override
-    protected synchronized void elemento7() {
-        espacios(2);
-
-        if (getDatosNotaCredito().getNotaCreditoXML().getDetalles() != null &&
-            !getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle().isEmpty()) {
-
-            getLinea().escribe();
-
-            detalleNotaCreditoCompleta();
-
-            getTabla().escribe();
-
-            getLinea().escribe();
-            if (getPdfWriter().getVerticalPosition(true) < 140)
-                getDocumento().newPage();
-        }
-    }
-
+    
     /** Metodo para detalle NotaCredito completa.
      *
      */
-    public void detalleNotaCreditoCompleta() {
-
+    private void detalleNotaCreditoCompleta() {
         if (totalDescuento > 0) {
-
-            List<Object> listaDatos = new ArrayList<>();
-            
+            List<Object> listaDatos = new ArrayList<>();           
 
             for (NotaCredito.Detalles.Detalle a :
                  getDatosNotaCredito().getNotaCreditoXML().getDetalles().getDetalle()) {
@@ -601,25 +347,8 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      *
      */
     @Override
-    protected  synchronized void elemento8() {
-        espacios(2);
-
-        subTotales();
-        getForm().escribe();
-
-        getLinea().setWidthPercentage(34);
-        getLinea().escribe();
-
-        totales();
-        getForm().escribe();
-    }
-
-    /** Metodo para agregar los totales de la notaCredito
-     *
-     */
-    @Override
     protected  synchronized void elemento13()  {
-        espacios(2);
+        getElementosComunes().espacios(2);
 
         PdfPTable table = new PdfPTable(1);
         table.getDefaultCell().setBorder(0);
@@ -671,9 +400,9 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      * @throws Exception
      */
     @Override
-    protected  synchronized void elemento14()  {
+    protected  synchronized void elementoFirma()  {
         String firmaGrafica = getDatosNotaCredito().getPathFirmaGrafica();
-        firmarGraficamente(firmaGrafica);        
+        getElementosComunes().firmarGraficamente(firmaGrafica);
     }
 
 
@@ -754,11 +483,11 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
                 if (getPdfWriter().getVerticalPosition(true) < total)
                     getDocumento().newPage();
 
-                espacios(2);
+                getElementosComunes().espacios(2);
 
                 getH2().setTexto(TXT_10_1);
                 getH2().escribe();
-                espacios(2);
+                getElementosComunes().espacios(2);
 
                 getForm().setListaDimensiones("25", "75");
                 getForm().setListaPaneles(String.valueOf(size));

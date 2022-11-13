@@ -1,10 +1,7 @@
 package com.aplicaciones13.impresion;
 
+import com.aplicaciones13.ride.ElementosComunes;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.util.ArrayList;
@@ -21,24 +18,24 @@ import java.util.logging.Logger;
  */
 public class ImpresionBaseElementos {
 
-    protected static final String ELEMENTO_1 = "1";
-    protected static final String ELEMENTO_2 = "2";
-    protected static final String ELEMENTO_3 = "3";
-    protected static final String ELEMENTO_4 = "4";
-    protected static final String ELEMENTO_5 = "5";
-    protected static final String ELEMENTO_6 = "6";
-    protected static final String ELEMENTO_7 = "7";
-    protected static final String ELEMENTO_8 = "8";
-    protected static final String ELEMENTO_9 = "9";
-    protected static final String ELEMENTO_10 = "10";
-    protected static final String ELEMENTO_11 = "11";
-    protected static final String ELEMENTO_12 = "12";
-    protected static final String ELEMENTO_13 = "13";
-    protected static final String ELEMENTO_14 = "14";
-    protected static final String ELEMENTO_15 = "15";
-    protected static final String ELEMENTO_16 = "16";
-    protected static final String ELEMENTO_17 = "17";
-    protected static final String ELEMENTO_18 = "18";
+    public static final String ELEMENTO_PIE = "PIE";
+    public static final String ELEMENTO_2 = "2";
+    public static final String ELEMENTO_3 = "3";
+    public static final String ELEMENTO_4 = "4";
+    public static final String ELEMENTO_5 = "5";
+    public static final String ELEMENTO_6 = "6";
+    public static final String ELEMENTO_7 = "7";
+    public static final String ELEMENTO_8 = "8";
+    public static final String ELEMENTO_9 = "9";
+    public static final String ELEMENTO_10 = "10";
+    public static final String ELEMENTO_11 = "11";
+    public static final String ELEMENTO_12 = "12";
+    public static final String ELEMENTO_13 = "13";
+    public static final String ELEMENTO_14 = "14";
+    public static final String ELEMENTO_15 = "15";
+    public static final String ELEMENTO_16 = "16";
+    public static final String ELEMENTO_17 = "17";
+    public static final String ELEMENTO_FIRMA = "FIRMA";
 
     private List<String> elementos;
     private Document documento;
@@ -47,12 +44,11 @@ public class ImpresionBaseElementos {
     private H1 h1;
     private H2 h2;
     private H3 h3;
-    private Imagen imagen;
-    private Imagen imagen1;
     private Linea linea;
     private P p;
     private Tabla tabla;
     private PdfWriter pdfWriter;
+    private ElementosComunes elementosComunes;
 
     /**
      * Metodo para crear el objeto.
@@ -77,11 +73,6 @@ public class ImpresionBaseElementos {
         getH2().setDocumento(getDocumento());
         setH3(new H3());
         getH3().setDocumento(getDocumento());
-        setImagen(new Imagen());
-        getImagen().setDocumento(getDocumento());
-
-        setImagen1(new Imagen());
-        getImagen1().setDocumento(getDocumento());
 
         setLinea(new Linea());
         getLinea().setDocumento(getDocumento());
@@ -89,6 +80,9 @@ public class ImpresionBaseElementos {
         getP().setDocumento(getDocumento());
         setTabla(new Tabla());
         getTabla().setDocumento(getDocumento());
+
+        this.elementosComunes = new ElementosComunes();
+        this.elementosComunes.setDocumento(getDocumento());
 
         this.elementos = new ArrayList<>();
         setPdfWriter(null);
@@ -130,8 +124,8 @@ public class ImpresionBaseElementos {
     public void imprimirElemento(String valor) {
         try {
             switch (valor) {
-                case ELEMENTO_1:
-                    elemento1();
+                case ELEMENTO_PIE:
+                    elementoPie();
                     break;
                 case ELEMENTO_2:
                     elemento2();
@@ -199,11 +193,11 @@ public class ImpresionBaseElementos {
                 case ELEMENTO_17:
                     elemento17();
                     break;
-                case ELEMENTO_18:
-                    elemento18();
+                case ELEMENTO_FIRMA:
+                    elementoFirma();
                     break;
                 default:
-                    elemento1();
+                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, valor);
                     break;
             }
         } catch (Exception e) {
@@ -212,7 +206,17 @@ public class ImpresionBaseElementos {
         }
     }
 
-    private synchronized void elemento1() {
+    /**
+     * @return the elementosComunes
+     */
+    public ElementosComunes getElementosComunes() {
+        return elementosComunes;
+    }
+    
+    /**
+     * Metodo para generar la numeracion del documento.
+     */
+    private synchronized void elementoPie() {
         Pie pie = new Pie();
         getPdfWriter().setPageEvent(pie);
     }
@@ -281,7 +285,7 @@ public class ImpresionBaseElementos {
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 17");
     }
 
-    protected void elemento18() {
+    protected void elementoFirma() {
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 18");
     }
 
@@ -335,22 +339,6 @@ public class ImpresionBaseElementos {
         this.h3 = h3;
     }
 
-    public Imagen getImagen() {
-        return imagen;
-    }
-
-    public Imagen getImagen1() {
-        return imagen1;
-    }
-
-    public void setImagen(Imagen imagen) {
-        this.imagen = imagen;
-    }
-
-    public void setImagen1(Imagen imagen1) {
-        this.imagen1 = imagen1;
-    }
-
     public Linea getLinea() {
         return linea;
     }
@@ -389,48 +377,7 @@ public class ImpresionBaseElementos {
 
     public void setPdfWriter(PdfWriter pdfWriter) {
         this.pdfWriter = pdfWriter;
-    }
+        this.elementosComunes.setPdfWriter(pdfWriter);
+    }   
 
-    /**
-     * Metodo para agregar la firma grafica.
-     * 
-     * @param firmaGrafica
-     */
-    public void firmarGraficamente(String firmaGrafica) {
-        if (firmaGrafica != null && !firmaGrafica.isEmpty()) {
-            if (getPdfWriter().getVerticalPosition(true) < 105) {
-                getDocumento().newPage();
-            }
-
-            PdfPTable table = new PdfPTable(1);
-            table.setWidthPercentage(100);
-            getImagen1().setPath(firmaGrafica);
-            getImagen1().setScala(30f);
-
-            PdfPCell celda = getImagen1().escribeCelda();
-            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-            celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            table.addCell(celda);
-
-            try {
-                espacios(1);
-                getDocumento().add(table);
-            } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
-            }
-        }
-
-    }
-
-    /**
-     * Metodo para saltar espacios
-     *
-     * @param j
-     */
-    public void espacios(int j) {
-        while (j > 0) {
-            getEspacio().escribe();
-            j--;
-        }
-    }
 }

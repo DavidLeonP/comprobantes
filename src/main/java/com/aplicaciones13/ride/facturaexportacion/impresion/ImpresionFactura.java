@@ -1,5 +1,6 @@
 package com.aplicaciones13.ride.facturaexportacion.impresion;
 
+import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.impresion.ImpresionBaseIText;
 
 import com.itextpdf.text.Document;
@@ -77,9 +78,9 @@ public class ImpresionFactura extends ImpresionBaseIText {
 
         ((ImpresionElementosFactura) getImpresionBaseElementos()).setDatosFactura(datosFactura);
 
-        getImpresionBaseElementos().elementosAImprimir("0", "1", "10", "11",
+        getImpresionBaseElementos().elementosAImprimir(ImpresionBaseElementos.ELEMENTO_PIE, "10", "11",
                 "12", "13", "17", "16",
-                "9", "18");
+                "9", ImpresionBaseElementos.ELEMENTO_FIRMA);
 
         getImpresionBaseElementos().escribir();
     }
