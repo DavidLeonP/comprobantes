@@ -5,6 +5,7 @@ import com.aplicaciones13.sri.contenedores.TotalDocumento;
 import com.aplicaciones13.impresion.Elemento;
 import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.ride.facturaexportacion.Factura;
+import com.aplicaciones13.ride.facturaexportacion.ObligadoContabilidad;
 import com.aplicaciones13.ride.facturaexportacion.Pagos.Pago;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
 /**
  * Objeto para crear un documento de factura.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class ImpresionElementosFactura extends ImpresionBaseElementos {
@@ -64,13 +65,14 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
      */
     @Override
     protected synchronized void elemento10() {
+        ObligadoContabilidad obligadoContabilidad = getDatosFactura().getFacturaXML().getInfoFactura().getObligadoContabilidad();
         this.getElementosComunes().encabezado(
                 getDatosFactura().getPathLogo(),
                 getDatosFactura().getFacturaXML().getInfoTributaria().getRazonSocial(),
                 getDatosFactura().getFacturaXML().getInfoTributaria().getDirMatriz(),
                 getDatosFactura().getFacturaXML().getInfoFactura().getDirEstablecimiento(),
                 getDatosFactura().getFacturaXML().getInfoFactura().getContribuyenteEspecial(),
-                getDatosFactura().getFacturaXML().getInfoFactura().getObligadoContabilidad().value(),
+                obligadoContabilidad.toString(),
                 getDatosFactura().getFacturaXML().getInfoTributaria().getRuc(),
                 TXT_3_1,
                 getDatosFactura().getFacturaXML().getInfoTributaria().getEstab()
@@ -106,7 +108,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -134,7 +136,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
             try {
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
 
             if (getPdfWriter().getVerticalPosition(true) < 140)
@@ -297,7 +299,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
         try {
             tableCompleta.setWidths(columnWidths);
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
 
         tableCompleta.getDefaultCell().setBorder(1);
@@ -305,7 +307,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
         try {
             getDocumento().add(tableCompleta);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -445,7 +447,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
             try {
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
     }
@@ -509,7 +511,7 @@ public class ImpresionElementosFactura extends ImpresionBaseElementos {
                 try {
                     getDocumento().add(table);
                 } catch (DocumentException e) {
-                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
                 }
 
             }

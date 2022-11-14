@@ -19,6 +19,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Objeto para armar la impresion de nota de debito.
+ *
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
 
     private static final String TXT_3_1 = "Nota D\u00e9bito";
@@ -96,7 +102,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e.toString());
         }
     }
@@ -124,7 +130,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
             try {
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                         e.toString());
             }
 
@@ -252,7 +258,7 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e.toString());
         }
     }

@@ -17,6 +17,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Clase para imprimir los elementos de la nota de credito.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
     private static final String TXT_3_1 = "Nota Cr\u00e9dito";
     
@@ -108,7 +114,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
         }
     }
@@ -135,7 +141,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
             try {
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                                 e.toString());
             }
 
@@ -387,7 +393,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
         }
     }
@@ -546,7 +552,7 @@ public class ImpresionElementosNotaCredito extends ImpresionBaseElementos {
      *
      * @param bus
      */
-    public void cargarTotales(com.aplicaciones13.ride.notacredito.NotaCredito bus) {
+    private void cargarTotales(com.aplicaciones13.ride.notacredito.NotaCredito bus) {
         if (bus.getInfoNotaCredito().getTotalConImpuestos() != null &&
             !bus.getInfoNotaCredito().getTotalConImpuestos().getTotalImpuesto().isEmpty()) {
             for (TotalConImpuestos.TotalImpuesto a :

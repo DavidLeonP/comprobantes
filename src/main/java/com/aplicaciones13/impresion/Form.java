@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * Objeto Para escribir en forma de un formulario
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class Form extends Elemento {
@@ -54,7 +54,7 @@ public class Form extends Elemento {
             if (tablaTemporal != null)
                 getDocumento().add(tablaTemporal);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e.toString());
         }
 
@@ -152,25 +152,25 @@ public class Form extends Elemento {
     public PdfPTable escribeForm() {
         try {
             if (getListaFormatos().size() != getListaTitulos().size()) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "No estan formateadas todas las columnas\"");
                 return null;
             }
 
             if (getListaDimensiones().size() != 2) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "No estan dimensionadas todas las columnas");
                 return null;
             }
 
             if (getListaValores().isEmpty()) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "Consulta no devuelve una unica fila");
                 return null;
             }
 
             if (getListaFormatos().size() != getListaValores().size()) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "El numero de titulos y de valores no coincide");
                 return null;
             }
@@ -190,7 +190,7 @@ public class Form extends Elemento {
             }
             return generaRespuesta();
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e.toString());
         }
         return null;

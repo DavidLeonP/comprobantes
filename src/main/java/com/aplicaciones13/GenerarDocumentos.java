@@ -9,10 +9,13 @@ import com.aplicaciones13.sri.contenedores.InfoEjecutor;
 /**
  * Objeto de test de Impresiones Factura
  *
- * @author omar velez omargo33@jeremiassoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class GenerarDocumentos {
+    /**
+     *
+     */
     private static final String PATH = "/home/omarv/Documentos/java/DocumentosElectronicos/archivosPruebas/";
 
     /**

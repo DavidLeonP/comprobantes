@@ -1,5 +1,11 @@
 package com.aplicaciones13;
 
+/**
+ * Constantes.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class Constantes {
 
     public static final String FECHA_AUTORIZACION = "Fecha Autorizaci\u00f3n";
@@ -11,6 +17,9 @@ public class Constantes {
     public static final String CONTRIBUYENTE_ESPECIAL_NO = "Contribuyente especial Nro.";
     public static final String RAZON_SOCIAL = "Raz\u00f3n Social";
 
+    /**
+     * Constructor.
+     */
     protected Constantes() {
     }
 }

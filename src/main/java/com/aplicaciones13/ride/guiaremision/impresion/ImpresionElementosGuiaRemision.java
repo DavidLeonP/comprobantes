@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 /**
  * Objeto para crear un documento de guiaRemision.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
@@ -104,7 +104,7 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
 		try {
 			getDocumento().add(table);
 		} catch (DocumentException e) {
-			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+			Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
 		}
 	}
 
@@ -155,7 +155,7 @@ public class ImpresionElementosGuiaRemision extends ImpresionBaseElementos {
 				try {
 					getDocumento().add(table);
 				} catch (DocumentException e) {
-					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
 				}
 			}
 			if (getPdfWriter().getVerticalPosition(true) < 140)

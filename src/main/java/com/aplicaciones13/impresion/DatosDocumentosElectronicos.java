@@ -3,7 +3,7 @@ package com.aplicaciones13.impresion;
 
 /** Objeto para soportar los datos de los documeentos electronicos
  *
- * @author omarv  omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class DatosDocumentosElectronicos {

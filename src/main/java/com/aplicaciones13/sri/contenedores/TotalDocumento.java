@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 /** Objeto para soportar los totales de los documentos.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class TotalDocumento {

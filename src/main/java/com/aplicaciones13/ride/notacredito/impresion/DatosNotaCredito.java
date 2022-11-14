@@ -12,6 +12,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 
+/**
+ * Clase para tener los datos de la nota de credito.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class DatosNotaCredito extends DatosDocumentosElectronicos {
     private NotaCredito notaCreditoXML;
 
@@ -31,7 +37,7 @@ public class DatosNotaCredito extends DatosDocumentosElectronicos {
             setNotaCreditoXML((NotaCredito)unmarshaller.unmarshal(file));
 
         } catch (JAXBException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
 
         }
         }

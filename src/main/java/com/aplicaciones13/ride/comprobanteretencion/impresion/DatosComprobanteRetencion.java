@@ -11,6 +11,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * Clase para tener los datos del comprobante de retencion.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class DatosComprobanteRetencion extends DatosDocumentosElectronicos {
 
     private ComprobanteRetencion comprobanteRetencionXML;
@@ -31,7 +37,7 @@ public class DatosComprobanteRetencion extends DatosDocumentosElectronicos {
                 setComprobanteRetencionXML((ComprobanteRetencion) unmarshaller.unmarshal(file));
 
             } catch (JAXBException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
     }

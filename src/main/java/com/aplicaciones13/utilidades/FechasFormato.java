@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-/** Objeto para dar formato a la fecha
+/** 
+ * Objeto para dar formato a la fecha
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class FechasFormato {

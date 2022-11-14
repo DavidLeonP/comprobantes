@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 /**
  * Objeto para dar soporte a mensajes bundle.
  *
- * @author o.velez@qapaq.io
- * @created 2022-08-19
+ * @author o.velez@13aplicaciones.com
+ *  
  */
 public class Bundles {
 

@@ -12,8 +12,7 @@ import java.util.logging.Logger;
 /**
  * Clase base para la generación de elementos.
  *
- * @author omarv omargo33@JeremiasSoft.com
- *
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class ImpresionBaseElementos {
@@ -156,8 +155,8 @@ public class ImpresionBaseElementos {
                     break;
             }
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, valor);
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, valor);
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -197,12 +196,12 @@ public class ImpresionBaseElementos {
                     elementoFirma();
                     break;
                 default:
-                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, valor);
+                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, valor);
                     break;
             }
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, valor);
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, valor);
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -222,71 +221,71 @@ public class ImpresionBaseElementos {
     }
 
     protected void elemento2() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 2");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 2");
     }
 
     protected void elemento3() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 3");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 3");
     }
 
     protected void elemento4() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 4");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 4");
     }
 
     protected void elemento5() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 5");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 5");
     }
 
     protected void elemento6() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 6");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 6");
     }
 
     protected void elemento7() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 7");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 7");
     }
 
     protected void elemento8() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 8");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 8");
     }
 
     protected void elemento9() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 9");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 9");
     }
 
     protected void elemento10() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 10");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 10");
     }
 
     protected void elemento11() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 11");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 11");
     }
 
     protected void elemento12() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 12");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 12");
     }
 
     protected void elemento13() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 13");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 13");
     }
 
     protected void elemento14() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 14");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 14");
     }
 
     protected void elemento15() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 15");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 15");
     }
 
     protected void elemento16() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 16");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 16");
     }
 
     protected void elemento17() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 17");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 17");
     }
 
     protected void elementoFirma() {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, "elemento 18");
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO, "elemento 18");
     }
 
     // Propiedades

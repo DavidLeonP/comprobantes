@@ -22,8 +22,7 @@ import com.aplicaciones13.sri.contenedores.InfoEjecutor;
 /**
  * Objeto ejecutar los pdf del sistema
  * 
- * @author omar velez
- * 
+ * @author o.velez@13aplicaciones.com
  * 
  */
 public class Ejecutor {
@@ -64,14 +63,14 @@ public class Ejecutor {
             responseOut = new BufferedOutputStream(fileOutputStream);
             impresionFactura.getByteArrayOutputStream().writeTo(responseOut);
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return false;
         } finally {
             try {
                 impresionFactura.getByteArrayOutputStream().close();
                 cerrarFlujos();
             } catch (IOException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
         return true;
@@ -103,14 +102,14 @@ public class Ejecutor {
             responseOut = new BufferedOutputStream(fileOutputStream);
             impresionComprobanteRetencion.getByteArrayOutputStream().writeTo(responseOut);
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return false;
         } finally {
             try {
                 impresionComprobanteRetencion.getByteArrayOutputStream().close();
                 cerrarFlujos();
             } catch (IOException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
         return true;
@@ -142,14 +141,14 @@ public class Ejecutor {
             responseOut = new BufferedOutputStream(fileOutputStream);
             impresionNotaCredito.getByteArrayOutputStream().writeTo(responseOut);
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return false;
         } finally {
             try {
                 impresionNotaCredito.getByteArrayOutputStream().close();
                 cerrarFlujos();
             } catch (IOException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
         return true;
@@ -181,14 +180,14 @@ public class Ejecutor {
             responseOut = new BufferedOutputStream(fileOutputStream);
             impresionNotaDebito.getByteArrayOutputStream().writeTo(responseOut);
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return false;
         } finally {
             try {
                 impresionNotaDebito.getByteArrayOutputStream().close();
                 cerrarFlujos();
             } catch (IOException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
         return true;
@@ -220,14 +219,14 @@ public class Ejecutor {
             responseOut = new BufferedOutputStream(fileOutputStream);
             impresionGuiaRemision.getByteArrayOutputStream().writeTo(responseOut);
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return false;
         } finally {
             try {
                 impresionGuiaRemision.getByteArrayOutputStream().close();
                 cerrarFlujos();
             } catch (IOException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
         return true;
@@ -246,7 +245,7 @@ public class Ejecutor {
                 fileOutputStream.close();
             }
         } catch (IOException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 }

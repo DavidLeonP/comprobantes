@@ -11,6 +11,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+
+/**
+ * Clase para tener los datos de la nota de debito.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class DatosNotaDebito extends DatosDocumentosElectronicos {
     private NotaDebito notaDebitoXML;
 
@@ -31,7 +38,7 @@ public class DatosNotaDebito extends DatosDocumentosElectronicos {
                 setNotaDebitoXML((NotaDebito) unmarshaller.unmarshal(file));
 
             } catch (JAXBException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
 
             }
         }

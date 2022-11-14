@@ -9,9 +9,10 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**Metodo para mostrar una linea.
+/**
+ * Clase para mostrar una linea.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class Linea extends Elemento {
@@ -43,7 +44,7 @@ public class Linea extends Elemento {
             getDocumento().add(table);
 
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
         }
     }

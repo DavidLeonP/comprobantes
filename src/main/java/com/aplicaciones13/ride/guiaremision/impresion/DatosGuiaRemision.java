@@ -11,6 +11,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * Clase para tener los datos de la guia de remision.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class DatosGuiaRemision extends DatosDocumentosElectronicos {
 
     private GuiaRemision guiaRemisionXML;
@@ -31,7 +37,7 @@ public class DatosGuiaRemision extends DatosDocumentosElectronicos {
                 File file = new File(getPathSource());
                 setGuiaRemisionXML((GuiaRemision) unmarshaller.unmarshal(file));
             } catch (JAXBException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
     }

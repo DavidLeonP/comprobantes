@@ -20,7 +20,7 @@ import javax.swing.text.InternationalFormatter;
 /**
  * Clase con los datos esenciales para la escritura del archivo PDF.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class Elemento {

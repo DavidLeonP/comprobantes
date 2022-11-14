@@ -24,7 +24,7 @@ import org.krysalis.barcode4j.tools.UnitConv;
 
 /**Metodo para mostrar un titulo
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class Imagen extends Elemento {
@@ -56,7 +56,7 @@ public class Imagen extends Elemento {
             setPath(null);
             url = null;
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
         }
     }
@@ -82,7 +82,7 @@ public class Imagen extends Elemento {
             url = null;
             return celda;
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
         }
         return null;
@@ -139,14 +139,14 @@ public class Imagen extends Elemento {
 
             this.imagenTrabajo = Image.getInstance(baos.toByteArray());
         }catch(Exception e){
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
         }
         
         finally {            
             try{
                 baos.close();
             }catch(Exception e){
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
             }
         }
     }
@@ -167,7 +167,7 @@ public class Imagen extends Elemento {
                     imagenTrabajo = Image.getInstance(getPath());
 
             } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                                 e.toString());
                 return null;
             }
@@ -179,7 +179,7 @@ public class Imagen extends Elemento {
                     imagenTrabajo = Image.getInstance(getUrl());
 
             } catch (Exception e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                                 e.toString());
                 return null;
             }
@@ -195,7 +195,7 @@ public class Imagen extends Elemento {
         try {
             this.imagenTrabajo = Image.getInstance(i, Color.WHITE);
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());            
         }
     }
@@ -208,7 +208,7 @@ public class Imagen extends Elemento {
         try {
             this.url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
         }
     }
 

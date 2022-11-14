@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 /**
  * Objeto para crear un documento de comprobante de Retencion.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElementos {
@@ -94,7 +94,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -120,7 +120,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
             try {
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
 
             if (getPdfWriter().getVerticalPosition(true) < 140)
@@ -216,7 +216,7 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -269,11 +269,10 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionBaseElement
             }
 
             if (size > 0) {
-
                 int total = 74 + (12 * size);
-
-                if (getPdfWriter().getVerticalPosition(true) < total)
+                if (getPdfWriter().getVerticalPosition(true) < total){
                     getDocumento().newPage();
+                }
 
                 getElementosComunes().espacios(2);
 

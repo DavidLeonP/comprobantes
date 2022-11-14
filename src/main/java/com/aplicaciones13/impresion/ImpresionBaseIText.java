@@ -8,7 +8,12 @@ import java.io.ByteArrayOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Clase para tener los elementos de configuracion base.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class ImpresionBaseIText {
 
     public static final  String BOX_SIZE_NOMBRE = "ART_BOX_SIZE";
@@ -17,7 +22,9 @@ public class ImpresionBaseIText {
     private ByteArrayOutputStream byteArrayOutputStream;
     private PdfWriter pdfWriter;
 
-
+    /**
+     * Constructor.
+     */
     public ImpresionBaseIText() {
         setByteArrayOutputStream(new ByteArrayOutputStream());
         setImpresionBaseElementos(new ImpresionBaseElementos());
@@ -28,8 +35,8 @@ public class ImpresionBaseIText {
      * @param codigoConsulta
      */
     public void ejecutar(String codigoConsulta) {
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,codigoConsulta);
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,codigoConsulta);
+        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                                                         "Falta sobrecargar el mentodo");
     }
 

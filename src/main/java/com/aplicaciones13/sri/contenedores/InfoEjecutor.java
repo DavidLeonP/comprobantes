@@ -1,7 +1,7 @@
 package com.aplicaciones13.sri.contenedores;
 
 /**
- * Clase para crear pasar datos a la ejecucion de PDF
+ * Clase para crear pasar datos a la ejecucion de PDF.
  * 
  * @author o.velez@13aplicaciones.com
  * 

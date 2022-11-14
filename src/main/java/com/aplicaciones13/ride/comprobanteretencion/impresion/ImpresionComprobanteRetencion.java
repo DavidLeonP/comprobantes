@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /** Objeto para armar la impresion del comprobante de rentecion.
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class ImpresionComprobanteRetencion extends ImpresionBaseIText {
@@ -39,7 +39,7 @@ public class ImpresionComprobanteRetencion extends ImpresionBaseIText {
             setPdfWriter(PdfWriter.getInstance(documento, getByteArrayOutputStream()));
             getPdfWriter().setBoxSize(BOX_SIZE_NOMBRE, new Rectangle(36, 54, 559, 788));
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             return;
         }
         documento.open();

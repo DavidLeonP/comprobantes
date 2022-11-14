@@ -21,7 +21,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 /**
  * Clase para implementar elementos comunes en los RIDE.
  * 
- * @author omarv
+ * @author o.velez@13aplicaciones.com
  * 
  */
 public class ElementosComunes {
@@ -101,7 +101,7 @@ public class ElementosComunes {
         try {
             getDocumento().add(table);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 
@@ -273,7 +273,7 @@ public class ElementosComunes {
                 espacios(1);
                 getDocumento().add(table);
             } catch (DocumentException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
     }

@@ -20,8 +20,7 @@ import java.util.logging.Logger;
 /**
  * Objeto para crear el Pie de documentos.
  * 
- * @author omargo33
- * @date 2020-01-30
+ * @author o.velez@13aplicaciones.com
  * 
  */
 public class Pie extends PdfPageEventHelper {
@@ -80,7 +79,7 @@ public class Pie extends PdfPageEventHelper {
 
             table.writeSelectedRows(0, -1, rect.getLeft() - 2, rect.getBottom() - 26, writer.getDirectContent());
         } catch (Exception e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 

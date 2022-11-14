@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 /**
  * Clase de escribir una tabla
  *
- * @author omarv omargo33@JeremiasSoft.com
+ * @author o.velez@13aplicaciones.com
  *
  */
 public class Tabla extends Elemento {
@@ -65,7 +65,7 @@ public class Tabla extends Elemento {
             if (tablaTemporal != null)
                 getDocumento().add(tablaTemporal);
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e.toString());
         }
     }
@@ -108,13 +108,13 @@ public class Tabla extends Elemento {
     public PdfPTable escribeTabla() {
         try {
             if (getListaFormatos().size() != getListaTitulos().size()) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "No estan formateadas todas las columnas");
                 return null;
             }
 
             if (getListaDimensiones().size() != getListaTitulos().size()) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.INFO,
                         "No estan dimensionadas todas las columnas");
                 return null;
             }
@@ -151,7 +151,7 @@ public class Tabla extends Elemento {
 
             return table;
         } catch (DocumentException e2) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                     e2.toString());            
         }
         return null;

@@ -11,6 +11,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * Clase para tener los datos de la factura de exportacion.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class DatosFactura extends DatosDocumentosElectronicos {
 
     private Factura facturaXML;
@@ -30,7 +36,7 @@ public class DatosFactura extends DatosDocumentosElectronicos {
                 File file = new File(pathSource);
                 this.facturaXML = (Factura) unmarshaller.unmarshal(file);
             } catch (JAXBException e) {
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, e.toString());
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
             }
         }
     }

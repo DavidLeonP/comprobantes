@@ -13,6 +13,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Objeto para armar la nota de credito.
+ * 
+ * @author o.velez@13aplicaciones.com
+ * 
+ */
 public class ImpresionNotaCredito extends ImpresionBaseIText {
 
     /**Metodo para iniciar el objeto.
@@ -42,7 +48,7 @@ public class ImpresionNotaCredito extends ImpresionBaseIText {
             getPdfWriter().setBoxSize(BOX_SIZE_NOMBRE,
                                       new Rectangle(36, 54, 559, 788));
         } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE,
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
                                                             e.toString());
             return;
         }
