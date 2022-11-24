@@ -8,6 +8,14 @@ package com.aplicaciones13.utilidades;
  * 
  */
 public class BundleFactory {
+
+    /**
+     * Metodo para crear el objeto.
+     * 
+     */
+    protected BundleFactory() {
+        super();
+    }
         
     /**
      * Crea el bundle para instancias.

@@ -458,23 +458,25 @@ public class ImpresionElementosNotaDebito extends ImpresionBaseElementos {
                 !bus.getInfoNotaDebito().getImpuestos().getImpuesto().isEmpty()) {
 
             for (Impuesto a : bus.getInfoNotaDebito().getImpuestos().getImpuesto()) {
-
                 if (a.getCodigo().compareTo("2") == 0) {
-                    if (a.getCodigoPorcentaje().compareTo("0") == 0) {
-                        getTotales().get(1).setValor(a.getBaseImponible());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("2") == 0) {
-                        getTotales().get(0).setValor(a.getBaseImponible());
-                        getTotales().get(6).setValor(a.getValor());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("6") == 0) {
-                        getTotales().get(2).setValor(a.getBaseImponible());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("7") == 0) {
-                        getTotales().get(4).setValor(a.getBaseImponible());
+                    switch (a.getCodigoPorcentaje()) {
+                        case "0":
+                            getTotales().get(1).setValor(a.getBaseImponible());
+                            break;
+                        case "2":
+                            getTotales().get(0).setValor(a.getBaseImponible());
+                            getTotales().get(6).setValor(a.getValor());
+                            break;
+                        case "6":
+                            getTotales().get(2).setValor(a.getBaseImponible());
+                            break;
+                        case "7":
+                            getTotales().get(4).setValor(a.getBaseImponible());
+                            break;
+                        default:
+                            Logger.getLogger(NotaDebito.class.getName()).log(Level.INFO,
+                                    "No definido a.getCodigoPorcentaje()");
+                            break;
                     }
                 }
 

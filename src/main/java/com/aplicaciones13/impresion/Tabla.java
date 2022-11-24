@@ -188,7 +188,7 @@ public class Tabla extends Elemento {
     public String datoFormato(String valores, String tipoFormato, int indice) {
         String dato = super.datoFormato(valores, tipoFormato);
         if (dato.trim().length() == 0) {
-            return dato;
+            return "";
         }
 
         if (tipoFormato.equalsIgnoreCase(FORMATO_ENTERO)) {

@@ -1,2 +1,1 @@
-mvn install:install-file -Dfile=/home/omarv/.respaldo/Documentos/java/comprobantes/lib/jai_codec.jar -DgroupId=com.sun -DartifactId=media -Dversion=1.0.0 -Dpackaging=jar
-mvn install:install-file -Dfile=/home/omarv/.respaldo/Documentos/java/comprobantes/lib/JBARS.jar -DgroupId=com.jbars -DartifactId=jbars -Dversion=1.0.0 -Dpackaging=jar
+mvn sonar:sonar -Dsonar.projectKey=comprobantes -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1aa5477eabb6df3b2e9456042e01069b1b987dc7

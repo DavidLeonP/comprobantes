@@ -16,7 +16,7 @@ public class FechasFormato {
     /** Metodo para crear el objeto.
      *
      */
-    public FechasFormato() {
+    protected FechasFormato() {
         super();
     }
 

@@ -9,8 +9,53 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <sonar.exclusions>
+      **/comprobanteretencion/InfoTributaria.java,
+      **/comprobanteretencion/ObjectFactory.java,
+      **/comprobanteretencion/Impuesto.java,
+      **/comprobanteretencion/ComprobanteRetencion.java,
+
+      **/notadebito/InfoTributaria.java,
+      **/notadebito/Compensacion.java,
+      **/notadebito/Detalle.java,    
+      **/notadebito/Impuesto.java,  
+      
+      **/notadebito/NotaDebito.java,  
+      **/notadebito/ObjectFactory.java,
+      **/notadebito/ObligadoContabilidad.java,
+      **/notadebito/Pago.java,
+
+      **/notacredito/Detalle.java,  
+      **/notacredito/Impuesto.java,  
+      **/notacredito/InfoTributaria.java,
+      **/notacredito/NotaCredito.java,
+      **/notacredito/ObjectFactory.java,
+      **/notacredito/TotalConImpuestos.java,
+
+      **/guiaremision/Destinatario.java,
+      **/guiaremision/Detalle.java,
+      **/guiaremision/GuiaRemision.java,
+      **/guiaremision/InfoTributaria.java,
+      **/guiaremision/ObjectFactory.java,
+
+      **/facturaexportacion/DetalleImpuestos.java,
+      **/facturaexportacion/Factura.java, 
+      **/facturaexportacion/Impuesto.java,
+      **/facturaexportacion/InfoTributaria.java,
+      **/facturaexportacion/ObjectFactory.java,
+      **/facturaexportacion/ObligadoContabilidad.java,
+      **/facturaexportacion/Pagos.java,
+      **/facturaexportacion/Reembolsos.java
+
+      </sonar.exclusions>
   </properties>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+    <dependency>
+      <groupId>org.sonarsource.scanner.maven</groupId>
+      <artifactId>sonar-maven-plugin</artifactId>
+      <version>3.9.0.2155</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
     <dependency>
       <groupId>com.itextpdf</groupId>
@@ -73,7 +118,7 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-          <finalName>${pom.artifactId}-${pom.version}-full</finalName>
+          <finalName>${project.artifactId}-${project.version}-full</finalName>
           <appendAssemblyId>false</appendAssemblyId>
           <archive>
             <manifest>
@@ -106,4 +151,34 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

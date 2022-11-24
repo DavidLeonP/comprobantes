@@ -8,10 +8,8 @@ import java.awt.Color;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +19,8 @@ import org.krysalis.barcode4j.impl.code128.Code128Constants;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
 
-
-/**Metodo para mostrar un titulo
+/**
+ * Metodo para mostrar un titulo
  *
  * @author o.velez@13aplicaciones.com
  *
@@ -34,7 +32,8 @@ public class Imagen extends Elemento {
     private float scala;
     private Image imagenTrabajo;
 
-    /**Metodo para crear la imagen.
+    /**
+     * Metodo para crear la imagen.
      *
      */
     public Imagen() {
@@ -42,7 +41,8 @@ public class Imagen extends Elemento {
         setScala(100);
     }
 
-    /** Escribir objeto.
+    /**
+     * Escribir objeto.
      *
      */
     public void escribe() {
@@ -57,11 +57,12 @@ public class Imagen extends Elemento {
             url = null;
         } catch (Exception e) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                            e.toString());
+                    e.toString());
         }
     }
 
-    /** Escribir objeto.
+    /**
+     * Escribir objeto.
      *
      */
     public PdfPCell escribeCelda() {
@@ -83,7 +84,7 @@ public class Imagen extends Elemento {
             return celda;
         } catch (Exception e) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                            e.toString());
+                    e.toString());
         }
         return null;
     }
@@ -115,42 +116,41 @@ public class Imagen extends Elemento {
     /**
      * Metodo para procesar un code 128.
      * 
+     * Configura el codigo de barras.
+     * setea los DPI
+     * Estableze el tamaño del codigo de barras
+     * 
+     * Crea el espacio en memoria para la imagen
+     * Crea el espacio de codigo de barras
+     * Crea el codigo de barras
+     * Se crea la imagen 
+     * Se cierra el espacio de memoria para la imagen
+     * 
      * @param code
      */
-    public void procesarCode128(String code){
+    public void procesarCode128(String code) {
         Code128Bean barcode128Bean = new Code128Bean();
         barcode128Bean.setCodeset(Code128Constants.CODESET_B);
         final int dpi = 600;
 
-        // Configure the barcode generator
-        // adjust barcode width here
         barcode128Bean.setModuleWidth(UnitConv.in2mm(5.0f / dpi));
         barcode128Bean.doQuietZone(false);
 
-        // Open output file
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            
+        try {            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();  
             BitmapCanvasProvider canvasProvider = new BitmapCanvasProvider(
-                baos, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+                    baos, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
             barcode128Bean.generateBarcode(canvasProvider, code);
             canvasProvider.finish();
 
             this.imagenTrabajo = Image.getInstance(baos.toByteArray());
-        }catch(Exception e){
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
-        }
-        
-        finally {            
-            try{
-                baos.close();
-            }catch(Exception e){
-                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
-            }
+            baos.close();                
+        } catch (Exception e) {
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
-    
+
     /**
      * Metodo para obtener la imagen.
      * 
@@ -168,7 +168,7 @@ public class Imagen extends Elemento {
 
             } catch (Exception e) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                                e.toString());
+                        e.toString());
                 return null;
             }
         }
@@ -180,7 +180,7 @@ public class Imagen extends Elemento {
 
             } catch (Exception e) {
                 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                                e.toString());
+                        e.toString());
                 return null;
             }
         }
@@ -196,7 +196,7 @@ public class Imagen extends Elemento {
             this.imagenTrabajo = Image.getInstance(i, Color.WHITE);
         } catch (Exception e) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                            e.toString());            
+                    e.toString());
         }
     }
 
@@ -208,7 +208,7 @@ public class Imagen extends Elemento {
         try {
             this.url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,e.toString());
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, e.toString());
         }
     }
 

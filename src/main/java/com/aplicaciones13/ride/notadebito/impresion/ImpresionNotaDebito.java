@@ -5,13 +5,6 @@ import com.aplicaciones13.impresion.ImpresionBaseElementos;
 import com.aplicaciones13.impresion.ImpresionBaseIText;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Objeto para armar la impresion de nota de debito.
@@ -39,19 +32,7 @@ public class ImpresionNotaDebito extends ImpresionBaseIText {
      * @param datosNotaDebito
      */
     public void ejecutar(DatosNotaDebito datosNotaDebito) {        
-        Document documento = new Document();
-        documento.setPageSize(PageSize.A4);
-        documento.setMargins(36, 28, 28, 28);
-        try {
-            setPdfWriter(PdfWriter.getInstance(documento,
-                                               getByteArrayOutputStream()));
-            getPdfWriter().setBoxSize(BOX_SIZE_NOMBRE,
-                                      new Rectangle(36, 54, 559, 788));
-        } catch (DocumentException e) {
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,
-                                                            e.toString());
-            return;
-        }
+        Document documento = crearDocumento();
         documento.open();
 
         imprimirSRI(datosNotaDebito, documento);
