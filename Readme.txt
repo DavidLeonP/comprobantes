@@ -1,1 +1,0 @@
-mvn sonar:sonar -Dsonar.projectKey=comprobantes -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1aa5477eabb6df3b2e9456042e01069b1b987dc7
