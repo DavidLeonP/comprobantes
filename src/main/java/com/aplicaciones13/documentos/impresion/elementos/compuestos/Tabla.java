@@ -10,6 +10,9 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -22,7 +25,10 @@ import java.util.List;
  * @author omargo33
  *
  */
+
 @Slf4j
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Tabla extends Conjunto {
 
     private List<Object[]> listaValores;
@@ -92,26 +98,5 @@ public class Tabla extends Conjunto {
                 columna++;
             }
         }
-    }
-
-    /**
-     * @param listaValores the listaValores to set
-     */
-    public void setListaValores(List<Object[]> listaValores) {
-        this.listaValores = listaValores;
-    }
-
-    /**
-     * @return the sumatoria
-     */
-    public boolean isSumatoria() {
-        return sumatoria;
-    }
-
-    /**
-     * @param sumatoria the sumatoria to set
-     */
-    public void setSumatoria(boolean sumatoria) {
-        this.sumatoria = sumatoria;
-    }
+    }    
 }
