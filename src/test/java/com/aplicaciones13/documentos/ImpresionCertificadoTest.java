@@ -50,7 +50,7 @@ public class ImpresionCertificadoTest {
             mapa.put("documentoSucursal", "Cuenca");
             mapa.put("documentoCodigo", "IKM7450");
             mapa.put("documentoNombre", "Certificad de ser Socio");
-            mapa.put("documentoDestino", "/home/ovelez/test.pdf");
+            mapa.put("documentoDestino", "/home/colaborador/test.pdf");
             mapa.put("documentoURL", "https://itextpdf.com/en/resources/examples/itext-7/repeating-rows");
             mapa.put("sitioWeb", "https://www.jardinazuayo.fin.ec");
             mapa.put("documentoValidez", "06 Noviembre de 2020");

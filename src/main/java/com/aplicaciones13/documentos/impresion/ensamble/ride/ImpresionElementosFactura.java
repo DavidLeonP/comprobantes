@@ -16,7 +16,6 @@ import com.itextpdf.layout.element.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.extern.slf4j.Slf4j;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -41,25 +40,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
     private static BundleMessages bundle = new BundleMessages("elementos-ride");
 
     Border bordeSolido = new SolidBorder(1f);
-
-    protected static String ELEMENTO_1 = "1";
-    protected static String ELEMENTO_2 = "2";
-    protected static String ELEMENTO_3 = "3";
-    protected static String ELEMENTO_4 = "4";
-    protected static String ELEMENTO_5 = "5";
-    protected static String ELEMENTO_6 = "6";
-    protected static String ELEMENTO_7 = "7";
-    protected static String ELEMENTO_8 = "8";
-    protected static String ELEMENTO_9 = "9";
-    protected static String ELEMENTO_10 = "10";
-    protected static String ELEMENTO_11 = "11";
-    protected static String ELEMENTO_12 = "12";
-    protected static String ELEMENTO_13 = "13";
-    protected static String ELEMENTO_14 = "14";
-    protected static String ELEMENTO_15 = "15";
-    protected static String ELEMENTO_16 = "16";
-    protected static String ELEMENTO_17 = "17";
-    protected static String ELEMENTO_18 = "18";
 
     private static String TXT_3_1 = "Factura";
     private static String TXT_3_2 = "No. %s-%s-%s";
@@ -115,18 +95,16 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             "Pa\u00eds Destino", "Puerto Destino", "Pa\u00eds Adquisici\u00f3n"
     };
 
-    private DatosRide datosRide;
     private Factura factura;
     List<TotalDocumentoFactura> totales;
 
-    public ImpresionElementosFactura(){
-        datosRide= new DatosRide();
+    public ImpresionElementosFactura(){        
          factura= new Factura();
          totales = new ArrayList<TotalDocumentoFactura>();
     }
 
     /*
-     * public synchronized void elemento_1() {
+     * public synchronized void elemento1() {
      * Pie pie = new Pie(TXT_3_1);
      * pie.setNumeroDocumento(getFactura().getInfoTributaria()
      * .getEstab() + "-"
@@ -148,7 +126,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Imprime el logo.
      *
      */
-    public synchronized void elemento_2() throws Exception {
+    public synchronized void elemento2(){
         
         //TODO no se puede imprimir el logo
         /*
@@ -167,7 +145,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
-    public synchronized void elemento_10() throws Exception {
+    public synchronized void elemento10() {
         Table table = new Table(2);
 
         table.setWidth(UnitValue.createPercentValue(100f));
@@ -255,13 +233,13 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         getH2().setTexto(TXT_11_8);
         tableDerecha.addCell(getH2().getParagraph());
 
-        getP().setTexto(datosRide.getNumeroAutorizacion());
+        getP().setTexto(getParametrosBusqueda().get("numeroAutorizacion"));
 
         tableDerecha.addCell(getP().getParagraph());
 
         // Ambiente
         getForm().setListaTitulos(TXT_11_10);
-        getForm().setListaValores(datosRide.getAmbienteAutorizacion());
+        getForm().setListaValores(getParametrosBusqueda().get("ambienteAutorizacion"));
         getForm().setListaFormatos(Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(40f, 60f);
         // TODO revisar paneles
@@ -270,7 +248,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
         // Emision
         getForm().setListaTitulos(TXT_11_11);
-        getForm().setListaValores(datosRide.getEmisionAutorizacion());
+        getForm().setListaValores(getParametrosBusqueda().get("emisionAutorizacion"));
         getForm().setListaFormatos(Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(40f, 60f);
         // TODO revisar paneles
@@ -289,7 +267,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
         org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
         code128.setCodeType(Barcode.CODE128);
-        code128.setCode(datosRide.getClaveAccesoAutorizacion());
+        code128.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
         code128.placeBarcode(imagenBarras, Color.black, Color.blue);
 
         //TODO revisar muestra de imagenes.
@@ -304,7 +282,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         try {
             getDocumento().add(table);
         } catch (Exception e) {            
-            throw new Exception(e);
+            new Exception(e);
         }
     }
 
@@ -312,7 +290,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    public synchronized void elemento_11() throws Exception {
+    public synchronized void elemento11() {
         getEspacio().escribir(2);
 
         informacionCliente();
@@ -330,7 +308,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         try {
             getDocumento().add(table);
         } catch (Exception e) {
-            throw new Exception(e);
+            new Exception(e);
         }
     }
 
@@ -338,7 +316,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    public synchronized void elemento_12() throws Exception {
+    public synchronized void elemento12() {
         getEspacio().escribir(2);
 
         if (getFactura().getDetalles() != null && getFactura()
@@ -361,7 +339,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             try {
                 getDocumento().add(table);
             } catch (Exception e) {
-                throw new Exception(e);
+                new Exception(e);
             }
 
             if (getCurrentPosition().getY() < 140) {
@@ -375,12 +353,14 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar la informaci\u00f3n del documento
      *
      */
-    public synchronized void elemento_3() {
-        getH1().setTexto(TXT_3_1);
+    public synchronized void elemento3() {
+        System.out.println("elemento3");
+        getH1().setTexto(TXT_3_1);        
         getH1().escribir();
 
-        getH1()
-                .setTexto(String.format(TXT_3_2, getFactura()
+        System.out.println("elemento3.1");
+        
+     /*   getH1().setTexto(String.format(TXT_3_2, getFactura()
                         .getInfoTributaria()
                         .getEstab(),
                         getFactura()
@@ -389,29 +369,37 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                         getFactura()
                                 .getInfoTributaria()
                                 .getSecuencial()));
-        getH1().escribir();
+        getH1().escribir();*/
 
         getEspacio().escribir(1);
+        
+        System.out.println("elemento3.2");
+        
         getForm().setListaTitulos(TXT_3_3);
+        System.out.println("elemento3.3");
+
 
         getForm()
-                .setListaValores(datosRide.getNumeroAutorizacion(), datosRide.getFechaAutorizacion(),
-                datosRide.getAmbienteAutorizacion(), datosRide.getEmisionAutorizacion());
+                .setListaValores(getParametrosBusqueda().get("numeroAutorizacion"), getParametrosBusqueda().get("fechaAutorizacion"),
+                getParametrosBusqueda().get("ambienteAutorizacion"), getParametrosBusqueda().get("emisionAutorizacion"));
         getForm()
                 .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
                         Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(25f, 75f);
+        System.out.println("elemento3.4");
 
         // TODO revisar paneles
         // getForm().setListaPaneles("4");
         getForm().escribir();
+        System.out.println("elemento3.5");
+        
     }
 
     /**
      * Metodo para escribir el codigo de barras de la clave de acceso.
      *
      */
-    public synchronized void elemento_4() {
+    public synchronized void elemento4() {
 
         getForm().setListaTitulos(TXT_4_1);
 
@@ -430,7 +418,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
         org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
         code128.setCodeType(Barcode.CODE128);
-        code128.setCode(datosRide.getClaveAccesoAutorizacion());
+        code128.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
         code128.placeBarcode(imagenBarras, Color.black, Color.blue);
 
         //TODO no se imprime el codigo de barras
@@ -448,7 +436,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      *
      * @throws Exception
      */
-    public synchronized void elemento_5() throws Exception {
+    public synchronized void elemento5() {
         getEspacio().escribir(5);
         getLineaSolida().escribir();
         getH2().setTexto(getFactura()
@@ -500,7 +488,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    public synchronized void elemento_6() throws Exception {
+    public synchronized void elemento6() {
         getEspacio().escribir(2);
         getLineaSolida().escribir();
 
@@ -547,7 +535,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
      *
      */
-    public synchronized void elemento_7() throws Exception {
+    public synchronized void elemento7(){
         getEspacio().escribir(2);
 
         if (getFactura().getDetalles() != null && getFactura()
@@ -653,7 +641,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar los totales de la factura
      *
      */
-    public synchronized void elemento_8() throws Exception {
+    public synchronized void elemento8() {
         getEspacio().escribir(2);
 
         subTotales();
@@ -670,7 +658,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar los totales de la factura
      *
      */
-    public synchronized void elemento_13() throws Exception {
+    public synchronized void elemento13() {
         getEspacio().escribir(2);
 
         Table tableTotales = new Table(1);
@@ -750,7 +738,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         try {
             getDocumento().add(tableCompleta);
         } catch (Exception e) {
-            throw new Exception(e);
+            new Exception(e);
         }
     }
 
@@ -851,7 +839,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar Formas de pago exportaciones.
      *
      */
-    public synchronized void elemento_14() throws Exception {
+    public synchronized void elemento14() {
         int size = 0;
 
         if (getFactura()
@@ -905,7 +893,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar informaci\u00f3n de la exportacion.
      *
      */
-    public synchronized void elemento_15() throws Exception {
+    public synchronized void elemento15() {
         if (isExportacion()) {
             getEspacio().escribir(2);
             // getLineaSolida().setWidthPercentage(100);
@@ -924,7 +912,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar informaci\u00f3n de la exportacion SRI.
      *
      */
-    public synchronized void elemento_17() throws Exception {
+    public synchronized void elemento17() {
         if (isExportacion()) {
 
             getEspacio().escribir(2);
@@ -970,7 +958,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             try {
                 getDocumento().add(table);
             } catch (Exception e) {
-                throw new Exception(e);
+                new Exception(e);
             }
         }
     }
@@ -979,7 +967,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar Formas de pago exportaciones SRI
      *
      */
-    public synchronized void elemento_16() throws Exception {
+    public synchronized void elemento16() {
         int size = 0;
 
         if (getFactura()
@@ -1058,7 +1046,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 try {
                     getDocumento().add(table);
                 } catch (Exception e) {
-                    throw new Exception(e);
+                    new Exception(e);
                 }
             }
         }
@@ -1108,7 +1096,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar informaci\u00f3n adicional.
      *
      */
-    public synchronized void elemento_9() throws Exception {
+    public synchronized void elemento9() {
         if (isExportacion())
             return;
         int size = informacionAdicional();

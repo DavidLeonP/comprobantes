@@ -25,15 +25,15 @@
             <version>2.3.1</version>
         </dependency>
 
-         <!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
-         <dependency>
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
+        <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext7-core</artifactId>
             <version>7.1.10</version>
             <type>pom</type>
         </dependency>
 
-        
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -41,6 +41,12 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -56,8 +62,8 @@
             <systemPath>${project.basedir}/src/main/resources/lib/JBARS.jar</systemPath>
         </dependency>
 
-         <!-- https://www.vogella.com/tutorials/JUnit/article.html -->
-         <dependency>
+        <!-- https://www.vogella.com/tutorials/JUnit/article.html -->
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.3.1</version>
