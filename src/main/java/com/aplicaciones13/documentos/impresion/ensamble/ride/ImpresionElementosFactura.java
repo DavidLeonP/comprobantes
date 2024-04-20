@@ -2,25 +2,29 @@ package com.aplicaciones13.documentos.impresion.ensamble.ride;
 
 import com.aplicaciones13.documentos.estruturas.factura.v2_1_0.Pagos.Pago;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
+import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionElementosBase;
 import com.aplicaciones13.documentos.estruturas.factura.v2_1_0.Factura;
 
 import com.aplicaciones13.documentos.utilidades.BundleMessages;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
+import com.itextpdf.barcodes.Barcode128;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ import org.jbars.Barcode;
  * @author omargo33
  *
  */
+@Slf4j
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ImpresionElementosFactura extends ImpresionElementosBase {
@@ -41,10 +46,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
     Border bordeSolido = new SolidBorder(1f);
 
-    private static String TXT_3_1 = "Factura";
-    private static String TXT_3_2 = "No. %s-%s-%s";
-    private static String TXT_3_3[] = {
-            "No.: Autorizaci\u00f3n", "Fecha Autorizaci\u00f3n", "Ambiente", "Emisi\u00f3n" };
     private static String TXT_4_1 = "Clave de Acceso";
     private static String TXT_5_1[] = {
             "RUC", "Direcci\u00f3n Matriz", "Direcci\u00f3n Establecimiento", "Contribuyente especial Nro.",
@@ -83,8 +84,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
     private static String TXT_11_6 = "Factura";
     private static String TXT_11_7 = "No.: %s-%s-%s";
     private static String TXT_11_8 = "N\u00famero Autorizaci\u00f3n";
-    private static String TXT_11_10 = "Ambiente";
-    private static String TXT_11_11 = "Emisi\u00f3n";
+    private static String TXT_11_10[] = { "Ambiente", "Emisi\u00f3n" };
     private static String TXT_11_12 = "Clave de Acceso";
 
     private static String TXT_14_1 = "Formas de Pago";
@@ -98,9 +98,9 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
     private Factura factura;
     List<TotalDocumentoFactura> totales;
 
-    public ImpresionElementosFactura(){        
-         factura= new Factura();
-         totales = new ArrayList<TotalDocumentoFactura>();
+    public ImpresionElementosFactura() {
+        factura = new Factura();
+        totales = new ArrayList<TotalDocumentoFactura>();
     }
 
     /*
@@ -119,60 +119,32 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      */
 
     /**
-     * Metodo para generar el logo del documento.
-     *
-     * Si el archivo no existe
-     * Agrega un logo temporal
-     * Imprime el logo.
-     *
-     */
-    public synchronized void elemento2(){
-        
-        //TODO no se puede imprimir el logo
-        /*
-        if (new File(getPathLogo()).isFile()) {
-            throw new Exception("No se encontro el archivo de logo");
-        }
-        getImagen().setPath(getPathLogo());
-        getImagen().setEscala(50f);
-        getImagen().setX(400);
-        getImagen().setY(690);
-        getImagen().escribir();
-        */
-    }
-
-    /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
-    public synchronized void elemento10() {
-        Table table = new Table(2);
-
-        table.setWidth(UnitValue.createPercentValue(100f));
-
+    public synchronized void elemento2() {
         // Lado Izquierdo
         Table tableIzquierda = new Table(1);
 
-        // Logotipo lado Izquierdo
-        //TODO no se puede imprimir el logo
+        int anchoImagen = (int) (getCurrentPosition().getAncho() * 0.2);
+        int margenes = (int) (getCurrentPosition().getAncho() / 2 - anchoImagen) / 2;
 
-        /**
-        if (new File(getPathLogo()).isFile()) {
-            throw new Exception("No se encontro el archivo de logo");
-        }
-        */
+        getImagen().setPathImagen(getParametrosBusqueda().get("pathImagen"));
+        getImagen().setMaximoAncho(anchoImagen);
+        getImagen().procesar();
 
-        //TODO no se puede imprimir el logo
-        /**
-        getImagen().setPath(getPathLogo());
-        getImagen().setEscala(50f);
-        tableIzquierda.addCell(getImagen().escribeCelda());
-        */
+        // Celda para imagen en el centro en el eje horizontal
+        Cell cellimg = new Cell();
+        cellimg.setPaddingLeft(margenes);
+        cellimg.add(getImagen().getImagen());
+
+        tableIzquierda.addCell(cellimg);
 
         // Nombre de la empresa
-        getH1().setTexto(getFactura()
+        getH1().setParagraph(getFactura()
                 .getInfoTributaria()
                 .getRazonSocial());
+
         tableIzquierda.addCell(getH1().getParagraph());
 
         // Informacion de la empresa
@@ -185,8 +157,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                         .getDirEstablecimiento());
         getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(30.0f, 70.0f);
-        // TODO revisar paneles
-        // getForm().setListaPaneles(2);
+        getForm().procesar();
         tableIzquierda.addCell(getForm().getTabla());
 
         // Informacion de contabilidad
@@ -200,90 +171,68 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                                 .getObligadoContabilidad());
         getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(50f, 50f);
-        // TODO revisar paneles
-        // getForm().setListaPaneles("2");
+        getForm().procesar();
         tableIzquierda.addCell(getForm().getTabla());
 
         // Lado Derecho
         Table tableDerecha = new Table(1);
-
+        tableDerecha.setBorder(Border.NO_BORDER);
         // Ruc
-        getH2().setTexto(TXT_11_5 + getFactura()
+        getH2().setParagraph(TXT_11_5 + getFactura()
                 .getInfoTributaria()
                 .getRuc());
         tableDerecha.addCell(getH2().getParagraph());
 
         // Nombre del documento
-        getH1().setTexto(TXT_11_6);
+        getH1().setParagraph(TXT_11_6);
         tableDerecha.addCell(getH1().getParagraph());
 
         // Numero del documento
-        getH1()
-                .setTexto(String.format(TXT_11_7, getFactura()
+        getH1().setParagraph(String.format(TXT_11_7, getFactura()
+                .getInfoTributaria()
+                .getEstab(),
+                getFactura()
                         .getInfoTributaria()
-                        .getEstab(),
-                        getFactura()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getFactura().getInfoTributaria()
-                                .getSecuencial()));
+                        .getPtoEmi(),
+                getFactura().getInfoTributaria()
+                        .getSecuencial()));
         tableDerecha.addCell(getH1().getParagraph());
 
         // Numero de autorizacion
-        getH2().setTexto(TXT_11_8);
+        getH2().setParagraph(TXT_11_8);
         tableDerecha.addCell(getH2().getParagraph());
 
-        getP().setTexto(getParametrosBusqueda().get("numeroAutorizacion"));
-
-        tableDerecha.addCell(getP().getParagraph());
+        getNota().setParagraph(getParametrosBusqueda().get("numeroAutorizacion"));
+        getNota().getParagraph().setFontSize(P.NOTA);
+        tableDerecha.addCell(getNota().getParagraph());
 
         // Ambiente
         getForm().setListaTitulos(TXT_11_10);
-        getForm().setListaValores(getParametrosBusqueda().get("ambienteAutorizacion"));
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(40f, 60f);
-        // TODO revisar paneles
-        // getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().getParagraph());
-
-        // Emision
-        getForm().setListaTitulos(TXT_11_11);
-        getForm().setListaValores(getParametrosBusqueda().get("emisionAutorizacion"));
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(40f, 60f);
-        // TODO revisar paneles
-        // getForm().setListaPaneles("1");
-        tableDerecha.addCell(getForm().getParagraph());
+        getForm().setListaValores(getParametrosBusqueda().get("ambienteAutorizacion"),
+                getParametrosBusqueda().get("emisionAutorizacion"));
+        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
+        getForm().setListaDimensiones(25f, 75f);
+        getForm().procesar();
+        tableDerecha.addCell(getForm().getTabla());
 
         // Clave de acceso
-        getH2().setTexto(TXT_11_12);
+        getH2().setParagraph(TXT_11_12);
         tableDerecha.addCell(getH2().getParagraph());
 
-        // Codigo barras
-        BufferedImage imagenBarras = new BufferedImage(640, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = imagenBarras.createGraphics();
-        g.setPaint(Color.WHITE);
-        g.fillRect(0, 0, 640, 100);
+        Barcode128 barcode = new Barcode128(getDocumento().getPdfDocument());
+        barcode.setCodeType(Barcode128.CODE128);
+        barcode.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
 
-        org.jbars.Barcode128 code128 = new org.jbars.Barcode128();
-        code128.setCodeType(Barcode.CODE128);
-        code128.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
-        code128.placeBarcode(imagenBarras, Color.black, Color.blue);
+        PdfFormXObject barcodeObject = barcode.createFormXObject(null, null, getDocumento().getPdfDocument());
+        Cell cell = new Cell().add(new Image(barcodeObject));
+        tableDerecha.addCell(cell);
 
-        //TODO revisar muestra de imagenes.
-        /**
-        getImagen().setImagen(imagenBarras);
-        getImagen().setEscala(35f);
-        tableDerecha.addCell(getImagen().escribeCelda());
-        */
-
-        table.addCell(tableIzquierda);
-        table.addCell(tableDerecha);
-        try {
-            getDocumento().add(table);
-        } catch (Exception e) {            
-            new Exception(e);
-        }
+        getPanel().setListaDimensiones(50f, 50f);
+        getPanel().getMapaAlineamiento().put(1, TextAlignment.LEFT);
+        getPanel().getMapaAlineamiento().put(2, TextAlignment.LEFT);
+        getPanel().setListaCeldas(tableIzquierda, tableDerecha);
+        getPanel().getTabla().setBorder(Border.NO_BORDER);
+        getPanel().procesarEscribir();
     }
 
     /**
@@ -328,10 +277,10 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
             Table table = new Table(1);
             table.setWidth(UnitValue.createPercentValue(100f));
-            //table.setWidthPercentage(100f);
+            // table.setWidthPercentage(100f);
             Cell cell = new Cell();
             cell.add(getTabla().getTabla());
-            //getTabla().escribeCelda();
+            // getTabla().escribeCelda();
             cell.setBorder(Border.NO_BORDER);
 
             table.addCell(cell);
@@ -347,52 +296,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             }
 
         }
-    }
-
-    /**
-     * Metodo para agregar la informaci\u00f3n del documento
-     *
-     */
-    public synchronized void elemento3() {
-        System.out.println("elemento3");
-        getH1().setTexto(TXT_3_1);        
-        getH1().escribir();
-
-        System.out.println("elemento3.1");
-        
-     /*   getH1().setTexto(String.format(TXT_3_2, getFactura()
-                        .getInfoTributaria()
-                        .getEstab(),
-                        getFactura()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getFactura()
-                                .getInfoTributaria()
-                                .getSecuencial()));
-        getH1().escribir();*/
-
-        getEspacio().escribir(1);
-        
-        System.out.println("elemento3.2");
-        
-        getForm().setListaTitulos(TXT_3_3);
-        System.out.println("elemento3.3");
-
-
-        getForm()
-                .setListaValores(getParametrosBusqueda().get("numeroAutorizacion"), getParametrosBusqueda().get("fechaAutorizacion"),
-                getParametrosBusqueda().get("ambienteAutorizacion"), getParametrosBusqueda().get("emisionAutorizacion"));
-        getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(25f, 75f);
-        System.out.println("elemento3.4");
-
-        // TODO revisar paneles
-        // getForm().setListaPaneles("4");
-        getForm().escribir();
-        System.out.println("elemento3.5");
-        
     }
 
     /**
@@ -421,14 +324,14 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         code128.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
         code128.placeBarcode(imagenBarras, Color.black, Color.blue);
 
-        //TODO no se imprime el codigo de barras
+        // TODO no se imprime el codigo de barras
         /*
-        getImagen().setImagen(imagenBarras);
-        getImagen().setEscala(35f);
-        getImagen().setX(165);
-        getImagen().setY(680);
-        getImagen().escribir();
-        */
+         * getImagen().setImagen(imagenBarras);
+         * getImagen().setEscala(35f);
+         * getImagen().setX(165);
+         * getImagen().setY(680);
+         * getImagen().escribir();
+         */
     }
 
     /**
@@ -535,7 +438,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Agrega los datos para la ubicacion en pantalla sin el codigo auxiliar
      *
      */
-    public synchronized void elemento7(){
+    public synchronized void elemento7() {
         getEspacio().escribir(2);
 
         if (getFactura().getDetalles() != null && getFactura()
@@ -631,10 +534,10 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         getTabla().getMapaAlineamiento().put(5, TextAlignment.RIGHT);
         getTabla().getMapaAlineamiento().put(6, TextAlignment.RIGHT);
 
-        //TODO se tiene que cambiar el metodo setVectorDatos
-        //getTabla().setVectorDatos(vector);
+        // TODO se tiene que cambiar el metodo setVectorDatos
+        // getTabla().setVectorDatos(vector);
         getTabla().getTabla().setWidth(UnitValue.createPercentValue(100f));
-        //getTabla().setWidthPercent(100f);
+        // getTabla().setWidthPercent(100f);
     }
 
     /**
@@ -685,29 +588,31 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         // tableTotales.addCell(getLineaSolida().escribeCelda());
 
         // TODO Revisar si se necesita linea solida!!
-        /*tableTotales.add(getLineaSolida());
-
-        cellLinea.addElement(tableLinea);
-        tableTotales.addCell(cellLinea);*/
+        /*
+         * tableTotales.add(getLineaSolida());
+         * 
+         * cellLinea.addElement(tableLinea);
+         * tableTotales.addCell(cellLinea);
+         */
 
         totales();
-        //Cell cellSumatoria = getForm().escribeCelda();
+        // Cell cellSumatoria = getForm().escribeCelda();
         Cell cellSumatoria = new Cell();
         cellSumatoria.add(getForm().getTabla());
 
         cellSumatoria.setBorder(Border.NO_BORDER);
-        //cellSumatoria.setBorderWidthTop(0f);
+        // cellSumatoria.setBorderWidthTop(0f);
         tableTotales.addCell(cellSumatoria);
 
         Table tableCompleta = new Table(2);
         tableCompleta.setWidth(UnitValue.createPercentValue(100f));
-        //tableCompleta.setWidthPercentage(100f);
+        // tableCompleta.setWidthPercentage(100f);
 
         Cell cellTotales = new Cell();
         cellTotales.setBorder(Border.NO_BORDER);
         cellTotales.add(tableTotales);
-        //cellTotales.setBorderWidthTop(0f);
-        //cellTotales.addElement(tableTotales);
+        // cellTotales.setBorderWidthTop(0f);
+        // cellTotales.addElement(tableTotales);
 
         if (isExportacion()) {
             int size = informacionAdicional();
@@ -716,8 +621,8 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 Table tableAdicionales = new Table(1);
                 tableAdicionales.setBorder(bordeSolido);
                 tableAdicionales.setWidth(UnitValue.createPercentValue(100f));
-                //tableAdicionales.getDefaultCell().setBorder(0);
-                //tableAdicionales.setWidthPercentage(100f);
+                // tableAdicionales.getDefaultCell().setBorder(0);
+                // tableAdicionales.setWidthPercentage(100f);
 
                 getH2().setTexto(TXT_10_1);
                 tableAdicionales.addCell(getH2().getParagraph());
@@ -729,9 +634,11 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             tableCompleta.addCell("");
 
         tableCompleta.addCell(tableTotales);
-        //TODO colomnas
-        /*float[] columnWidths = new float[] { 70f, 30f };
-        tableCompleta.setWidths(columnWidths);*/
+        // TODO colomnas
+        /*
+         * float[] columnWidths = new float[] { 70f, 30f };
+         * tableCompleta.setWidths(columnWidths);
+         */
 
         tableCompleta.setBorder(bordeSolido);
 
@@ -765,7 +672,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                     getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
                     getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
                     getForm().getMapaAlineamiento().put(j++, TextAlignment.RIGHT);
-                    //getForm().getListaCamposAlineadosDerecha().add(j++ + "");
+                    // getForm().getListaCamposAlineadosDerecha().add(j++ + "");
 
                 }
                 i++;
@@ -773,7 +680,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
             String tiuloPivot = getForm().getListaTitulos().get(0);
             String valorPivot = String.valueOf(getForm().getListaValores().get(0));
-            //String valorPivot = getForm().getListaValores().get(0);            
+            // String valorPivot = getForm().getListaValores().get(0);
 
             getForm().getListaTitulos().remove(0);
             getForm().getListaValores().remove(0);

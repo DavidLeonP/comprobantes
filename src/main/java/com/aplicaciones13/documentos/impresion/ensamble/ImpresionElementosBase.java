@@ -40,7 +40,7 @@ public class ImpresionElementosBase {
     /**
      * Elemento para generar los mensajes.
      */
-    BundleMessages bundle = new BundleMessages("elementos-base");
+    private static BundleMessages bundle = new BundleMessages("elementos-base");
 
     private float margenSuperiorOriginal;
     private int[] ordenElementos;
@@ -84,7 +84,7 @@ public class ImpresionElementosBase {
             }
         });
 
-        setP(new P(P.PARRAFO) {
+        setP(new P(P.PARRAFO ) {
             @Override
             public Document getDocumento() {
                 return getDocumentoPadre();

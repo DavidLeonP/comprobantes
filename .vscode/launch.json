@@ -9,6 +9,13 @@
             "name": "Ejecutar",
             "request": "launch",
             "mainClass": "com.aplicaciones13.documentos.Ejecutar",
+            "projectName": "documentos"
+        },
+        {
+            "type": "java",
+            "name": "Ejecutar",
+            "request": "launch",
+            "mainClass": "com.aplicaciones13.documentos.Ejecutar",
             "projectName": "comprobantes"
         },
         {

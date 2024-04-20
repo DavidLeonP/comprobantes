@@ -43,4 +43,20 @@ public class BundleMessages {
             return "Error: " + e.getMessage();
         }
     }
+
+    /**
+     * Metodo que obtiene los mensajes del archivo de propiedades sin parametros
+     * 
+     * @param keys
+     * @return
+     */
+    public String[] getMessages(String ...keys) {        
+        String[] messages = new String[keys.length];
+
+        for (int i = 0; i < keys.length; i++) {
+            messages[i] = getMessage(keys[i]);
+        }
+
+        return messages;
+    }
 }
