@@ -5,6 +5,7 @@
  */
 package com.aplicaciones13.documentos.impresion.elementos.compuestos;
 
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Table;
@@ -18,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 
 import java.util.List;
-
+import com.itextpdf.kernel.colors.Color;
 /**
  * Objeto presentar una tabla.
  *
@@ -33,6 +34,8 @@ public class Tabla extends Conjunto {
 
     private List<Object[]> listaValores;
     private boolean sumatoria=false;
+    private boolean bandasPresentacion=false;
+    private static Color colorFondo = new DeviceRgb( 244, 246, 246  );
 
     /**
      * Metodo para crear la clase. Inicializa SQLBase Limpia datos de la tabla.
@@ -64,6 +67,7 @@ public class Tabla extends Conjunto {
      */
     @Override
     public void procesar() {
+        boolean colorActivo = true;
         if (getListaDimensiones().size() != getListaFormatos().size()) {
             log.warn(".tabla()");
             return;
@@ -85,6 +89,7 @@ public class Tabla extends Conjunto {
 
         for (Object[] fila : listaValores) {
             int columna = 0;
+            colorActivo = !colorActivo;
             for (Object celda : fila) {
                 P pValor = new P(darFormatoManual(celda, getListaFormatos().get(columna)), P.TEXTO);
                 if (isSumatoria()) {
@@ -93,6 +98,11 @@ public class Tabla extends Conjunto {
                 Cell cell = new Cell();
                 cell.add(pValor.getParagraph());
                 cell.setBorder(Border.NO_BORDER);
+            
+                if(colorActivo && bandasPresentacion){
+                    cell.setBackgroundColor(colorFondo);
+                }
+            
                 cell.setTextAlignment(getAlineamientoColumna(columna, TextAlignment.LEFT));
                 getTabla().addCell(cell);
                 columna++;

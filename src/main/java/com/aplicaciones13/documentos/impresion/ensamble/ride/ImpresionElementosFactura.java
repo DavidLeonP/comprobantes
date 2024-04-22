@@ -132,19 +132,11 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 filaValores[3] = a.getPrecioUnitario().toString();
                 filaValores[4] = a.getDescuento().toString();
                 filaValores[5] = a.getPrecioTotalSinImpuesto().toString();
-                listaValores.add(filaValores);
 
                 if (a.getCodigoAuxiliar() != null && a.getCodigoAuxiliar()
                         .trim()
                         .length() > 0) {
-                    filaValores = new Object[6];
-                    filaValores[0] = "";
-                    filaValores[1] = "Cod.: " + a.getCodigoAuxiliar();
-                    filaValores[2] = "";
-                    filaValores[3] = "";
-                    filaValores[4] = "";
-                    filaValores[5] = "";
-                    listaValores.add(filaValores);
+                    filaValores[1] = filaValores[1] + "\nCod.: " + a.getCodigoAuxiliar();
                 }
 
                 if (a.getDetallesAdicionales() != null && a.getDetallesAdicionales()
@@ -152,16 +144,11 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                         .size() > 0) {
                     for (Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional b : a.getDetallesAdicionales()
                             .getDetAdicional()) {
-                        filaValores = new Object[6];
-                        filaValores[0] = "";
-                        filaValores[1] = b.getNombre() + ": " + b.getValor();
-                        filaValores[2] = "";
-                        filaValores[3] = "";
-                        filaValores[4] = "";
-                        filaValores[5] = "";
-                        listaValores.add(filaValores);
+                        filaValores[1] = filaValores[1] + "\n" + b.getNombre() + ": " + b.getValor();
                     }
                 }
+
+                listaValores.add(filaValores);
             }
             getTabla().setListaTitulos(bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021",
                     "fac_022"));
@@ -179,7 +166,9 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             getTabla().getMapaAlineamiento().put(6, TextAlignment.RIGHT);
 
             getTabla().setListaValores(listaValores);
-            getTabla().procesarEscribir();
+            getTabla().setBandasPresentacion(true);
+            getTabla().procesar();
+            getTabla().escribir();
         }
 
         if (getCurrentPosition().getY() < 140) {
@@ -201,24 +190,24 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
         subTotales();
         getPanel().setListaDimensiones(60f, 36f);
-                
+
         getForm().procesar();
         getPanel().setListaCeldas(cell, getForm().getTabla());
         getForm().reset();
 
         getPanel().procesar();
-        getPanel().escribir();        
-        
-        totales();        
+        getPanel().escribir();
+
+        totales();
         getPanel().setListaDimensiones(60f, 36f);
-                
+
         getForm().procesar();
         getForm().getTabla().setBorderTop(border);
         getPanel().setListaCeldas(cell, getForm().getTabla());
         getForm().reset();
 
         getPanel().procesar();
-        getPanel().escribir();        
+        getPanel().escribir();
     }
 
     /**
@@ -254,10 +243,49 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
     }
 
     /**
-     * Metodo para agregar Formas de pago
+     * Metodo para agregar informacion adicional.
      *
      */
     public synchronized void elemento7() {
+        if (isExportacion())
+            return;
+
+        if (isInformacionAdicional()) {
+            getEspacio().escribir(1);
+            getLineaSolida().escribir();
+
+            int size = 0;
+
+            getH2().setTexto(bundle.getMessage("fac_036"));
+            getH2().escribir();
+
+            for (Factura.InfoAdicional.CampoAdicional a : getFactura()
+                    .getInfoAdicional()
+                    .getCampoAdicional()) {
+                getForm().getListaTitulos().add(a.getNombre());
+                getForm().getListaValores().add((a.getValue() == null) ? "" : a.getValue().toString());
+                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+                size++;
+            }
+
+            if (size > 0) {
+                int total = 74 + (12 * size);
+                if (getCurrentPosition().getY() < total) {
+                    getDocumento().add(new AreaBreak());
+                }
+                getForm().setListaDimensiones(30f, 70f);
+                getForm().procesar();
+                getForm().escribir();
+                getForm().reset();
+            }
+        }
+    }
+
+    /**
+     * Metodo para agregar Formas de pago
+     *
+     */
+    public synchronized void elemento8() {
         int size = 0;
 
         if (getFactura()
@@ -294,45 +322,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 getH2().escribir();
 
                 getForm().setListaDimensiones(15f, 85f);
-                getForm().procesar();
-                getForm().escribir();
-                getForm().reset();
-            }
-        }
-    }
-
-    /**
-     * Metodo para agregar informacion adicional.
-     *
-     */
-    public synchronized void elemento8() {
-        if (isExportacion())
-            return;
-
-        if (isInformacionAdicional()) {
-            getEspacio().escribir(1);
-            getLineaSolida().escribir();
-
-            int size = 0;
-
-            getH2().setTexto(bundle.getMessage("fac_036"));
-            getH2().escribir();
-
-            for (Factura.InfoAdicional.CampoAdicional a : getFactura()
-                    .getInfoAdicional()
-                    .getCampoAdicional()) {
-                getForm().getListaTitulos().add(a.getNombre());
-                getForm().getListaValores().add((a.getValue() == null) ? "" : a.getValue().toString());
-                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
-                size++;
-            }
-
-            if (size > 0) {
-                int total = 74 + (12 * size);
-                if (getCurrentPosition().getY() < total) {
-                    getDocumento().add(new AreaBreak());
-                }
-                getForm().setListaDimensiones(30f, 70f);
                 getForm().procesar();
                 getForm().escribir();
                 getForm().reset();
