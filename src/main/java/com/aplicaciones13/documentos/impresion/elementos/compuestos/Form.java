@@ -12,12 +12,11 @@ import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,15 +27,13 @@ import java.util.List;
  *
  */
 @Slf4j
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class Form extends Conjunto {
 
     /**
      * Lista de valores de la forma.
      */
     List<Object> listaValores;
-    
+
     /**
      * Metodo que crea la clase.
      *
@@ -44,6 +41,17 @@ public class Form extends Conjunto {
     public Form() {
         super();
         init();
+    }
+
+    /**
+     * Metodo para resetear el objeto.
+     */
+    public void reset() {
+        setListaTitulos(new ArrayList<>());
+        setListaValores(new ArrayList<>());
+        setListaFormatos(null);
+        setMapaAlineamiento(new HashMap<>());        
+        setTabla(new Table(1));        
     }
 
     /**
@@ -59,16 +67,23 @@ public class Form extends Conjunto {
      *
      */
     public void procesar() {
+
         if (getListaFormatos().size() != this.listaValores.size()) {
-            log.warn(".procesar()");            
+            log.warn(".procesar() formatos:{} valores:{}", getListaFormatos().size(), this.listaValores.size());
+
             return;
         }
+
+        /*for (int i = 0; i < getListaTitulos().size(); i++) {
+            log.info("[TITULO]:{} [FORMATO]:{} [VALOR]:{}",getListaTitulos().get(i), getListaFormatos().get(i), getListaValores().get(i));            
+        }*/
+
 
         setTabla(new Table(getArrayDimensiones()));
         int i = 0;
         for (Object obj : listaValores) {
-            P pTitulo = new P(getListaTitulos().get(i), P.TEXTO);            
-            pTitulo.negrita();            
+            P pTitulo = new P(getListaTitulos().get(i), P.TEXTO);
+            pTitulo.negrita();
             Cell cellTitulo = new Cell();
             cellTitulo.add(pTitulo.getParagraph());
             cellTitulo.setBorder(Border.NO_BORDER);
@@ -76,15 +91,15 @@ public class Form extends Conjunto {
             cellTitulo.setVerticalAlignment(VerticalAlignment.MIDDLE);
             getTabla().addCell(cellTitulo);
 
-            P pDato = new P(darFormatoManual(obj, getListaFormatos().get(i)),P.TEXTO);
+            P pDato = new P(darFormatoManual(obj, getListaFormatos().get(i)), P.TEXTO);
             Cell cellValor = new Cell();
             cellValor.add(pDato.getParagraph());
             cellValor.setBorder(Border.NO_BORDER);
-            cellValor.setTextAlignment(getAlineamientoColumna(i+1, TextAlignment.LEFT));
+            cellValor.setTextAlignment(getAlineamientoColumna(i + 1, TextAlignment.LEFT));
             cellValor.setVerticalAlignment(VerticalAlignment.MIDDLE);
             getTabla().addCell(cellValor);
             i++;
-        }        
+        }
     }
 
     /**
@@ -103,5 +118,12 @@ public class Form extends Conjunto {
         listaValores = new ArrayList<>();
         listaValores.addAll(Arrays.asList(valor));
     }
-    
+
+    public void setListaValores(List<Object> listaValores) {
+        this.listaValores = listaValores;
+    }
+
+    public List<Object> getListaValores() {
+        return listaValores;
+    }
 }

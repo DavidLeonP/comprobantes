@@ -61,14 +61,14 @@ public class Elemento {
      *
      */
     public Elemento() {
-        initBase();
+        init();
     }
 
     /**
      * Metodo para inicializar los objetos utilizados.
      *
      */
-    private void initBase() {
+    private void init() {
         try {
             FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
             PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, false);

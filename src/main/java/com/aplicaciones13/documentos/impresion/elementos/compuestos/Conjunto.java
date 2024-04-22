@@ -35,15 +35,14 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
      */
     public Conjunto() {
         super();
-        initConjunto();
-
+        init();
     }
 
     /**
      * Metodo para inicializar el objeto.
      *
      */
-    private void initConjunto() {
+    private void init() {
         setMapaAlineamiento(new HashMap<>());
         this.listaTitulos = new ArrayList<>();
         setTabla(new Table(1));
@@ -61,7 +60,10 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
      */
     public void setListaFormatos(String... formatos) {
         listaFormatos = new ArrayList<>();
-        listaFormatos.addAll(Arrays.asList(formatos));
+        
+        if (formatos != null && formatos.length > 0){
+            listaFormatos.addAll(Arrays.asList(formatos));
+        }
     }
 
     /**
@@ -114,6 +116,10 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
     public void setListaTitulos(String... columnas) {
         this.listaTitulos = new ArrayList<>();
         this.listaTitulos.addAll(Arrays.asList(columnas));
+    }
+
+    public void setListaTitulos(List<String> listaTitulos) {
+        this.listaTitulos = listaTitulos;
     }
 
     /**

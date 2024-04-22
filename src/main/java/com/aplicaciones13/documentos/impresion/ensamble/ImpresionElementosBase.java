@@ -241,6 +241,9 @@ public class ImpresionElementosBase {
             case 7:
                 elemento7();
                 break;
+            case 8:
+                elemento8();
+                break;    
             default:
                 log.warn(".imprimirElemento() elemento no exite {} ", valor);
         }
@@ -391,6 +394,14 @@ public class ImpresionElementosBase {
      */
     public synchronized void elemento7() {
         log.warn(".elemento7()");
+    }
+
+    /**
+     * Metodo para imprimir el elemento 8.
+     *
+     */
+    public synchronized void elemento8() {
+        log.warn(".elemento8()");
     }
 
     /**
