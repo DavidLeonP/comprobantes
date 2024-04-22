@@ -5,7 +5,7 @@
  */
 package com.aplicaciones13.documentos.impresion.elementos.texto;
 
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 
 /**
  * Objeto para mostrar un titulo .

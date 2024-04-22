@@ -15,7 +15,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
-
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
@@ -157,13 +156,13 @@ public class Cenefa {
             PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
 
             if (cenefaEstructura.isImagenVisible()) {
-                try (Canvas canvasImagen = new Canvas(pdfCanvas, getPdfDocument(), rectanguloImagen)) {
+                try (Canvas canvasImagen = new Canvas(pdfCanvas, rectanguloImagen)) {
                     canvasImagen.add(image);
                 }
             }
 
             if (cenefaEstructura.isVisibleInformacionPagina()) {
-                try (Canvas canvasInformacionPagina = new Canvas(pdfCanvas, getPdfDocument(), rectanguloInformacionPagina)) {
+                try (Canvas canvasInformacionPagina = new Canvas(pdfCanvas, rectanguloInformacionPagina)) {
                     canvasInformacionPagina.add(creaInformacionPagina(i, n));
                 }
             }

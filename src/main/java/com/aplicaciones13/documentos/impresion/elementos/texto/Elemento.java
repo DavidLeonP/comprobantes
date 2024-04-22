@@ -8,7 +8,7 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.aplicaciones13.documentos.utilidades.BundleMessages;
+import com.aplicaciones13.documentos.utilidades.Bundle;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +49,7 @@ public class Elemento {
     /**
      * Manejo de mensajes.
      */
-    BundleMessages bundle = new BundleMessages();
+    Bundle bundle = new Bundle();
 
     private Paragraph paragraph;
     private PdfFont fontDatos;
@@ -71,14 +71,14 @@ public class Elemento {
     private void init() {
         try {
             FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
-            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, false);
+            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING);
             setFontDatos(pdfFont);
         } catch (IOException ex) {
             log.warn(".init() 1 {}", ex.toString());
         }
         try {
             FontProgram fontProgram = FontProgramFactory.createFont(BOLD);
-            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, false);
+            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING);
             setFontTitulos(pdfFont);
         } catch (IOException ex) {
             log.warn(".init() 2 {}", ex.toString());

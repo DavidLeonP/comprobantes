@@ -2,7 +2,7 @@ package com.aplicaciones13.documentos.impresion.ensamble.certificado;
 
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionElementosBase;
-import com.aplicaciones13.documentos.utilidades.BundleMessages;
+import com.aplicaciones13.documentos.utilidades.Bundle;
 import com.itextpdf.layout.Document;
 
 /**
@@ -14,7 +14,7 @@ import com.itextpdf.layout.Document;
 public class ImpresionElementosCertificado extends ImpresionElementosBase {
     private final String SALTO_PAGINA = "\n";
 
-    BundleMessages bundle = new BundleMessages("elementos-certificado");
+    Bundle bundle = new Bundle("elementos-certificado");
 
     P pTitulos;
 

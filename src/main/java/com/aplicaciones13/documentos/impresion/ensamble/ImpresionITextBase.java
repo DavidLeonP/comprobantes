@@ -19,7 +19,7 @@ import com.itextpdf.signatures.PdfSigner;
 import com.itextpdf.signatures.PrivateKeySignature;
 import com.aplicaciones13.documentos.impresion.elementos.presentacion.Cenefa;
 import com.aplicaciones13.documentos.impresion.elementos.presentacion.CenefaEstructura;
-import com.aplicaciones13.documentos.utilidades.BundleMessages;
+import com.aplicaciones13.documentos.utilidades.Bundle;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ public class ImpresionITextBase {
     /**
      * Manejo de mensajes.
      */
-    BundleMessages bundle = new BundleMessages("elementos-base");
+    Bundle bundle = new Bundle("elementos-base");
 
     Cenefa cenefaSuperior;
     Cenefa cenefaInferior;
@@ -277,7 +277,7 @@ public class ImpresionITextBase {
                 guardar();
             } else {
                 guardar(impresionElementosBase.getCurrentPosition(), mapaParametros);
-            }
+            }            
             encriptar(mapaParametros);
         } catch (Exception e) {
             log.warn(".ejecutar() {}", e.toString());
@@ -292,8 +292,8 @@ public class ImpresionITextBase {
      */
     private String getNombreDocumento(Map<String, String> mapaParametros) {
         return bundle.getMessage("txt_000_06",
-                (String) mapaParametros.get("documentoNombre"),
-                (String) mapaParametros.get("documentoCodigo")
+                String.valueOf(mapaParametros.get("documentoNombre")),
+                String.valueOf(mapaParametros.get("documentoCodigo"))
         );
     }
 
@@ -305,15 +305,31 @@ public class ImpresionITextBase {
     private void encriptar(Map<String, String> mapaParametros) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(
                 new PdfReader(pahtTemporal),
-                new PdfWriter((String) mapaParametros.get("documentoDestino"), new WriterProperties().setStandardEncryption(
-                        null,
-                        pahtTemporal.getBytes(),
-                        EncryptionConstants.ALLOW_PRINTING,
-                        EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA))
-        );
+                new PdfWriter(
+                        String.valueOf(mapaParametros.get("documentoDestino")), 
+                        new WriterProperties().setStandardEncryption(
+                            null,
+                            pahtTemporal.getBytes(),
+                            EncryptionConstants.ALLOW_PRINTING,
+                            EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA)
+                        )
+            );
         pdfDoc.close();
 
+        // codigo para poner clave que se solicite 
+        /*String archivoDestino = String.valueOf(mapaParametros.get("documentoDestino"));
+        byte[] USERPASS = "user".getBytes();
+        byte[] OWNERPASS = "owner".getBytes();
+        PdfReader pdfReader = new PdfReader(pahtTemporal);        
+        WriterProperties writerProperties = new WriterProperties();        
+        writerProperties.setStandardEncryption(USERPASS, OWNERPASS, EncryptionConstants.DO_NOT_ENCRYPT_METADATA, EncryptionConstants.ENCRYPTION_AES_128);        
+        PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(archivoDestino), writerProperties);        
+        PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);        
+        pdfDocument.close();*/
+
         Path pathAbsolute = Paths.get(pahtTemporal);
+        
         Files.deleteIfExists(pathAbsolute);
-    }
+        
+    }    
 }

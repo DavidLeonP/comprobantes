@@ -8,6 +8,7 @@ import lombok.Data;
 /** Objeto para soportar los totales de los documentos.
  *
  * @author omargo33
+ * @since 2024-04-22
  *
  */
 @Data

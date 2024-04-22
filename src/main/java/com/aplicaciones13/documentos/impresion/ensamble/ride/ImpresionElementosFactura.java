@@ -1,13 +1,13 @@
 package com.aplicaciones13.documentos.impresion.ensamble.ride;
 
-import com.aplicaciones13.documentos.estruturas.factura.v2_1_0.Pagos.Pago;
+import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Pagos.Pago;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionElementosBase;
-import com.aplicaciones13.documentos.estruturas.factura.v2_1_0.Factura;
+import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura;
 
-import com.aplicaciones13.documentos.utilidades.BundleMessages;
-import com.itextpdf.layout.property.TextAlignment;
+import com.aplicaciones13.documentos.utilidades.Bundle;
+
 import com.itextpdf.barcodes.Barcode128;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.borders.Border;
@@ -16,6 +16,7 @@ import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +34,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class ImpresionElementosFactura extends ImpresionElementosBase {
 
-    private static BundleMessages bundle = new BundleMessages("elementos-ride");
+    private static Bundle bundle = new Bundle("elementos-ride");
 
     private static String TOTALES_PRESENTACION[] = {
             "1", "1", "1 2", "1 2", "1", "1", "1", "1", "2", "2", "2", "2", "1 2" };

@@ -71,7 +71,7 @@ public class Imagen extends Elemento {
         try {
             setImagen(new Image(ImageDataFactory.create(this.pathImagen)));
             procesarEscala();
-        } catch (com.itextpdf.io.IOException | MalformedURLException ex) {
+        } catch (MalformedURLException ex) {
             procesarImagenNotFound();
         }
     }
@@ -97,7 +97,7 @@ public class Imagen extends Elemento {
     private void procesarImagenNotFound() {
         try {
             setImagen(new Image(ImageDataFactory.create(IMAGE_NOT_FOUND)));
-        } catch (com.itextpdf.io.IOException | MalformedURLException ex) {            
+        } catch (MalformedURLException ex) {            
             log.warn(".procesarImagenNotFound() {}", ex.toString());
         }
     }

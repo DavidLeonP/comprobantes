@@ -7,9 +7,9 @@ package com.aplicaciones13.documentos.impresion.elementos.compuestos;
 
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 
 import lombok.extern.slf4j.Slf4j;
@@ -73,11 +73,6 @@ public class Form extends Conjunto {
 
             return;
         }
-
-        /*for (int i = 0; i < getListaTitulos().size(); i++) {
-            log.info("[TITULO]:{} [FORMATO]:{} [VALOR]:{}",getListaTitulos().get(i), getListaFormatos().get(i), getListaValores().get(i));            
-        }*/
-
 
         setTabla(new Table(getArrayDimensiones()));
         int i = 0;

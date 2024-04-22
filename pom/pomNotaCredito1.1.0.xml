@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.aplicaciones13</groupId>
+        <artifactId>documentos</artifactId>
+        <version>1.0</version>
+    </parent>
+    <groupId>com.aplicaciones13</groupId>
+    <artifactId>documentos-credito</artifactId>
+    <version>1.1.0</version>
+    <packaging>pom</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+
+                    <execution>
+                        <id>xjc12</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>../src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
+                            <packageName>com.aplicaciones13.documentos.estructuras.notacredito.v1_1_0</packageName>
+                            <schemaDirectory>../src/main/resources/xsd</schemaDirectory>
+                            <schemaFiles>NotaCredito_V1.1.0.xsd</schemaFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>                    

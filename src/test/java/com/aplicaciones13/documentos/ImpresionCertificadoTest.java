@@ -19,14 +19,6 @@ import com.aplicaciones13.documentos.impresion.ensamble.certificado.ImpresionEle
  */
 public class ImpresionCertificadoTest {
 
-    
-    /**
-     *  Metodo para iniciar el test de ImpresionElementosCertificadoTest.
-     */
-    public ImpresionCertificadoTest() {
-        //No requiere para este ejercicio
-    }
-
     /**
      * Test of elemento2 method, of class ImpresionElementosCertificado.
      */
@@ -56,8 +48,8 @@ public class ImpresionCertificadoTest {
             mapa.put("documentoValidez", "06 Noviembre de 2020");
             //mapa.put("documentoPie", "/mnt/documentos/logosCooperativa/membreteInferior_2239x209.png");
             //mapa.put("documentoEncabezado", "/mnt/documentos/logosCooperativa/membreteSuperior_2239x209.png");
-            //mapa.put("documentoArchivoP12", "/mnt/documentos/pi16001-core/llave.p12");
-            //mapa.put("documentoArchivoP12Clave", "Admin1234s");
+            mapa.put("documentoArchivoP12", "/mnt/documentos/pi16001-core/llave.p12");
+            mapa.put("documentoArchivoP12Clave", "Admin1234s");
             mapa.put("cuerpo", "texto para probar \n y probar el salto de pagina");
 
             //CenefaEstructura cenefaEstructuraSuperior = new CenefaEstructura(false, true, false, false, false, mapa.get("documentoEncabezado"));

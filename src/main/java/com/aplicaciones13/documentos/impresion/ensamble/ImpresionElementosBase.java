@@ -4,7 +4,7 @@ import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
 import com.aplicaciones13.documentos.impresion.elementos.presentacion.Espacio;
 import com.aplicaciones13.documentos.impresion.elementos.presentacion.Linea;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Titulo;
-import com.aplicaciones13.documentos.utilidades.BundleMessages;
+import com.aplicaciones13.documentos.utilidades.Bundle;
 import com.aplicaciones13.documentos.impresion.elementos.texto.P;
 import com.aplicaciones13.documentos.impresion.elementos.imagen.ImagenCodigoQR;
 import com.aplicaciones13.documentos.impresion.elementos.imagen.Imagen;
@@ -17,10 +17,10 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.property.TextAlignment;
 import java.util.HashMap;
 import java.util.Map;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
 import lombok.ToString;
@@ -40,11 +40,11 @@ public class ImpresionElementosBase {
     /**
      * Elemento para generar los mensajes.
      */
-    private static BundleMessages bundle = new BundleMessages("elementos-base");
+    private static Bundle bundle = new Bundle("elementos-base");
 
     private float margenSuperiorOriginal;
     private int[] ordenElementos;
-    
+
     private Document documento;
     private Espacio espacio;
     private Form form;
@@ -84,7 +84,7 @@ public class ImpresionElementosBase {
             }
         });
 
-        setP(new P(P.PARRAFO ) {
+        setP(new P(P.PARRAFO) {
             @Override
             public Document getDocumento() {
                 return getDocumentoPadre();
@@ -224,10 +224,6 @@ public class ImpresionElementosBase {
                 elemento3();
                 break;
 
-            case 30:
-                elemento30();
-                break;
-
             case 4:
                 elemento4();
                 break;
@@ -243,7 +239,10 @@ public class ImpresionElementosBase {
                 break;
             case 8:
                 elemento8();
-                break;    
+                break;
+            case 9:
+                elemento9();
+                break;
             default:
                 log.warn(".imprimirElemento() elemento no exite {} ", valor);
         }
@@ -360,8 +359,8 @@ public class ImpresionElementosBase {
      * Metodo para imprimir el elemento 3.
      *
      */
-    public synchronized void elemento30() {
-        log.warn(".elemento30()");
+    public synchronized void elemento9() {
+        log.warn(".elemento9()");
     }
 
     /**
@@ -445,6 +444,6 @@ public class ImpresionElementosBase {
             y = topMargenEncabezado - yAreaEscribible + margenSuperiorOriginal;
             pagina = getDocumento().getRenderer().getCurrentArea().getPageNumber();
             ancho = 500f;
-        }        
+        }
     }
 }

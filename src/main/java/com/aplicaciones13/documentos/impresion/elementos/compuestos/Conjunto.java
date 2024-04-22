@@ -6,7 +6,7 @@
 package com.aplicaciones13.documentos.impresion.elementos.compuestos;
 
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
 import java.util.ArrayList;
 import java.util.Arrays;
