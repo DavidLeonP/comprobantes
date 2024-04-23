@@ -46,7 +46,7 @@ public class P extends Elemento {
     private void init(String texto, float tamano) {
         setTexto(texto);
         getTexto().setFontSize(tamano);
-        setParagraph(getTexto());
+        setParagraph(getTexto(),getFontDatos());
         getParagraph().setMultipliedLeading(1.1f);
     }
 

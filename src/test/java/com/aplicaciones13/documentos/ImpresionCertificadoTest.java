@@ -49,7 +49,7 @@ public class ImpresionCertificadoTest {
             mapa.put("documentoValidez", "06 Noviembre de 2020");
             mapa.put("documentoPie", pathUser +"/recursos/pie.png");
             mapa.put("documentoEncabezado", pathUser +"/recursos/encabezado.png");
-            mapa.put("documentoArchivoP12", pathUser +"/recursos/llave.p12");
+            mapa.put("documentoArchivoP12", pathUser +"/recursos/data.xml");
             mapa.put("documentoArchivoP12Clave", "Admin1234s");
             mapa.put("cuerpo", "texto para probar \n y probar el salto de pagina");
 

@@ -24,17 +24,16 @@ import java.io.File;
  * @author omargo33
  */
 @Slf4j
-class ImpresionDocumentosTest {
+public class ImpresionDocumentosTest {
 
     /**
      * Test of factura
      */
     @Test
-    void testFactura() {
+    public void testFactura() {
         String pathUser = System.getProperty("user.dir");
         String claveAcceso="1312202301179001691900122011070002060400460006816";
-        String ambiente= claveAcceso.substring(23, 24);
-        String emision= claveAcceso.substring(47, 48);
+        
         try {
             Map<String, String> mapa = new HashMap<>();
             File documentoXml = new File(pathUser + "/recursos/facturaAutorizacion.xml");
@@ -42,8 +41,6 @@ class ImpresionDocumentosTest {
             Factura factura = Conversion.xmlToPojo(autorizacion.getComprobante(), Factura.class);
 
             mapa.put("numeroAutorizacion", autorizacion.getNumeroAutorizacion());
-            mapa.put("ambienteAutorizacion", ambiente);
-            mapa.put("emisionAutorizacion", emision);
             mapa.put("claveAccesoAutorizacion", claveAcceso);
             mapa.put("fechaAutorizacion", autorizacion.getFechaAutorizacion());
             mapa.put("documentoDestino", pathUser + "/recursos/testFactura.pdf");

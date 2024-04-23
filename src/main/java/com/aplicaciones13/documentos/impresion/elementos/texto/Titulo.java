@@ -5,6 +5,7 @@
  */
 package com.aplicaciones13.documentos.impresion.elementos.texto;
 
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
 
 /**
@@ -19,13 +20,16 @@ public class Titulo extends Elemento {
     public static final float H2 = 12f; //Tamaño 12 px
     public static final float H3 = 10f; //Tamaño 10 px
 
+    private float tamano;
+
     /**
      * Metodo para crear el objeto.
      *
      * @param tamano
      */
     public Titulo(float tamano) {        
-        this("", tamano);        
+        this("", tamano);
+        this.tamano = tamano;
     }
 
     /**
@@ -48,6 +52,7 @@ public class Titulo extends Elemento {
     private void init(String texto, float tamano) {
         setTexto(texto);
         getTexto().setFontSize(tamano);
+        setParagraph(getTexto(),getFontTitulos());    
     }
 
     /**
@@ -56,8 +61,10 @@ public class Titulo extends Elemento {
     @Override
     public void setTexto(String texto) {
         super.setTexto(texto.toUpperCase());
-        setParagraph(getTexto(), getFontTitulos());
-        getParagraph().setTextAlignment(TextAlignment.LEFT);
+        setParagraph(new Paragraph(texto));
+        getParagraph().setFont(getFontTitulos());
+        getParagraph().setTextAlignment(TextAlignment.LEFT);        
+        getParagraph().setFontSize(tamano);
     }
 
     /**
@@ -65,8 +72,10 @@ public class Titulo extends Elemento {
      */
     public void setTextoCentro(String texto) {
         super.setTexto(texto.toUpperCase());
-        setParagraph(getTexto(), getFontTitulos());
+        setParagraph(new Paragraph(texto));
+        getParagraph().setFont(getFontTitulos());
         getParagraph().setTextAlignment(TextAlignment.CENTER);
+        getParagraph().setFontSize(tamano);
     }
     
     /**
@@ -74,7 +83,9 @@ public class Titulo extends Elemento {
      */
     public void setTextoDerecha(String texto) {
         super.setTexto(texto.toUpperCase());
-        setParagraph(getTexto(), getFontTitulos());
+        setParagraph(new Paragraph(texto));
+        getParagraph().setFont(getFontTitulos());
         getParagraph().setTextAlignment(TextAlignment.RIGHT);
-    }
+        getParagraph().setFontSize(tamano);
+    } 
 }

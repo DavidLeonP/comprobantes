@@ -42,10 +42,12 @@ public class Elemento {
     public static final String FORMATO_ENTERO = "7"; // Formato entero
 
     
-    public static final String BOLDITALIC = "src/main/resources/Arimo-Bold.ttf";
-    public static final String BOLD = "src/main/resources/Arimo-BoldItalic.ttf";  
-    public static final String REGULAR = "src/main/resources/Arimo-Italic.ttf";   
-    public static final String ITALIC = "src/main/resources/Arimo-Regular.ttf";  
+    //public static final String BOLD = "src/main/resources/Arimo-Bold.ttf";
+    public static final String BOLD = "src/main/resources/Lora-BoldItalic.ttf";
+    //public static final String BOLDITALIC = "src/main/resources/Arimo-BoldItalic.ttf";  
+    //public static final String ITALIC = "src/main/resources/Arimo-Italic.ttf";   
+    //public static final String REGULAR = "src/main/resources/Arimo-Regular.ttf";  
+    public static final String REGULAR = "src/main/resources/Lora-Italic.ttf";
     
     //Arimo-SemiBoldItalic.ttf   
     
@@ -88,8 +90,8 @@ public class Elemento {
             log.warn(".init() 2 {}", ex.toString());
         }
         setParagraph(new Paragraph(""));
-        getParagraph().setFont(getFontDatos());
-        setTexto(new Text(""));
+        getParagraph().setFont(getFontDatos());        
+        setTexto(new Text(""));     
     }
 
     /**
@@ -312,7 +314,7 @@ public class Elemento {
      * @param paragraph
      */
     public void setParagraph(Paragraph paragraph) {
-        this.paragraph = paragraph;
+        this.paragraph = paragraph;        
     }
 
     /**

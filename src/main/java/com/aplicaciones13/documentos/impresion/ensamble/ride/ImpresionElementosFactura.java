@@ -2,21 +2,13 @@ package com.aplicaciones13.documentos.impresion.ensamble.ride;
 
 import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Pagos.Pago;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
-import com.aplicaciones13.documentos.impresion.elementos.texto.P;
-import com.aplicaciones13.documentos.impresion.ensamble.ImpresionElementosBase;
 import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura;
 
 import com.aplicaciones13.documentos.utilidades.Bundle;
 
-import com.itextpdf.barcodes.Barcode128;
 import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
@@ -35,14 +27,13 @@ import java.util.List;
 @Slf4j
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ImpresionElementosFactura extends ImpresionElementosBase {
+public class ImpresionElementosFactura extends ImpresionElementosRide {
 
     private static Bundle bundle = new Bundle("elementos-ride");
 
     private static String[] totalesPresentacion = {
             "1", "1", "1 2", "1 2", "1", "1", "1", "1", "2", "2", "2", "2", "1 2" };
 
-    Border border = new SolidBorder(1f);
     private Factura factura;
     List<TotalDocumentoFactura> totales;
 
@@ -55,29 +46,15 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         totales = new ArrayList<>();
     }
 
-    /**
-     * Metodo para generar el panel superior en un formato semejante al SRI.
-     *
-     */
     @Override
     public synchronized void elemento2() {
-        getPanel().setListaDimensiones(50f);
-        getPanel().getMapaAlineamiento().put(1, TextAlignment.CENTER);
-        getPanel().setListaCeldas(informacionEmpresa().toArray());
-        getPanel().procesar();
-        Table tableIzq = getPanel().getTabla();
-        tableIzq.setBorderRight(border);
-
-        getPanel().setListaDimensiones(50f);
-        getPanel().getMapaAlineamiento().put(1, TextAlignment.LEFT);
-        getPanel().setListaCeldas(informacionDocumento().toArray());
-        getPanel().procesar();
-        Table tableDer = getPanel().getTabla();
-
-        getPanel().setListaDimensiones(52f, 48f);
-        getPanel().setListaCeldas(tableIzq, tableDer);
-        getPanel().procesar();
-        getPanel().escribir();
+        setRazonSocial(getFactura().getInfoTributaria().getRazonSocial());
+        setDireccionMatriz(getFactura().getInfoTributaria().getDirMatriz());
+        setDireccionEstablecimiento(getFactura().getInfoFactura().getDirEstablecimiento());
+        setContribuyenteEspecial(getFactura().getInfoFactura().getContribuyenteEspecial());
+        setObligadoContabilidad(getFactura().getInfoFactura().getObligadoContabilidad().value());
+        setClaveAccesoAutorizacion(getParametrosBusqueda().get("claveAccesoAutorizacion"));
+        super.elemento2();        
     }
 
     /**
@@ -337,133 +314,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 getForm().reset();
             }
         }
-    }
-
-    /**
-     * Metodo para generar el panel superior con la informacion de la empresa.
-     * 
-     * @return
-     */
-    private List<Object> informacionEmpresa() {
-        List<Object> listaLadoIzquerdo = new ArrayList<>();
-
-        // Lado Izquierdo
-        int anchoImagen = (int) (getCurrentPosition().getAncho() * 0.2);
-        int margenes = (int) (getCurrentPosition().getAncho() / 2 - anchoImagen) / 2;
-
-        getImagen().setPathImagen(getParametrosBusqueda().get("pathImagen"));
-        getImagen().setMaximoAncho(anchoImagen);
-        getImagen().procesar();
-
-        // Celda para imagen en el centro en el eje horizontal
-        Cell cellimg = new Cell();
-        cellimg.setPaddingLeft(margenes);
-        cellimg.add(getImagen().getImagen());
-
-        // Agregar imagen a la lista
-        listaLadoIzquerdo.add(cellimg);
-
-        // Nombre de la empresa
-        getH1().setParagraph(getFactura()
-                .getInfoTributaria()
-                .getRazonSocial());
-
-        // Agregar nombre de la empresa a la lista
-        listaLadoIzquerdo.add(getH1().getParagraph());
-
-        // Informacion de la empresa
-        getForm().setListaTitulos(bundle.getMessages("fac_001", "fac_002"));
-        getForm().setListaValores(getFactura()
-                .getInfoTributaria()
-                .getDirMatriz(),
-                getFactura()
-                        .getInfoFactura()
-                        .getDirEstablecimiento());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(18.0f, 82.0f);
-        getForm().procesar();
-        listaLadoIzquerdo.add(getForm().getTabla());
-        getForm().reset();
-
-        // Informacion de contabilidad
-        getForm().setListaTitulos(bundle.getMessages("fac_003", "fac_004"));
-        getForm()
-                .setListaValores(getFactura()
-                        .getInfoFactura()
-                        .getContribuyenteEspecial(),
-                        getFactura()
-                                .getInfoFactura()
-                                .getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(50f, 50f);
-        getForm().procesar();
-        listaLadoIzquerdo.add(getForm().getTabla());
-        getForm().reset();
-
-        return listaLadoIzquerdo;
-    }
-
-    /**
-     * Metodo para generar el panel superior en un formato semejante al SRI.
-     *
-     */
-    private List<Object> informacionDocumento() {
-        String tipoDocumento = getParametrosBusqueda().get("claveAccesoAutorizacion").substring(8, 10);
-        List<Object> listaLado = new ArrayList<>();
-
-        // Ruc
-        getH2().setParagraph(bundle.getMessage("fac_005", getFactura().getInfoTributaria().getRuc()));
-        listaLado.add(getH2().getParagraph());
-
-        // Nombre del documento
-        getH1().setParagraph(bundle.getMessage("tabla3_" + tipoDocumento));
-        listaLado.add(getH1().getParagraph());
-
-        // Numero del documento
-        getH1().setParagraph(
-                bundle.getMessage("fac_007",
-                        getFactura()
-                                .getInfoTributaria()
-                                .getEstab(),
-                        getFactura()
-                                .getInfoTributaria()
-                                .getPtoEmi(),
-                        getFactura().getInfoTributaria()
-                                .getSecuencial()));
-        listaLado.add(getH1().getParagraph());
-
-        // Numero de autorizacion
-        getH2().setParagraph(bundle.getMessage("fac_008"));
-        listaLado.add(getH2().getParagraph());
-
-        getTexto().setParagraph(getParametrosBusqueda().get("numeroAutorizacion"));
-        getTexto().getParagraph().setFontSize(P.TEXTO);
-        listaLado.add(getTexto().getParagraph());
-
-        // Ambiente
-        getForm().setListaTitulos(bundle.getMessages("fac_010", "fac_011"));
-        getForm().setListaValores(
-                bundle.getMessage("tabla4_" + getParametrosBusqueda().get("ambienteAutorizacion")),
-                bundle.getMessage("tabla2_" + getParametrosBusqueda().get("emisionAutorizacion")));
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(25f, 75f);
-        getForm().procesar();
-        listaLado.add(getForm().getTabla());
-        getForm().reset();
-
-        // Clave de acceso
-        getP().setParagraph(bundle.getMessage("fac_012"));
-        listaLado.add(getP().getParagraph());
-
-        Barcode128 barcode = new Barcode128(getDocumento().getPdfDocument());
-        barcode.setCodeType(Barcode128.CODE128);
-        barcode.setCode(getParametrosBusqueda().get("claveAccesoAutorizacion"));
-
-        PdfFormXObject barcodeObject = barcode.createFormXObject(null, null, getDocumento().getPdfDocument());
-        Cell cell = new Cell().add(new Image(barcodeObject));
-        listaLado.add(cell);
-
-        return listaLado;
     }
 
     /**
