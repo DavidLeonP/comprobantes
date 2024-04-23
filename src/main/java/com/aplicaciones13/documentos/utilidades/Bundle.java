@@ -3,6 +3,8 @@ package com.aplicaciones13.documentos.utilidades;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Clase que permite cargar un archivo de propiedades y obtener los mensajes
  * 
@@ -10,6 +12,7 @@ import java.util.ResourceBundle;
  * @since 2024-04-03
  *
  */
+@Slf4j
 public class Bundle {
 
     ResourceBundle resource;
@@ -40,7 +43,8 @@ public class Bundle {
             String message = resource.getString(key);
             return MessageFormat.format(message, params);
         } catch (Exception e) {
-            return "Error: " + e.getMessage();
+            log.error("Error {}",e.getMessage());
+            return "Error: " + key;
         }
     }
 

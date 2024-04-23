@@ -58,7 +58,7 @@ public class Form extends Conjunto {
      * Metodo para inicializar el objeto.
      *
      */
-    private void init() {
+    public void init() {
         listaValores = new ArrayList<>();
     }
 
@@ -66,6 +66,7 @@ public class Form extends Conjunto {
      * Metodo para generar la tabla de presentacion.
      *
      */
+    @Override
     public void procesar() {
 
         if (getListaFormatos().size() != this.listaValores.size()) {

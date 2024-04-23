@@ -41,10 +41,14 @@ public class Elemento {
     public static final String FORMATO_FECHA_HORA = "6"; // Formato fecha y hora
     public static final String FORMATO_ENTERO = "7"; // Formato entero
 
-    public static final String BOLD = "LiberationSans-Bold.ttf";
-    public static final String BOLDITALIC = "LiberationSans-BoldItalic.ttf";
-    public static final String ITALIC = "LiberationSans-Italic.ttf";
-    public static final String REGULAR = "LiberationSans-Regular.ttf";
+    
+    public static final String BOLDITALIC = "src/main/resources/Arimo-Bold.ttf";
+    public static final String BOLD = "src/main/resources/Arimo-BoldItalic.ttf";  
+    public static final String REGULAR = "src/main/resources/Arimo-Italic.ttf";   
+    public static final String ITALIC = "src/main/resources/Arimo-Regular.ttf";  
+    
+    //Arimo-SemiBoldItalic.ttf   
+    
 
     /**
      * Manejo de mensajes.

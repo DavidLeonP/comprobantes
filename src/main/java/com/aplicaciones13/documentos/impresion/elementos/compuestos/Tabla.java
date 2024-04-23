@@ -35,7 +35,7 @@ public class Tabla extends Conjunto {
     private List<Object[]> listaValores;
     private boolean sumatoria=false;
     private boolean bandasPresentacion=false;
-    private static Color colorFondo = new DeviceRgb( 244, 246, 246  );
+    Color colorFondo = new DeviceRgb( 223, 224, 226  );
 
     /**
      * Metodo para crear la clase. Inicializa SQLBase Limpia datos de la tabla.
@@ -51,6 +51,7 @@ public class Tabla extends Conjunto {
      */
     private void init() {
         this.listaValores = new ArrayList<>();
+        colorFondo = new DeviceRgb( 128, 128, 128  );
     }
 
     /**

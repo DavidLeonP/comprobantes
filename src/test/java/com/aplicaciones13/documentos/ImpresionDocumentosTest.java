@@ -24,15 +24,17 @@ import java.io.File;
  * @author omargo33
  */
 @Slf4j
-public class ImpresionDocumentosTest {
+class ImpresionDocumentosTest {
 
     /**
      * Test of factura
      */
     @Test
-    public void testFactura() {
-        String pathUser = System.getProperty("user.dir") ;
-
+    void testFactura() {
+        String pathUser = System.getProperty("user.dir");
+        String claveAcceso="1312202301179001691900122011070002060400460006816";
+        String ambiente= claveAcceso.substring(23, 24);
+        String emision= claveAcceso.substring(47, 48);
         try {
             Map<String, String> mapa = new HashMap<>();
             File documentoXml = new File(pathUser + "/recursos/facturaAutorizacion.xml");
@@ -40,23 +42,12 @@ public class ImpresionDocumentosTest {
             Factura factura = Conversion.xmlToPojo(autorizacion.getComprobante(), Factura.class);
 
             mapa.put("numeroAutorizacion", autorizacion.getNumeroAutorizacion());
-            mapa.put("ambienteAutorizacion", "<PENDIENTE>");
-            mapa.put("emisionAutorizacion", "<PENDIENTE>");
-            mapa.put("claveAccesoAutorizacion", "<PENDIENTE>");
+            mapa.put("ambienteAutorizacion", ambiente);
+            mapa.put("emisionAutorizacion", emision);
+            mapa.put("claveAccesoAutorizacion", claveAcceso);
             mapa.put("fechaAutorizacion", autorizacion.getFechaAutorizacion());
             mapa.put("documentoDestino", pathUser + "/recursos/testFactura.pdf");
-            mapa.put("pathImagen", pathUser + "/recursos/qapaq.png");
-
-
-            mapa.put("documentoSucursal", "Cuenca");
-            mapa.put("documentoCodigo", "IKM7450");
-            mapa.put("documentoNombre", "Certificad de ser Socio");
-            
-            mapa.put("documentoURL", "https://itextpdf.com/en/resources/examples/itext-7/repeating-rows");
-            mapa.put("sitioWeb", "https://www.jardinazuayo.fin.ec");
-            mapa.put("documentoValidez", "06 Noviembre de 2020");
-            mapa.put("documentoArchivoP12", "/mnt/documentos/pi16001-core/llave.p12");
-            mapa.put("documentoArchivoP12Clave", "Admin1234s");
+            mapa.put("pathImagen", pathUser + "/recursos/13aplicaciones.png");
 
             ImpresionElementosFactura impresionFactura = new ImpresionElementosFactura();
             impresionFactura.setFactura(factura);

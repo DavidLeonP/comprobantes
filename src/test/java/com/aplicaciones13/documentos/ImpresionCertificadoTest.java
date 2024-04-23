@@ -23,7 +23,8 @@ public class ImpresionCertificadoTest {
      * Test of elemento2 method, of class ImpresionElementosCertificado.
      */
     @Test
-    public void testelemento2() {
+    public void testCertificado() {
+        String pathUser = System.getProperty("user.dir");
  
         try {
             Map<String, String> mapa = new HashMap<>();
@@ -40,27 +41,27 @@ public class ImpresionCertificadoTest {
             mapa.put("saldoTotal", "1000.23");
             //Datos requeridos
             mapa.put("documentoSucursal", "Cuenca");
-            mapa.put("documentoCodigo", "IKM7450");
-            mapa.put("documentoNombre", "Certificad de ser Socio");
-            mapa.put("documentoDestino", "/home/colaborador/test.pdf");
+            mapa.put("documentoCodigo", "0102581709");
+            mapa.put("documentoNombre", "Certificad con firma");
+            mapa.put("documentoDestino", pathUser +"/recursos/testCertificado.pdf");
             mapa.put("documentoURL", "https://itextpdf.com/en/resources/examples/itext-7/repeating-rows");
             mapa.put("sitioWeb", "https://www.jardinazuayo.fin.ec");
             mapa.put("documentoValidez", "06 Noviembre de 2020");
-            //mapa.put("documentoPie", "/mnt/documentos/logosCooperativa/membreteInferior_2239x209.png");
-            //mapa.put("documentoEncabezado", "/mnt/documentos/logosCooperativa/membreteSuperior_2239x209.png");
-            mapa.put("documentoArchivoP12", "/mnt/documentos/pi16001-core/llave.p12");
+            mapa.put("documentoPie", pathUser +"/recursos/pie.png");
+            mapa.put("documentoEncabezado", pathUser +"/recursos/encabezado.png");
+            mapa.put("documentoArchivoP12", pathUser +"/recursos/llave.p12");
             mapa.put("documentoArchivoP12Clave", "Admin1234s");
             mapa.put("cuerpo", "texto para probar \n y probar el salto de pagina");
 
-            //CenefaEstructura cenefaEstructuraSuperior = new CenefaEstructura(false, true, false, false, false, mapa.get("documentoEncabezado"));
+            CenefaEstructura cenefaEstructuraSuperior = new CenefaEstructura(false, true, false, false, false, mapa.get("documentoEncabezado"));
             CenefaEstructura cenefaEstructuraInferior = new CenefaEstructura(false, true, false, false, false, mapa.get("documentoPie"));
 
             ImpresionElementosCertificado impresionCertificado = new ImpresionElementosCertificado();
             impresionCertificado.setOrdenElementos(new int[]{ 2, 1, 0});
           
             ImpresionITextBase impresionBaseIText = new ImpresionITextBase(impresionCertificado);
-            //impresionBaseIText.setCenefaEstructuraSuperior(cenefaEstructuraSuperior);
-            //impresionBaseIText.setCenefaEstructuraInferior(cenefaEstructuraInferior);
+            impresionBaseIText.setCenefaEstructuraSuperior(cenefaEstructuraSuperior);
+            impresionBaseIText.setCenefaEstructuraInferior(cenefaEstructuraInferior);
             impresionBaseIText.ejecutar(18, 36, 30, 36, mapa);
         } catch (Exception e) {            
             System.err.println("data " + e.toString());

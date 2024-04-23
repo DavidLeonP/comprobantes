@@ -9,6 +9,7 @@ import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura;
 import com.aplicaciones13.documentos.utilidades.Bundle;
 
 import com.itextpdf.barcodes.Barcode128;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
@@ -20,6 +21,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +32,14 @@ import java.util.List;
  * @author omargo33
  *
  */
+@Slf4j
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ImpresionElementosFactura extends ImpresionElementosBase {
 
     private static Bundle bundle = new Bundle("elementos-ride");
 
-    private static String TOTALES_PRESENTACION[] = {
+    private static String[] totalesPresentacion = {
             "1", "1", "1 2", "1 2", "1", "1", "1", "1", "2", "2", "2", "2", "1 2" };
 
     Border border = new SolidBorder(1f);
@@ -49,13 +52,14 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      */
     public ImpresionElementosFactura() {
         factura = new Factura();
-        totales = new ArrayList<TotalDocumentoFactura>();
+        totales = new ArrayList<>();
     }
 
     /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
      *
      */
+    @Override
     public synchronized void elemento2() {
         getPanel().setListaDimensiones(50f);
         getPanel().getMapaAlineamiento().put(1, TextAlignment.CENTER);
@@ -70,7 +74,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         getPanel().procesar();
         Table tableDer = getPanel().getTabla();
 
-        getPanel().setListaDimensiones(50f, 50f);
+        getPanel().setListaDimensiones(52f, 48f);
         getPanel().setListaCeldas(tableIzq, tableDer);
         getPanel().procesar();
         getPanel().escribir();
@@ -80,6 +84,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para escribir la informacion del cliente.
      *
      */
+    @Override
     public synchronized void elemento3() {
         getEspacio().escribir(1);
         getLineaSolida().escribir();
@@ -111,21 +116,17 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para detalle de la factura.
      *
      */
+    @Override
     public synchronized void elemento4() {
         List<Object[]> listaValores = new ArrayList<>();
-        Object[] filaValores = new Object[6];
+        Object[] filaValores;
 
         getEspacio().escribir(1);
         getLineaSolida().escribir();
 
-        if (getFactura().getDetalles() != null && getFactura()
-                .getDetalles()
-                .getDetalle()
-                .size() > 0) {
-
-            for (Factura.Detalles.Detalle a : getFactura()
-                    .getDetalles()
-                    .getDetalle()) {
+        if (getFactura().getDetalles() != null &&
+                getFactura().getDetalles().getDetalle().size() > 0) {
+            for (Factura.Detalles.Detalle a : getFactura().getDetalles().getDetalle()) {
                 filaValores = new Object[6];
                 filaValores[0] = a.getCodigoPrincipal();
                 filaValores[1] = a.getDescripcion();
@@ -134,15 +135,14 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 filaValores[4] = a.getDescuento().toString();
                 filaValores[5] = a.getPrecioTotalSinImpuesto().toString();
 
-                if (a.getCodigoAuxiliar() != null && a.getCodigoAuxiliar()
-                        .trim()
-                        .length() > 0) {
+                if (a.getCodigoAuxiliar() != null &&
+                        a.getCodigoAuxiliar().trim().length() > 0 &&
+                        String.valueOf(filaValores[0]).compareTo(a.getCodigoAuxiliar()) != 0) {
                     filaValores[1] = filaValores[1] + "\nCod.: " + a.getCodigoAuxiliar();
                 }
 
-                if (a.getDetallesAdicionales() != null && a.getDetallesAdicionales()
-                        .getDetAdicional()
-                        .size() > 0) {
+                if (a.getDetallesAdicionales() != null &&
+                        !a.getDetallesAdicionales().getDetAdicional().isEmpty()) {
                     for (Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional b : a.getDetallesAdicionales()
                             .getDetAdicional()) {
                         filaValores[1] = filaValores[1] + "\n" + b.getNombre() + ": " + b.getValor();
@@ -151,13 +151,18 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
                 listaValores.add(filaValores);
             }
-            getTabla().setListaTitulos(bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021",
-                    "fac_022"));
 
-            getTabla()
-                    .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
-                            Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-            getTabla().setListaDimensiones(15f, 40f, 10f, 10f, 10f, 15f);
+            getTabla().setColorFondo(new DeviceRgb(223, 224, 226));
+            getTabla().setListaTitulos(
+                    bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021", "fac_022"));
+            getTabla().setListaFormatos(
+                    Elemento.FORMATO_STRING,
+                    Elemento.FORMATO_STRING,
+                    Elemento.FORMATO_STRING,
+                    Elemento.FORMATO_STRING,
+                    Elemento.FORMATO_STRING,
+                    Elemento.FORMATO_STRING);
+            getTabla().setListaDimensiones(15f, 40f, 10f, 10f, 10f, 14f);
 
             getTabla().getMapaAlineamiento().put(1, TextAlignment.LEFT);
             getTabla().getMapaAlineamiento().put(2, TextAlignment.LEFT);
@@ -181,6 +186,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar los totales de la factura
      *
      */
+    @Override
     public synchronized void elemento5() {
         Cell cell = new Cell();
         getLineaSolida().escribir();
@@ -190,7 +196,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         cargarTotales();
 
         subTotales();
-        getPanel().setListaDimensiones(60f, 36f);
+        getPanel().setListaDimensiones(64f, 36f);
 
         getForm().procesar();
         getPanel().setListaCeldas(cell, getForm().getTabla());
@@ -200,7 +206,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         getPanel().escribir();
 
         totales();
-        getPanel().setListaDimensiones(60f, 36f);
+        getPanel().setListaDimensiones(64f, 36f);
 
         getForm().procesar();
         getForm().getTabla().setBorderTop(border);
@@ -215,6 +221,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar informacion de la exportacion SRI.
      *
      */
+    @Override
     public synchronized void elemento6() {
         if (isExportacion()) {
             getLineaSolida().escribir();
@@ -247,6 +254,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar informacion adicional.
      *
      */
+    @Override
     public synchronized void elemento7() {
         if (isExportacion())
             return;
@@ -264,7 +272,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                     .getInfoAdicional()
                     .getCampoAdicional()) {
                 getForm().getListaTitulos().add(a.getNombre());
-                getForm().getListaValores().add((a.getValue() == null) ? "" : a.getValue().toString());
+                getForm().getListaValores().add((a.getValue() == null) ? "" : String.valueOf(a.getValue()));
                 getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
                 size++;
             }
@@ -286,6 +294,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * Metodo para agregar Formas de pago
      *
      */
+    @Override
     public synchronized void elemento8() {
         int size = 0;
 
@@ -386,7 +395,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                                 .getInfoFactura()
                                 .getObligadoContabilidad());
         getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(40f, 60f);
+        getForm().setListaDimensiones(50f, 50f);
         getForm().procesar();
         listaLadoIzquerdo.add(getForm().getTabla());
         getForm().reset();
@@ -399,6 +408,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      *
      */
     private List<Object> informacionDocumento() {
+        String tipoDocumento = getParametrosBusqueda().get("claveAccesoAutorizacion").substring(8, 10);
         List<Object> listaLado = new ArrayList<>();
 
         // Ruc
@@ -406,7 +416,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
         listaLado.add(getH2().getParagraph());
 
         // Nombre del documento
-        getH1().setParagraph(bundle.getMessage("fac_006"));
+        getH1().setParagraph(bundle.getMessage("tabla3_" + tipoDocumento));
         listaLado.add(getH1().getParagraph());
 
         // Numero del documento
@@ -432,8 +442,9 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
 
         // Ambiente
         getForm().setListaTitulos(bundle.getMessages("fac_010", "fac_011"));
-        getForm().setListaValores(getParametrosBusqueda().get("ambienteAutorizacion"),
-                getParametrosBusqueda().get("emisionAutorizacion"));
+        getForm().setListaValores(
+                bundle.getMessage("tabla4_" + getParametrosBusqueda().get("ambienteAutorizacion")),
+                bundle.getMessage("tabla2_" + getParametrosBusqueda().get("emisionAutorizacion")));
         getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(25f, 75f);
         getForm().procesar();
@@ -520,7 +531,6 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * @param bus
      */
     public void cargarTotales() {
-
         if (getFactura().getInfoFactura().getTotalConImpuestos() != null && getFactura().getInfoFactura()
                 .getTotalConImpuestos()
                 .getTotalImpuesto()
@@ -530,41 +540,47 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                     .getTotalConImpuestos()
                     .getTotalImpuesto()) {
                 if (a.getCodigo().compareTo("2") == 0) {
-                    if (a.getCodigoPorcentaje().compareTo("0") == 0) {
-                        getTotales().get(1).setValor(a.getBaseImponible());
+
+                    switch (a.getCodigoPorcentaje()) {
+                        case "0":
+                            getTotales().get(1).setValor(a.getBaseImponible());
+                            break;
+                        case "2":
+                            getTotales().get(0).setTitulo(bundle.getMessage("fac_046"));
+                            getTotales().get(6).setTitulo(bundle.getMessage("fac_047"));
+                            getTotales().get(0).setValor(a.getBaseImponible());
+                            getTotales().get(6).setValor(a.getValor());
+                            break;
+                        case "3":
+                            getTotales().get(0).setTitulo(bundle.getMessage("fac_048"));
+                            getTotales().get(6).setTitulo(bundle.getMessage("fac_049"));
+                            getTotales().get(0).setValor(a.getBaseImponible());
+                            getTotales().get(6).setValor(a.getValor());
+                            break;
+
+                        case "4":
+                            getTotales().get(0).setTitulo(bundle.getMessage("fac_023"));
+                            getTotales().get(6).setTitulo(bundle.getMessage("fac_029"));
+                            getTotales().get(0).setValor(a.getBaseImponible());
+                            getTotales().get(6).setValor(a.getValor());
+                            break;
+
+                        case "5":
+                            getTotales().get(0).setTitulo(bundle.getMessage("fac_050"));
+                            getTotales().get(6).setTitulo(bundle.getMessage("fac_051"));
+                            getTotales().get(0).setValor(a.getBaseImponible());
+                            getTotales().get(6).setValor(a.getValor());
+                            break;
+
+                        case "6":
+                            getTotales().get(2).setValor(a.getBaseImponible());
+                            break;
+
+                        default:
+                            log.info("Codigo de impuesto no encontrado: {}", a.getCodigoPorcentaje());
+                            break;
                     }
 
-                    if (a.getCodigoPorcentaje().compareTo("2") == 0) {
-                        getTotales().get(0).setTitulo(bundle.getMessage("fac_046"));
-                        getTotales().get(6).setTitulo(bundle.getMessage("fac_047"));
-                        getTotales().get(0).setValor(a.getBaseImponible());
-                        getTotales().get(6).setValor(a.getValor());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("3") == 0) {
-                        getTotales().get(0).setTitulo(bundle.getMessage("fac_048"));
-                        getTotales().get(6).setTitulo(bundle.getMessage("fac_049"));
-                        getTotales().get(0).setValor(a.getBaseImponible());
-                        getTotales().get(6).setValor(a.getValor());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("4") == 0) {
-                        getTotales().get(0).setTitulo(bundle.getMessage("fac_023"));
-                        getTotales().get(6).setTitulo(bundle.getMessage("fac_029"));
-                        getTotales().get(0).setValor(a.getBaseImponible());
-                        getTotales().get(6).setValor(a.getValor());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("5") == 0) {
-                        getTotales().get(0).setTitulo(bundle.getMessage("fac_050"));
-                        getTotales().get(6).setTitulo(bundle.getMessage("fac_051"));
-                        getTotales().get(0).setValor(a.getBaseImponible());
-                        getTotales().get(6).setValor(a.getValor());
-                    }
-
-                    if (a.getCodigoPorcentaje().compareTo("6") == 0) {
-                        getTotales().get(2).setValor(a.getBaseImponible());
-                    }
                 }
 
                 if (a.getCodigo().compareTo("3") == 0) {
@@ -589,10 +605,9 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      *
      */
     private void subTotales() {
-
         if (isExportacion()) {
             int i = 0;
-            String totalesExportacion[] = {
+            String[] totalesExportacion = {
                     "", "",
                     bundle.getMessage("fac_053"),
                     bundle.getMessage("fac_052"),
@@ -607,7 +622,7 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
             while (i < getTotales().size() - 1) {
                 TotalDocumentoFactura a = getTotales().get(i);
 
-                if (TOTALES_PRESENTACION[i].indexOf("2") >= 0) {
+                if (totalesPresentacion[i].indexOf("2") >= 0) {
                     getForm().getListaTitulos().add(totalesExportacion[i].trim());
                     getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
                     getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
@@ -632,13 +647,10 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
                 if (i < 3)
                     valor = 1f;
 
-                if (valor > 0) {
-
-                    if (TOTALES_PRESENTACION[i].indexOf("1") >= 0) {
+                if (valor > 0 && totalesPresentacion[i].indexOf("1") >= 0) {
                         getForm().getListaTitulos().add(a.getTitulo());
                         getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
                         getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-                    }
                 }
                 i++;
             }
@@ -691,13 +703,11 @@ public class ImpresionElementosFactura extends ImpresionElementosBase {
      * @return
      */
     private boolean isExportacion() {
-        if (getFactura().getInfoFactura()
+        return (getFactura().getInfoFactura()
                 .getComercioExterior() != null
                 && getFactura().getInfoFactura()
                         .getComercioExterior()
                         .trim()
-                        .length() > 0)
-            return true;
-        return false;
+                        .length() > 0);
     }
 }
