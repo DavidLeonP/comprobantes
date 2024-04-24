@@ -11,9 +11,11 @@ import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,18 +72,15 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     private synchronized List<Object> informacionEmpresa() {
         List<Object> listaLadoIzquerdo = new ArrayList<>();
 
-        // Lado Izquierdo
-        int anchoImagen = (int) (getCurrentPosition().getAncho() / 3.3);
-        int margenes = (int) (getCurrentPosition().getAncho() / 2 - anchoImagen) / 2;
-
+        // Lado Izquierdo        
         getImagen().setPathImagen(getParametrosBusqueda().get("pathImagen"));
-        getImagen().setMaximoAncho(anchoImagen);
+        getImagen().setMaximoAncho(140);
+        getImagen().setMaximoAlto(80);
         getImagen().procesar();
+        getImagen().getImagen().setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-        // Celda para imagen en el centro en el eje horizontal
         Cell cellimg = new Cell();
-        cellimg.setPaddingLeft(margenes);        
-        cellimg.setPaddingBottom(15f);
+        cellimg.setPaddingBottom(5f);
         cellimg.add(getImagen().getImagen());
 
         // Agregar imagen a la lista
@@ -174,7 +173,10 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         barcode.setCode(getClaveAccesoAutorizacion());
 
         PdfFormXObject barcodeObject = barcode.createFormXObject(null, null, getDocumento().getPdfDocument());
-        Cell cell = new Cell().add(new Image(barcodeObject));
+        Image imagenBarcode = new Image(barcodeObject);
+        imagenBarcode.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+        Cell cell = new Cell().add(imagenBarcode);
         listaLado.add(cell);
 
         return listaLado;

@@ -44,7 +44,7 @@ public class ImpresionDocumentosTest {
             mapa.put("claveAccesoAutorizacion", claveAcceso);
             mapa.put("fechaAutorizacion", autorizacion.getFechaAutorizacion());
             mapa.put("documentoDestino", pathUser + "/recursos/testFactura.pdf");
-            mapa.put("pathImagen", pathUser + "/recursos/13aplicaciones.png");
+            mapa.put("pathImagen", pathUser + "/recursos/13aplicacionesHorizontal.png");
 
             ImpresionElementosFactura impresionFactura = new ImpresionElementosFactura();
             impresionFactura.setFactura(factura);

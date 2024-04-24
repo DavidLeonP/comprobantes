@@ -54,7 +54,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         setContribuyenteEspecial(getFactura().getInfoFactura().getContribuyenteEspecial());
         setObligadoContabilidad(getFactura().getInfoFactura().getObligadoContabilidad().value());
         setClaveAccesoAutorizacion(getParametrosBusqueda().get("claveAccesoAutorizacion"));
-        super.elemento2();        
+        super.elemento2();
     }
 
     /**
@@ -66,7 +66,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         getEspacio().escribir(1);
         getLineaSolida().escribir();
 
-        getForm().setListaTitulos(bundle.getMessages("fac_013", "fac_014", "fac_015", "fac_016"));
+        getForm().setListaTitulos(bundle.getMessages("fac_013", "fac_014", "fac_015"));
         getForm()
                 .setListaValores(getFactura()
                         .getInfoFactura()
@@ -76,17 +76,22 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                                 .getIdentificacionComprador(),
                         getFactura()
                                 .getInfoFactura()
-                                .getFechaEmision(),
-                        getFactura()
-                                .getInfoFactura()
-                                .getGuiaRemision());
+                                .getFechaEmision());
         getForm()
-                .setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
+                .setListaFormatos(
+                        Elemento.FORMATO_STRING,
+                        Elemento.FORMATO_STRING,
                         Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(15f, 85f);
         getForm().procesar();
         getForm().escribir();
         getForm().reset();
+
+        String direccion = getFactura().getInfoFactura().getDireccionComprador();
+        setCamposExtra(direccion, "fac_060");
+
+        String guiaRemision = getFactura().getInfoFactura().getGuiaRemision();
+        setCamposExtra(guiaRemision, "fac_016");
     }
 
     /**
@@ -106,25 +111,11 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
             for (Factura.Detalles.Detalle a : getFactura().getDetalles().getDetalle()) {
                 filaValores = new Object[6];
                 filaValores[0] = a.getCodigoPrincipal();
-                filaValores[1] = a.getDescripcion();
+                filaValores[1] = generarDescripcion(a);
                 filaValores[2] = a.getCantidad().toString();
                 filaValores[3] = a.getPrecioUnitario().toString();
                 filaValores[4] = a.getDescuento().toString();
                 filaValores[5] = a.getPrecioTotalSinImpuesto().toString();
-
-                if (a.getCodigoAuxiliar() != null &&
-                        a.getCodigoAuxiliar().trim().length() > 0 &&
-                        String.valueOf(filaValores[0]).compareTo(a.getCodigoAuxiliar()) != 0) {
-                    filaValores[1] = filaValores[1] + "\nCod.: " + a.getCodigoAuxiliar();
-                }
-
-                if (a.getDetallesAdicionales() != null &&
-                        !a.getDetallesAdicionales().getDetAdicional().isEmpty()) {
-                    for (Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional b : a.getDetallesAdicionales()
-                            .getDetAdicional()) {
-                        filaValores[1] = filaValores[1] + "\n" + b.getNombre() + ": " + b.getValor();
-                    }
-                }
 
                 listaValores.add(filaValores);
             }
@@ -211,11 +202,11 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
             getForm().setListaValores(
                     getFactura().getInfoFactura().getIncoTermFactura(),
                     getFactura().getInfoFactura().getLugarIncoTerm(),
-                    bundle.getMessage("tabla25_" + getFactura().getInfoFactura().getPaisOrigen()),
+                    buscarPais(getFactura().getInfoFactura().getPaisOrigen()),
                     getFactura().getInfoFactura().getPuertoEmbarque(),
-                    bundle.getMessage("tabla25_" + getFactura().getInfoFactura().getPaisDestino()),
+                    buscarPais(getFactura().getInfoFactura().getPaisDestino()),
                     getFactura().getInfoFactura().getPuertoDestino(),
-                    bundle.getMessage("tabla25_" + getFactura().getInfoFactura().getPaisAdquisicion()));
+                    buscarPais(getFactura().getInfoFactura().getPaisAdquisicion()));
             getForm().setListaFormatos(
                     Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
                     Elemento.FORMATO_STRING, Elemento.FORMATO_STRING, Elemento.FORMATO_STRING,
@@ -314,6 +305,26 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                 getForm().reset();
             }
         }
+    }
+
+    /**
+     * Metodo para agregar la informacion del cliente.
+     * 
+     * @param campo
+     * @param bundleKey
+     */
+    private void setCamposExtra(String campo, String bundleKey) {
+        if (campo == null || campo.isEmpty()) {
+            return;
+        }
+
+        getForm().setListaTitulos(bundle.getMessage(bundleKey));
+        getForm().setListaValores(campo);
+        getForm().setListaFormatos(Elemento.FORMATO_STRING);
+        getForm().setListaDimensiones(15f, 85f);
+        getForm().procesar();
+        getForm().escribir();
+        getForm().reset();
     }
 
     /**
@@ -466,7 +477,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                     bundle.getMessage("fac_055"),
                     bundle.getMessage("fac_056"),
                     bundle.getMessage("fac_057"),
-                    bundle.getMessage("fac_052")
+                    bundle.getMessage("fac_035")
             };
 
             while (i < getTotales().size() - 1) {
@@ -498,9 +509,9 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                     valor = 1f;
 
                 if (valor > 0 && totalesPresentacion[i].indexOf("1") >= 0) {
-                        getForm().getListaTitulos().add(a.getTitulo());
-                        getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
-                        getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
+                    getForm().getListaTitulos().add(a.getTitulo());
+                    getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
+                    getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
                 }
                 i++;
             }
@@ -533,6 +544,45 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
         getForm().setListaDimensiones(22f, 11f);
         getForm().procesar();
+    }
+
+    /**
+     * Metodo para generar la descripcion de la factura.
+     * 
+     * Agrega el codigo auxiliar y los detalles adicionales del item.
+     * 
+     * @param a
+     * @return
+     */
+    private String generarDescripcion(Factura.Detalles.Detalle a) {
+        String codigo = a.getCodigoPrincipal();
+        StringBuilder sb = new StringBuilder();
+        sb.append(a.getDescripcion());
+
+        if (a.getCodigoAuxiliar() != null &&
+                a.getCodigoAuxiliar().trim().length() > 0 &&
+                String.valueOf(codigo).compareTo(a.getCodigoAuxiliar()) != 0) {
+            sb.append("\nCod.: ").append(a.getCodigoAuxiliar());
+        }
+
+        if (a.getDetallesAdicionales() != null &&
+                !a.getDetallesAdicionales().getDetAdicional().isEmpty()) {
+            for (Factura.Detalles.Detalle.DetallesAdicionales.DetAdicional b : a.getDetallesAdicionales()
+                    .getDetAdicional()) {
+                sb.append("\n").append(b.getNombre()).append(": ").append(b.getValor());
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Metodo para buscar el pais en el bundle.
+     * 
+     * @param codigo
+     * @return
+     */
+    private String buscarPais(String codigo) {
+        return bundle.getMessage("tabla25_" + codigo);
     }
 
     /**
