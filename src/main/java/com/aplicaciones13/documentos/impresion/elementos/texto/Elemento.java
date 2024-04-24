@@ -86,7 +86,7 @@ public class Elemento {
         }
         try {
             FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
-            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, EmbeddingStrategy.PREFER_NOT_EMBEDDED );
+            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, EmbeddingStrategy.PREFER_NOT_EMBEDDED );    
             setFontDatos(pdfFont);
         } catch (IOException ex) {
             log.warn(".init() 1 {}", ex.toString());
