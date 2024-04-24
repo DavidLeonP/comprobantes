@@ -48,9 +48,7 @@ public class ImpresionDocumentosTest {
 
             ImpresionElementosFactura impresionFactura = new ImpresionElementosFactura();
             impresionFactura.setFactura(factura);
-
-            //impresionFactura.setOrdenElementos(new int[] { 2, 3, 4, 5, 6, 7, 8 });
-            impresionFactura.setOrdenElementos(new int[] { 2, 3 });            
+            impresionFactura.setOrdenElementos(new int[] { 2, 3, 4, 5, 6, 7, 8 });            
             ImpresionITextBase impresionBaseIText = new ImpresionITextBase(impresionFactura);
             impresionBaseIText.ejecutar(18, 36, 30, 36, mapa);
         } catch (Exception e) {

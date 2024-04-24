@@ -5,6 +5,7 @@ import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.font.PdfFontFactory.EmbeddingStrategy;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import javax.swing.text.InternationalFormatter;
+import javax.swing.text.StyleConstants.FontConstants;
 
 /**
  * Clase con los datos esenciales para la escritura del archivo PDF.
@@ -44,10 +46,13 @@ public class Elemento {
     public static final String FORMATO_FECHA_HORA = "6"; // Formato fecha y hora
     public static final String FORMATO_ENTERO = "7"; // Formato entero
 
-    public static final String BOLD = "src/main/resources/fonts/liberationSans/LiberationSans-Bold.ttf";
-    public static final String REGULAR = "src/main/resources/fonts/liberationSans/LiberationSans-Regular.ttf";
+    //public static final String BOLD = "src/main/resources/fonts/workSans/WorkSans-Bold.ttf";
+    //public static final String REGULAR = "src/main/resources/fonts/workSans/WorkSans-Regular.ttf";
 
+    public static final String BOLD = "src/main/resources/fonts/liberation/LiberationSans-Bold.ttf";
+    public static final String REGULAR = "src/main/resources/fonts/liberation/LiberationSans-Regular.ttf";
 
+    
     /**
      * Manejo de mensajes.
      */
@@ -72,18 +77,19 @@ public class Elemento {
      */
     private void init() {
         try {
-            FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
-            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING);
-            setFontDatos(pdfFont);
-        } catch (IOException ex) {
-            log.warn(".init() 1 {}", ex.toString());
-        }
-        try {
+
             FontProgram fontProgram = FontProgramFactory.createFont(BOLD);
-            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING);
+            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, EmbeddingStrategy.PREFER_NOT_EMBEDDED );
             setFontTitulos(pdfFont);
         } catch (IOException ex) {
             log.warn(".init() 2 {}", ex.toString());
+        }
+        try {
+            FontProgram fontProgram = FontProgramFactory.createFont(REGULAR);
+            PdfFont pdfFont = PdfFontFactory.createFont(fontProgram, PdfEncodings.PDF_DOC_ENCODING, EmbeddingStrategy.PREFER_NOT_EMBEDDED );
+            setFontDatos(pdfFont);
+        } catch (IOException ex) {
+            log.warn(".init() 1 {}", ex.toString());
         }
         setParagraph(new Paragraph(""));
         getParagraph().setFont(getFontDatos());

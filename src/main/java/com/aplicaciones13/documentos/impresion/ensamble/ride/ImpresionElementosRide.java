@@ -41,7 +41,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
 
     /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
-     *
+      *
      */
     @Override
     public synchronized void elemento2() {
