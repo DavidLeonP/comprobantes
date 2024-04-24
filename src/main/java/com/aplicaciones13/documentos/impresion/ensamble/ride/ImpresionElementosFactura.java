@@ -121,6 +121,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
             }
 
             getTabla().setColorFondo(new DeviceRgb(223, 224, 226));
+            
             getTabla().setListaTitulos(
                     bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021", "fac_022"));
             getTabla().setListaFormatos(

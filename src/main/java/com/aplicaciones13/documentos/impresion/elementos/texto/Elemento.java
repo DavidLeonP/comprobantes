@@ -47,6 +47,7 @@ public class Elemento {
     public static final String BOLD = "src/main/resources/fonts/liberationSans/LiberationSans-Bold.ttf";
     public static final String REGULAR = "src/main/resources/fonts/liberationSans/LiberationSans-Regular.ttf";
 
+
     /**
      * Manejo de mensajes.
      */

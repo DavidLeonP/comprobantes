@@ -168,6 +168,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getH3().setTexto(bundle.getMessage("fac_012"));
         listaLado.add(getH3().getParagraph());
 
+         
         Barcode128 barcode = new Barcode128(getDocumento().getPdfDocument());
         barcode.setCodeType(Barcode128.CODE128);
         barcode.setCode(getClaveAccesoAutorizacion());
@@ -178,7 +179,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
 
         Cell cell = new Cell().add(imagenBarcode);
         listaLado.add(cell);
-
+        
         return listaLado;
     }
 }
