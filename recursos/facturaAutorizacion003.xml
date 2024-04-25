@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<autorizacion>
+    <estado>AUTORIZADO</estado>
+    <numeroAutorizacion>1402201523245601900720020012925051664</numeroAutorizacion>
+    <fechaAutorizacion>2015-02-14T23:24:56.040-05:00</fechaAutorizacion>
+    <comprobante><![CDATA[<?xml version="1.0" encoding="UTF-8"?><factura id="comprobante" version="1.1.0">
+<infoTributaria>
+<ambiente>2</ambiente>
+<tipoEmision>1</tipoEmision>
+<razonSocial>GERARDO ORTIZ E HIJOS CIA LTDA</razonSocial>
+<nombreComercial>GERARDO ORTIZ E HIJOS CIA LTDA</nombreComercial>
+<ruc>0190072002001</ruc>
+<claveAcceso>1402201501019007200200120189070000029263538887614</claveAcceso>
+<codDoc>01</codDoc>
+<estab>018</estab>
+<ptoEmi>907</ptoEmi>
+<secuencial>000002926</secuencial>
+<dirMatriz>CARLOS JULIO AROSEMENA</dirMatriz>
+</infoTributaria>
+<infoFactura>
+<fechaEmision>14/02/2015</fechaEmision>
+<dirEstablecimiento>AV GONZALES SUAREZ</dirEstablecimiento>
+<contribuyenteEspecial>3517</contribuyenteEspecial>
+<obligadoContabilidad>SI</obligadoContabilidad>
+<tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+<razonSocialComprador>OMAR VELEZ</razonSocialComprador>
+<identificacionComprador>0102581709</identificacionComprador>
+<direccionComprador>SARAHURCO Y SANANCAJAS</direccionComprador>
+<totalSinImpuestos>30.33</totalSinImpuestos>
+<totalDescuento>0.00</totalDescuento>
+<totalConImpuestos>
+<totalImpuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<baseImponible>12.14</baseImponible>
+<valor>0.00</valor>
+</totalImpuesto>
+<totalImpuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<baseImponible>18.19</baseImponible>
+<valor>2.18</valor>
+</totalImpuesto>
+</totalConImpuestos>
+<propina>0.00</propina>
+<importeTotal>32.51</importeTotal>
+<moneda>DOLAR AMERICANO</moneda>
+</infoFactura>
+<detalles>
+<detalle>
+<codigoPrincipal>X70772Z</codigoPrincipal>
+<descripcion>TOALLA DE COCINA DURAMAX 2EN1 12X1 R1323</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>3.9979</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>4.00</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>4.00</baseImponible>
+<valor>0.48</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X73849A</codigoPrincipal>
+<descripcion>PH FAMILIA ACOLCHADO MEGAROLLO X12</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>8.2774</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>8.28</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>8.28</baseImponible>
+<valor>0.99</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X86015R</codigoPrincipal>
+<descripcion>GALLETAS SALTICAS INTEGRAL 75GR</descripcion>
+<cantidad>2.0000</cantidad>
+<precioUnitario>0.2565</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>0.51</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>0.51</baseImponible>
+<valor>0.06</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X8606N5</codigoPrincipal>
+<descripcion>CHOCOLATE JET 18 X26GR</descripcion>
+<cantidad>2.0000</cantidad>
+<precioUnitario>0.3391</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>0.68</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>0.68</baseImponible>
+<valor>0.08</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X860831</codigoPrincipal>
+<descripcion>MERMELADA DURAZNO 295GR SNOB FRASCO</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>1.7639</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>1.76</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>1.76</baseImponible>
+<valor>0.21</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X860960</codigoPrincipal>
+<descripcion>GALLETAS DUCALES TACO</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>1.5444</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>1.54</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>1.54</baseImponible>
+<valor>0.18</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X86096A</codigoPrincipal>
+<descripcion>GALLETAS SALTIN TACO 320GR</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>1.4195</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>1.42</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>1.42</baseImponible>
+<valor>0.17</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>X8L088S</codigoPrincipal>
+<descripcion>QUESO MIX SELECCION ESPECIAL 500GR KIOSK</descripcion>
+<cantidad>1.0000</cantidad>
+<precioUnitario>6.3308</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>6.33</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>6.33</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>XY8L05Q</codigoPrincipal>
+<descripcion>LECHE DESCREMADA NUTRI CARTON 1 LITRO</descripcion>
+<cantidad>2.0000</cantidad>
+<precioUnitario>1.2535</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>2.51</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="UNIDAD"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>2.51</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>XYK0069</codigoPrincipal>
+<descripcion>MANZANA WINTER KILO RIO</descripcion>
+<cantidad>0.4850</cantidad>
+<precioUnitario>1.7639</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>0.86</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="KILO"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>0.86</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>XYKM00E</codigoPrincipal>
+<descripcion>MANZANA ROYAL GALAG MONAY</descripcion>
+<cantidad>0.6800</cantidad>
+<precioUnitario>2.2578</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>1.54</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="KILO"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>1.54</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>XYKM06E</codigoPrincipal>
+<descripcion>DURAZNO NECTARIN MONAY</descripcion>
+<cantidad>0.5050</cantidad>
+<precioUnitario>1.7835</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>0.90</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Medida" valor="KILO"/>
+<detAdicional nombre="Bodega" valor="9"/>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>0.90</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+</detalles>
+<infoAdicional>
+<campoAdicional nombre="Lugar Venta">CORAL MONAY</campoAdicional>
+<campoAdicional nombre="Codigo">9999999</campoAdicional>
+<campoAdicional nombre="Direccion">SARAHURCO Y SANANCAJAS</campoAdicional>
+<campoAdicional nombre="Telefonos">097147964</campoAdicional>
+<campoAdicional nombre="Correo">OMARGO33@HOTMAIL.COM</campoAdicional>
+<campoAdicional nombre="Pedido">3723581</campoAdicional>
+</infoAdicional>
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:etsi="http://uri.etsi.org/01903/v1.3.2#" Id="Signature727249">
+<ds:SignedInfo Id="Signature-SignedInfo901886">
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<ds:Reference URI="#Signature727249-SignedProperties61065" Id="SignedPropertiesID28297" Type="http://uri.etsi.org/01903#SignedProperties">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>5G1gHYz6hp7AMkZcC/smNBTEwog=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference URI="#Certificate1995159">
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>8DIgs68o2FaaZDChgFuNf3ZyJVg=</ds:DigestValue>
+</ds:Reference>
+<ds:Reference URI="#comprobante" Id="Reference-ID-485014">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>9NWuSLlcdN0FJE4KZsBzx9kVvUY=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue Id="SignatureValue998865">
+BQhV9OKZ+uPtjv9FftTvfNatGBMQo78xAQW9eqWYezHaLJTZ3scA5AHlrfrADDZVpswR6wJZhF76
+3B2E0IFotsJbVCW5QHhQgOjs/CnxmYT6SuHHnaB/Ta3w3XnyE0SLo3JTKTdzEst5jia+zsVnstEa
+mNiWqHFtQB5BMhgMOHOnK6qLKtgPcinIfe9uQhzVCZdIm1BMgFoWREr0rZi3E2GoBa37vqLGfEJ0
+hcDkvI+Y3TIQE9L/nkRIbaM4toOp4ITs/4ytjiP+2cDZbvGLPYATMSsQJd/bThpyc9AIzW/ZDSZK
+VSWtSGegAV+Rr2ZdMu9zyfgH9FhDlHbpwODPsQ==
+</ds:SignatureValue>
+<ds:KeyInfo Id="Certificate1995159">
+<ds:X509Data>
+<ds:X509Certificate>
+MIIJYzCCB0ugAwIBAgIETkQOEDANBgkqhkiG9w0BAQsFADCBoTELMAkGA1UEBhMCRUMxIjAgBgNV
+BAoTGUJBTkNPIENFTlRSQUwgREVMIEVDVUFET1IxNzA1BgNVBAsTLkVOVElEQUQgREUgQ0VSVElG
+SUNBQ0lPTiBERSBJTkZPUk1BQ0lPTi1FQ0lCQ0UxDjAMBgNVBAcTBVFVSVRPMSUwIwYDVQQDExxB
+QyBCQU5DTyBDRU5UUkFMIERFTCBFQ1VBRE9SMB4XDTE1MDEzMDE0MDQ1MloXDTE2MDEzMDE0MzQ1
+MlowgbUxCzAJBgNVBAYTAkVDMSIwIAYDVQQKExlCQU5DTyBDRU5UUkFMIERFTCBFQ1VBRE9SMTcw
+NQYDVQQLEy5FTlRJREFEIERFIENFUlRJRklDQUNJT04gREUgSU5GT1JNQUNJT04tRUNJQkNFMQ4w
+DAYDVQQHEwVRVUlUTzE5MBEGA1UEBRMKMDAwMDEwNDE3MTAkBgNVBAMTHUhVR08gQU5EUkVTIFFV
+RVpBREEgSVpRVUlFUkRPMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoaiSY2j3PFJB
+Nousas4nqhf3Krsv64b6wkZJffp+AgWk5ZytJ82O/FSUIa7jmK6nrqRcCdP5AbunqhNFgTLPj1ep
+zG6jE0dGn6031FfsnW9bqQasQ62YG3vf2EfyviFW7PrqGa73xtjSK9luB7IudMzVNxHJJ65NyF1N
+/dsrKYj3Uzb70+WQzAqabkgqV/jGbxeWZPdhXii/toTAPUSkl11u904bvS0yB2BZfN7E3eOa8zuu
+nRxn46c1+RPcWhdGEP3uDkQX1Uwy1ezJXBqNHm/JLmyBBG6UncmUiYlLK1QgsiXzYedDWXKOqM0/
+NqFaUXjra6wcc80Z9yDQJ9HRzwIDAQABo4IEizCCBIcwCwYDVR0PBAQDAgUgMIGRBggrBgEFBQcB
+AQSBhDCBgTA+BggrBgEFBQcwAYYyaHR0cDovL29jc3AuZWNpLmJjZS5lYy9lamJjYS9wdWJsaWN3
+ZWIvc3RhdHVzL29jc3AwPwYIKwYBBQUHMAGGM2h0dHA6Ly9vY3NwMS5lY2kuYmNlLmVjL2VqYmNh
+L3B1YmxpY3dlYi9zdGF0dXMvb2NzcDAuBgorBgEEAYKoOwMKBCATHkdFUkFSRE8gT1JUSVogRSBI
+SUpPUyBDSUEgTFREQTAdBgorBgEEAYKoOwMLBA8TDTAxOTAwNzIwMDIwMDEwGgYKKwYBBAGCqDsD
+AQQMEwowMTA0NzE0MDE5MBsGCisGAQQBgqg7AwIEDRMLSFVHTyBBTkRSRVMwFwYKKwYBBAGCqDsD
+AwQJEwdRVUVaQURBMBkGCisGAQQBgqg7AwQECxMJSVpRVUlFUkRPMBcGCisGAQQBgqg7AwUECRMH
+R0VSRU5URTAvBgorBgEEAYKoOwMHBCETH0FWIENBUkxPUyBKVUxJTyBBUk9TRU1FTkEgS00gMTUw
+GQYKKwYBBAGCqDsDCAQLEwkwNDI1MDY2MzIwGQYKKwYBBAGCqDsDCQQLEwlHdWF5YXF1aWwwFwYK
+KwYBBAGCqDsDDAQJEwdFQ1VBRE9SMCAGCisGAQQBgqg7AzMEEhMQU09GVFdBUkUtQVJDSElWTzAk
+BgNVHREEHTAbgRllY2FycmlvbkBnZXJhcmRvb3J0aXouY29tMIIB3wYDVR0fBIIB1jCCAdIwggHO
+oIIByqCCAcaGgdVsZGFwOi8vYmNlcWxkYXBzdWJwMS5iY2UuZWMvY249Q1JMMTk5LGNuPUFDJTIw
+QkFOQ08lMjBDRU5UUkFMJTIwREVMJTIwRUNVQURPUixsPVFVSVRPLG91PUVOVElEQUQlMjBERSUy
+MENFUlRJRklDQUNJT04lMjBERSUyMElORk9STUFDSU9OLUVDSUJDRSxvPUJBTkNPJTIwQ0VOVFJB
+TCUyMERFTCUyMEVDVUFET1IsYz1FQz9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2WGNGh0
+dHA6Ly93d3cuZWNpLmJjZS5lYy9DUkwvZWNpX2JjZV9lY19jcmxmaWxlY29tYi5jcmykgbUwgbIx
+CzAJBgNVBAYTAkVDMSIwIAYDVQQKExlCQU5DTyBDRU5UUkFMIERFTCBFQ1VBRE9SMTcwNQYDVQQL
+Ey5FTlRJREFEIERFIENFUlRJRklDQUNJT04gREUgSU5GT1JNQUNJT04tRUNJQkNFMQ4wDAYDVQQH
+EwVRVUlUTzElMCMGA1UEAxMcQUMgQkFOQ08gQ0VOVFJBTCBERUwgRUNVQURPUjEPMA0GA1UEAxMG
+Q1JMMTk5MB8GA1UdIwQYMBaAFBj58PvmMhyZZjkqyouyaX1JJ7/OMB0GA1UdDgQWBBRSXaxVu5mi
+tvplh5T5DwxUNGlTzzAJBgNVHRMEAjAAMBkGCSqGSIb2fQdBAAQMMAobBFY4LjEDAgSwMA0GCSqG
+SIb3DQEBCwUAA4ICAQB3Y2T9C7Tmz0KYRcN8SAw9NSrKEXp/XTASFuFXcUeVHGlUjJu2v8dkf1HW
+NWjugsxnB4cc/lZ1CUqAgHoyuB7nbWDzhldHaaAkHtp9hb/9XXBBbsMRfoBMtguy3QhTv6WvmN4Q
+Pa0zy4aMAzqSnNoESdLBhQXmy4rjT7m3zgQYSNVoDXMtigbZ5f6o9cVfp5FqhubKYZMIGWonjXwv
+G1/sY5BS5skcyjXsxLHsQvr7SpPcJFx7EV2AgEfGlat1eGlLxl2dVykg3tuWXzedC2PUZ337Ihbz
+C8BkHWg5oEKF9IZYeMMIzXrAFPGmmPn0smUUXsN/pjTOzhT5x4IgT6PAJdDU2MBX/ajsQZs5/Z5v
+RsrGUU18rCC3QBv6bVgzrNODiX4LLraESPIuQVvyhx61PI0cgTmvQrdJfHn8j/IHyLIap8RN9+lX
+0RX3P1XWQLkkoamL3Nu97AeAuXGDfg4PgMKgh8l8kuVwaoA1Xl+FRtGwU/OvNtA4/YLiXD+bKXLu
+G9GS0vNw7T/LTlu5++mIHbtIByMcbLxAKOp8d9UpglCDsmNcsG6uP9bp25I1mcYq+PfKvY1sRYsi
+OcuXRMdRvz5StROrC2N8bV5ke5AvkDkOnjLwFzpJSSC4RYQ2JbyJESU6/4h3XORzgIMr+IOXO86L
+ZN14v8KGFqhrnxeJYQ==
+</ds:X509Certificate>
+</ds:X509Data>
+<ds:KeyValue>
+<ds:RSAKeyValue>
+<ds:Modulus>
+oaiSY2j3PFJBNousas4nqhf3Krsv64b6wkZJffp+AgWk5ZytJ82O/FSUIa7jmK6nrqRcCdP5Abun
+qhNFgTLPj1epzG6jE0dGn6031FfsnW9bqQasQ62YG3vf2EfyviFW7PrqGa73xtjSK9luB7IudMzV
+NxHJJ65NyF1N/dsrKYj3Uzb70+WQzAqabkgqV/jGbxeWZPdhXii/toTAPUSkl11u904bvS0yB2BZ
+fN7E3eOa8zuunRxn46c1+RPcWhdGEP3uDkQX1Uwy1ezJXBqNHm/JLmyBBG6UncmUiYlLK1QgsiXz
+YedDWXKOqM0/NqFaUXjra6wcc80Z9yDQJ9HRzw==
+</ds:Modulus>
+<ds:Exponent>AQAB</ds:Exponent>
+</ds:RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+<ds:Object Id="Signature727249-Object725878"><etsi:QualifyingProperties Target="#Signature727249"><etsi:SignedProperties Id="Signature727249-SignedProperties61065"><etsi:SignedSignatureProperties><etsi:SigningTime>2015-02-14T23:11:56-05:00</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>SU+ZNYgz5cuqQg4qgE6T/dz5vd8=</ds:DigestValue></etsi:CertDigest><etsi:IssuerSerial><ds:X509IssuerName>CN=AC BANCO CENTRAL DEL ECUADOR,L=QUITO,OU=ENTIDAD DE CERTIFICACION DE INFORMACION-ECIBCE,O=BANCO CENTRAL DEL ECUADOR,C=EC</ds:X509IssuerName><ds:X509SerialNumber>1313082896</ds:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate></etsi:SignedSignatureProperties><etsi:SignedDataObjectProperties><etsi:DataObjectFormat ObjectReference="#Reference-ID-485014"><etsi:Description>Contenido comprobante</etsi:Description><etsi:MimeType>text/xml</etsi:MimeType></etsi:DataObjectFormat></etsi:SignedDataObjectProperties></etsi:SignedProperties></etsi:QualifyingProperties></ds:Object></ds:Signature></factura>]]></comprobante>
+</autorizacion>

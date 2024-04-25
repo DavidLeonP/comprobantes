@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.aplicaciones13</groupId>
+    <artifactId>documentos-all</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <description>Configuracion de Modulo para crear estructuras XSD</description>
+    <modules>
+        <module>pom/pomAutorizacion.xml</module>
+        <module>pom/pomAutorizacionComprobanteResponse.xml</module>
+        <module>pom/pomComprobanteRetencion1.0.0.xml</module>
+        <module>pom/pomComprobanteRetencion2.0.0.xml</module>
+        <module>pom/pomFactura1.0.0.xml</module>
+        <module>pom/pomFactura1.1.0.xml</module>
+        <module>pom/pomFactura2.0.0.xml</module>
+        <module>pom/pomFactura2.1.0.xml</module>
+        <module>pom/pomGuiaRemision1.0.0.xml</module>
+        <module>pom/pomGuiaRemision1.1.0.xml</module>
+        <module>pom/pomLiquidacionCompra1.0.0.xml</module>
+        <module>pom/pomLiquidacionCompra1.1.0.xml</module>
+        <module>pom/pomNotaCredito1.0.0.xml</module>
+        <module>pom/pomNotaCredito1.1.0.xml</module>
+        <module>pom/pomNotaDebito1.0.0.xml</module>
+    </modules>
+</project>
