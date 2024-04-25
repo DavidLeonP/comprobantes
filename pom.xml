@@ -14,6 +14,7 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+    <description>Producto de comprobantes RIDE de SRI Ecuador</description>
     <build>
         <plugins>
             <plugin>
