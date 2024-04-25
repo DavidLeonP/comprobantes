@@ -36,7 +36,7 @@ public class ImpresionDocumentosTest {
         
         try {
             Map<String, String> mapa = new HashMap<>();
-            File documentoXml = new File(pathUser + "/recursos/facturaAutorizacion.xml");
+            File documentoXml = new File(pathUser + "/recursos/facturaAutorizacion000.xml");
             Autorizacion autorizacion = Conversion.xmlToPojo(documentoXml, Autorizacion.class);
             Factura factura = Conversion.xmlToPojo(autorizacion.getComprobante(), Factura.class);
 
@@ -44,7 +44,7 @@ public class ImpresionDocumentosTest {
             mapa.put("claveAccesoAutorizacion", claveAcceso);
             mapa.put("fechaAutorizacion", autorizacion.getFechaAutorizacion());
             mapa.put("documentoDestino", pathUser + "/recursos/testFactura.pdf");
-            mapa.put("pathImagen", pathUser + "/recursos/13aplicacionesHorizontal.png");
+            mapa.put("pathImagen", pathUser + "/recursos/logoRideVertical.png");
 
             ImpresionElementosFactura impresionFactura = new ImpresionElementosFactura();
             impresionFactura.setFactura(factura);

@@ -51,7 +51,7 @@ Puede ver mas información a [arquitectura JAVA](https://www.arquitecturajava.co
 
 ## Configuracion pom Generate
 
-El archivo pomGenerate.xml permite la generación de estructuras necesarias para interactuar con SOAP y xml, que se encuentra en la carpeta POM para generar cada una de las estructuras de lectura.
+El archivo pomGenerate.xml permite la generación de estructuras necesarias para interactuar con SOAP y xml, que se encuentra en la carpeta POM para generar cada una de las estructuras de lectura con un modulo de maven.
 
 ```bash
 mvn clean compile install -f pomGenerate.xml
@@ -75,25 +75,16 @@ mvn test
 
 ## Configuraciones archivos de fuentes de caracters
 
-Se debe agregar las fuentes a la carpeta de Fonts del sistema operativo, para que el aplicativo pueda leer las fuentes y generar los certificados.
+Se debe agregar las fuentes a la carpeta de resources/fonts del proyecto o en el sistema operativo y para que el aplicativo pueda leer las fuentes y generar los certificados se debe modificar el archivo de configuración de la aplicación /resorces/messages.properties en las entradas de las fuentes.
 
-### Windows
-
-Dar clic con el boton derecho del raton en cada fuente y en el menu contextual  seleccionar la opción de instalar.
-
-### Linux
-
-En la carpeta /usr/share/fonts/truetype/ se debe copiar las fuentes que se encuentran en la carpeta de recursos del aplicativo con el usuairo root.
-
-- workSans
-- liberation
+```bash
 
 >**NOTA:** 
 >
 >Los log del producto se obtienen de manera estándar en la consola de la aplicación.
 
 ---
-![logo](./recursos/13aplicaciones.png)
+![logo](./recursos/logo13Aplicaciones.png)
 
 <omargo33@hotmail.com>
 
