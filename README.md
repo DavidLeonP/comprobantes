@@ -77,11 +77,11 @@ mvn test
 
 Se debe agregar las fuentes a la carpeta de resources/fonts del proyecto o en el sistema operativo y para que el aplicativo pueda leer las fuentes y generar los certificados se debe modificar el archivo de configuración de la aplicación /resorces/messages.properties en las entradas de las fuentes.
 
-```bash
 
 >**NOTA:** 
 >
 >Los log del producto se obtienen de manera estándar en la consola de la aplicación.
+>
 
 ---
 ![logo](./recursos/logo13Aplicaciones.png)
