@@ -7,6 +7,7 @@ package com.aplicaciones13.documentos.impresion.elementos.imagen;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.layout.element.Image;
+import com.aplicaciones13.documentos.impresion.elementos.compuestos.ConjuntoInterface;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +20,7 @@ import java.net.MalformedURLException;
  *
  */
 @Slf4j
-public class Imagen extends Elemento {
+public class Imagen extends Elemento implements ConjuntoInterface {
 
     private String pathImagen;
     private float escala;
@@ -32,7 +33,7 @@ public class Imagen extends Elemento {
      * Metodo para crear el objeto.
      *
      */
-    public Imagen() {
+    public Imagen()  {
         initImagen();
     }
 
@@ -63,19 +64,7 @@ public class Imagen extends Elemento {
         return this.image;
     }
 
-    /**
-     * Procesa la imagen en el pdf
-     * 
-     */    
-    public void procesar() {
-        try {
-            setImagen(new Image(ImageDataFactory.create(this.pathImagen)));
-            procesarEscala();
-        } catch (MalformedURLException ex) {
-            procesarImagenNotFound();
-        }
-    }
-
+    
     /**
      * Metodo para procesar las escalas del sistemas.
      *
@@ -162,4 +151,22 @@ public class Imagen extends Elemento {
         this.image = image;
     }
 
+/**
+     * Procesa la imagen en el pdf
+     * 
+     */
+    @Override
+    public void procesar() {
+        try {
+            setImagen(new Image(ImageDataFactory.create(this.pathImagen)));
+            procesarEscala();
+        } catch (MalformedURLException ex) {
+            procesarImagenNotFound();
+        }
+    }
+
+    @Override
+    public void reset() {
+        initImagen();
+    }
 }

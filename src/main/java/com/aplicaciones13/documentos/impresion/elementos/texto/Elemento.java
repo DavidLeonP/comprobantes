@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import javax.swing.text.InternationalFormatter;
-import javax.swing.text.StyleConstants.FontConstants;
 
 /**
  * Clase con los datos esenciales para la escritura del archivo PDF.
@@ -62,14 +61,14 @@ public class Elemento {
      *
      */
     public Elemento() {
-        init();
+        initFonts();
     }
 
     /**
      * Metodo para inicializar los objetos utilizados.
      *
      */
-    private void init() {
+    private void initFonts() {
         try {
 
             FontProgram fontProgram = FontProgramFactory.createFont(BOLD);
@@ -236,8 +235,8 @@ public class Elemento {
 
         if (nombre != null && nombre.trim().length() > 1) {
             String respuesta = "";
-            nombre = nombre.replaceAll("\\_{1}", " ").trim();
-
+            nombre = nombre.replace('_', ' ').trim();
+            
             if (nombre.startsWith("@")) {
                 return nombre.replaceFirst("@", "");
             }

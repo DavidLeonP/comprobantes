@@ -18,6 +18,10 @@ import java.io.StringReader;
 @Slf4j
 public class Conversion {
 
+    private Conversion(){
+        super();
+    }
+
     /**
      * Metodo para obtener el documento parseado sobre los objetos de la estructura.
      * 

@@ -16,4 +16,9 @@ public interface ConjuntoInterface {
      * Metodo para procesar la informacion.
      */
     void procesar();       
+
+    /**
+     * Metodo para reset de la informacion;     
+     */
+    void reset();
 }

@@ -21,7 +21,7 @@ import java.util.Map;
  *
  *
  */
-public class Conjunto extends Elemento implements ConjuntoInterface {
+public class Conjunto extends Elemento {
 
     private Table tabla;
     private Map<Integer, TextAlignment> mapaAlineamiento;
@@ -35,14 +35,14 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
      */
     public Conjunto() {
         super();
-        init();
+        initConjunto();
     }
 
     /**
      * Metodo para inicializar el objeto.
      *
      */
-    private void init() {
+    private void initConjunto() {
         setMapaAlineamiento(new HashMap<>());
         this.listaTitulos = new ArrayList<>();
         setTabla(new Table(1));
@@ -64,6 +64,10 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
         if (formatos != null && formatos.length > 0){
             listaFormatos.addAll(Arrays.asList(formatos));
         }
+    }
+
+    public void setListaFormatos(List<String> listaFormatos){
+        this.listaFormatos = listaFormatos;
     }
 
     /**
@@ -201,8 +205,12 @@ public class Conjunto extends Elemento implements ConjuntoInterface {
         getDocumento().add(getTabla());
     }
 
-    @Override
+
     public void procesar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void reset() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

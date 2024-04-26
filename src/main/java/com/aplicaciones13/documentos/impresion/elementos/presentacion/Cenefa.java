@@ -26,7 +26,7 @@ import java.util.Date;
  * @author omargo33
  *
  */
-public class Cenefa {
+public class Cenefa{
 
     /**
      * Indicador si es cenefa superior o inferior
@@ -148,7 +148,7 @@ public class Cenefa {
      *
      * Recorre el documento y va insertando los canvas de imagen/informacion.
      *
-     */
+     */    
     public void procesar() {        
         int n = getPdfDocument().getNumberOfPages();
         for (int i = 1; i <= n; i++) {
@@ -220,5 +220,5 @@ public class Cenefa {
      */
     public void setCenefaEstructura(CenefaEstructura cenefaEstructura) {
         this.cenefaEstructura = cenefaEstructura;
-    }
+    } 
 }

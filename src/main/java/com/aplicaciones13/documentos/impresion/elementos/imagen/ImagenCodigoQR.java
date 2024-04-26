@@ -26,7 +26,7 @@ import java.util.Map;
  *
  */
 @Slf4j
-public class ImagenCodigoQR extends Imagen {
+public class ImagenCodigoQR extends Imagen{
 
     private float ancho = 0f;
 

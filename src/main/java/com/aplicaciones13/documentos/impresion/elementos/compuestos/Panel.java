@@ -22,7 +22,7 @@ import java.util.List;
  * @author omargo33
  *
  */
-public class Panel extends Conjunto {
+public class Panel extends Conjunto implements ConjuntoInterface{
 
     private List<Object> listaCeldas;
 
@@ -32,14 +32,14 @@ public class Panel extends Conjunto {
      */
     public Panel() {
         super();
-        init();
+        initPanel();
     }
 
     /**
      * Metodo para inicializar el objeto.
      *
      */
-    private void init() {
+    private void initPanel() {
         this.listaCeldas = new ArrayList<>();
     }
 

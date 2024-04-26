@@ -30,7 +30,7 @@ import com.itextpdf.kernel.colors.Color;
 @Slf4j
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Tabla extends Conjunto {
+public class Tabla extends Conjunto implements ConjuntoInterface {
 
     private List<Object[]> listaValores;
     private boolean sumatoria=false;
@@ -42,14 +42,14 @@ public class Tabla extends Conjunto {
      */
     public Tabla() {
         super();
-        init();
+        initTabla();
     }
 
     /**
      * Metodo para inicializar el objeto.
      *
      */
-    private void init() {
+    private void initTabla() {
         this.listaValores = new ArrayList<>();
         colorFondo = new DeviceRgb( 128, 128, 128  );
     }

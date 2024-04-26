@@ -27,7 +27,7 @@ import java.util.List;
  *
  */
 @Slf4j
-public class Form extends Conjunto {
+public class Form extends Conjunto implements ConjuntoInterface {
 
     /**
      * Lista de valores de la forma.
@@ -40,25 +40,26 @@ public class Form extends Conjunto {
      */
     public Form() {
         super();
-        init();
+        initForm();
     }
 
     /**
      * Metodo para resetear el objeto.
      */
+    @Override
     public void reset() {
         setListaTitulos(new ArrayList<>());
         setListaValores(new ArrayList<>());
-        setListaFormatos(null);
-        setMapaAlineamiento(new HashMap<>());        
-        setTabla(new Table(1));        
+        setListaFormatos(new ArrayList<>());
+        setMapaAlineamiento(new HashMap<>());
+        setTabla(new Table(1));
     }
 
     /**
      * Metodo para inicializar el objeto.
      *
      */
-    public void init() {
+    public void initForm() {
         listaValores = new ArrayList<>();
     }
 

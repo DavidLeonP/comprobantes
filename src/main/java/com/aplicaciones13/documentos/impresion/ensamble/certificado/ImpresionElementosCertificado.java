@@ -5,14 +5,17 @@ import com.aplicaciones13.documentos.impresion.ensamble.ImpresionElementosBase;
 import com.aplicaciones13.documentos.utilidades.Bundle;
 import com.itextpdf.layout.Document;
 
+import lombok.EqualsAndHashCode;
+
 /**
  * Objeto con los datos de impresiones certificado de socio.
  *
  * @author Omar Velez o.velez@jardinazuayo.fin.ec
  *
  */
+@EqualsAndHashCode(callSuper = true)
 public class ImpresionElementosCertificado extends ImpresionElementosBase {
-    private final String SALTO_PAGINA = "\n";
+    private static final String SALTO_PAGINA = "\n";
 
     Bundle bundle = new Bundle("elementos-certificado");
 

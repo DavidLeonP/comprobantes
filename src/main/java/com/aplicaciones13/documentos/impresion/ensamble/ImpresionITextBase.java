@@ -210,7 +210,7 @@ public class ImpresionITextBase {
         //Presentacion de la firma electrionica 
         PdfSignatureAppearance pdfSignatureAppearance = signer.getSignatureAppearance();
         pdfSignatureAppearance.setReason(getNombreDocumento(mapaParametros));
-        pdfSignatureAppearance.setLocation((String) mapaParametros.get("documentoSucursal"));
+        pdfSignatureAppearance.setLocation(String.valueOf(mapaParametros.get("documentoSucursal")));
         pdfSignatureAppearance.setReuseAppearance(false);
         pdfSignatureAppearance.setPageRect(new Rectangle(currentPosition.getX(), currentPosition.getY(), currentPosition.getAncho(), 60));
         pdfSignatureAppearance.setPageNumber(currentPosition.getPagina());
@@ -303,7 +303,7 @@ public class ImpresionITextBase {
      * @throws IOException
      */
     private void encriptar(Map<String, String> mapaParametros) throws IOException {
-        PdfDocument pdfDoc = new PdfDocument(
+        try (PdfDocument pdfDoc = new PdfDocument(
                 new PdfReader(pahtTemporal),
                 new PdfWriter(
                         String.valueOf(mapaParametros.get("documentoDestino")), 
@@ -313,23 +313,31 @@ public class ImpresionITextBase {
                             EncryptionConstants.ALLOW_PRINTING,
                             EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA)
                         )
-            );
-        pdfDoc.close();
-
-        // codigo para poner clave que se solicite 
-        /*String archivoDestino = String.valueOf(mapaParametros.get("documentoDestino"));
-        byte[] USERPASS = "user".getBytes();
-        byte[] OWNERPASS = "owner".getBytes();
-        PdfReader pdfReader = new PdfReader(pahtTemporal);        
-        WriterProperties writerProperties = new WriterProperties();        
-        writerProperties.setStandardEncryption(USERPASS, OWNERPASS, EncryptionConstants.DO_NOT_ENCRYPT_METADATA, EncryptionConstants.ENCRYPTION_AES_128);        
-        PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(archivoDestino), writerProperties);        
-        PdfDocument pdfDocument = new PdfDocument(pdfReader, pdfWriter);        
-        pdfDocument.close();*/
-
-        Path pathAbsolute = Paths.get(pahtTemporal);
-        
-        Files.deleteIfExists(pathAbsolute);
-        
+            )) {            
+            Path pathAbsolute = Paths.get(pahtTemporal);        
+            Files.deleteIfExists(pathAbsolute);        
+        }        
     }    
+
+
+    /**
+     * Metodo para agregar autenticacion para ver el archivo.
+     * 
+     * @param mapaParametros
+     * @throws IOException
+     */
+    public void agregarAutenticacion(Map<String, String> mapaParametros) throws IOException{
+        String archivoDestino = String.valueOf(mapaParametros.get("documentoDestino"));
+        byte[] userPassword = String.valueOf(mapaParametros.get("usuarioPassword")).getBytes();
+        byte[] ownerPassword = String.valueOf(mapaParametros.get("ownerPassword")).getBytes();
+        
+        WriterProperties writerProperties = new WriterProperties();        
+        writerProperties.setStandardEncryption(userPassword, ownerPassword, EncryptionConstants.DO_NOT_ENCRYPT_METADATA, EncryptionConstants.ENCRYPTION_AES_128);        
+        try (PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(archivoDestino), writerProperties)) {
+            try (PdfDocument pdfDoc = new PdfDocument(new PdfReader(pahtTemporal), pdfWriter)){            
+                Path pathAbsolute = Paths.get(pahtTemporal);        
+                Files.deleteIfExists(pathAbsolute);        
+            }
+        }        
+    }
 }

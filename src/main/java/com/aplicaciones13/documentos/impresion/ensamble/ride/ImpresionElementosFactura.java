@@ -121,7 +121,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
             }
 
             getTabla().setColorFondo(new DeviceRgb(223, 224, 226));
-            
+
             getTabla().setListaTitulos(
                     bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021", "fac_022"));
             getTabla().setListaFormatos(
@@ -164,7 +164,12 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
 
         cargarTotales();
 
-        subTotales();
+        if(isExportacion()){
+            subTotalesExportacion();
+        }else {
+            subTotales();
+        }       
+        
         getPanel().setListaDimensiones(64f, 36f);
 
         getForm().procesar();
@@ -463,63 +468,74 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
     }
 
     /**
-     * Metodo para ejecutar los totales.
+     * Metodo para ejecutar los totales en una factura de exportacion.
+     *
+     */
+    private void subTotalesExportacion() {
+
+        int i = 0;
+        String[] totalesExportacion = {
+                "", "",
+                bundle.getMessage("fac_053"),
+                bundle.getMessage("fac_052"),
+                "", "", "", "",
+                bundle.getMessage("fac_054"),
+                bundle.getMessage("fac_055"),
+                bundle.getMessage("fac_056"),
+                bundle.getMessage("fac_057"),
+                bundle.getMessage("fac_035")
+        };
+
+        while (i < getTotales().size() - 1) {
+            TotalDocumentoFactura a = getTotales().get(i);
+
+            if (totalesPresentacion[i].indexOf("2") >= 0) {
+                getForm().getListaTitulos().add(totalesExportacion[i].trim());
+                getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
+                getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
+            }
+            i++;
+        }
+
+        String tiuloPivot = getForm().getListaTitulos().get(0);
+        String valorPivot = String.valueOf(getForm().getListaValores().get(0));
+        getForm().getListaTitulos().remove(0);
+        getForm().getListaValores().remove(0);
+        getForm().getListaTitulos().add(tiuloPivot);
+        getForm().getListaValores().add(valorPivot);
+
+        for (int j = 0; j < getForm().getListaTitulos().size(); j++) {
+            getForm().getMapaAlineamiento().put(j + 1, TextAlignment.RIGHT);
+        }
+
+        getForm().setListaDimensiones(22f, 11f);
+        getForm().procesar();
+    }
+
+    /**
+     * Metodo para ejecutar los sub totales.
      *
      */
     private void subTotales() {
-        if (isExportacion()) {
-            int i = 0;
-            String[] totalesExportacion = {
-                    "", "",
-                    bundle.getMessage("fac_053"),
-                    bundle.getMessage("fac_052"),
-                    "", "", "", "",
-                    bundle.getMessage("fac_054"),
-                    bundle.getMessage("fac_055"),
-                    bundle.getMessage("fac_056"),
-                    bundle.getMessage("fac_057"),
-                    bundle.getMessage("fac_035")
-            };
+        int i = 0;
+        while (i < getTotales().size() - 1) {
+            TotalDocumentoFactura a = getTotales().get(i);
+            String valorString = (a.getValor() == null) ? "0" : a.getValor().toString();
+            double valor = Double.parseDouble(valorString);
 
-            while (i < getTotales().size() - 1) {
-                TotalDocumentoFactura a = getTotales().get(i);
+            if (i < 3)
+                valor = 1f;
 
-                if (totalesPresentacion[i].indexOf("2") >= 0) {
-                    getForm().getListaTitulos().add(totalesExportacion[i].trim());
-                    getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
-                    getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-                }
-                i++;
+            if (valor > 0 && totalesPresentacion[i].indexOf("1") >= 0) {
+                getForm().getListaTitulos().add(a.getTitulo());
+                getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
+                getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
             }
-
-            String tiuloPivot = getForm().getListaTitulos().get(0);
-            String valorPivot = String.valueOf(getForm().getListaValores().get(0));
-            getForm().getListaTitulos().remove(0);
-            getForm().getListaValores().remove(0);
-            getForm().getListaTitulos().add(tiuloPivot);
-            getForm().getListaValores().add(valorPivot);
-
-        } else {
-            int i = 0;
-            while (i < getTotales().size() - 1) {
-                TotalDocumentoFactura a = getTotales().get(i);
-                String valorString = (a.getValor() == null) ? "0" : a.getValor().toString();
-                double valor = Double.parseDouble(valorString);
-
-                if (i < 3)
-                    valor = 1f;
-
-                if (valor > 0 && totalesPresentacion[i].indexOf("1") >= 0) {
-                    getForm().getListaTitulos().add(a.getTitulo());
-                    getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
-                    getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-                }
-                i++;
-            }
+            i++;
         }
 
-        for (int i = 0; i < getForm().getListaTitulos().size(); i++) {
-            getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
+        for (int j = 0; j < getForm().getListaTitulos().size(); j++) {
+            getForm().getMapaAlineamiento().put(j + 1, TextAlignment.RIGHT);
         }
 
         getForm().setListaDimensiones(22f, 11f);
