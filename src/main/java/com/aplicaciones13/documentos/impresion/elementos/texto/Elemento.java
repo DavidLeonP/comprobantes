@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import javax.swing.text.InternationalFormatter;
-import javax.swing.text.StyleConstants.FontConstants;
 
 /**
  * Clase con los datos esenciales para la escritura del archivo PDF.

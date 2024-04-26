@@ -210,7 +210,7 @@ public class ImpresionITextBase {
         //Presentacion de la firma electrionica 
         PdfSignatureAppearance pdfSignatureAppearance = signer.getSignatureAppearance();
         pdfSignatureAppearance.setReason(getNombreDocumento(mapaParametros));
-        pdfSignatureAppearance.setLocation((String) mapaParametros.get("documentoSucursal"));
+        pdfSignatureAppearance.setLocation(String.valueOf(mapaParametros.get("documentoSucursal")));
         pdfSignatureAppearance.setReuseAppearance(false);
         pdfSignatureAppearance.setPageRect(new Rectangle(currentPosition.getX(), currentPosition.getY(), currentPosition.getAncho(), 60));
         pdfSignatureAppearance.setPageNumber(currentPosition.getPagina());
