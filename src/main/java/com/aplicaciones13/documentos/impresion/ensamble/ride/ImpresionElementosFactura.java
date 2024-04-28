@@ -61,44 +61,34 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Metodo para escribir la informacion del cliente.
      *
      */
-    @Override
     public synchronized void elemento3() {
         getEspacio().escribir(1);
         getLineaSolida().escribir();
 
-        getForm().setListaTitulos(bundle.getMessages("fac_013", "fac_014", "fac_015"));
-        getForm()
-                .setListaValores(getFactura()
-                        .getInfoFactura()
-                        .getRazonSocialComprador(),
-                        getFactura()
-                                .getInfoFactura()
-                                .getIdentificacionComprador(),
-                        getFactura()
-                                .getInfoFactura()
-                                .getFechaEmision());
-        getForm()
-                .setListaFormatos(
-                        Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING,
-                        Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(15f, 85f);
-        getForm().procesar();
-        getForm().escribir();
-        getForm().reset();
+        String razonSocial = getFactura().getInfoFactura().getRazonSocialComprador();
+        escribirCamposSimples(razonSocial, "fac_013");
+
+        String identificacion = getFactura().getInfoFactura().getIdentificacionComprador();
+        try {
+            escribirCamposSimples(identificacion, "tabla6_" + getFactura().getInfoFactura().getTipoIdentificacionComprador());
+        } catch (Exception e) {
+            escribirCamposSimples(identificacion, "gen003");
+        }
 
         String direccion = getFactura().getInfoFactura().getDireccionComprador();
-        setCamposExtra(direccion, "fac_060");
+        escribirCamposSimples(direccion, "fac_060");
+
+        String fechaEmision = getFactura().getInfoFactura().getFechaEmision();
+        escribirCamposSimples(fechaEmision, "fac_015");
 
         String guiaRemision = getFactura().getInfoFactura().getGuiaRemision();
-        setCamposExtra(guiaRemision, "fac_016");
+        escribirCamposSimples(guiaRemision, "fac_016");
     }
 
     /**
      * Metodo para detalle de la factura.
      *
      */
-    @Override
     public synchronized void elemento4() {
         List<Object[]> listaValores = new ArrayList<>();
         Object[] filaValores;
@@ -155,7 +145,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Metodo para agregar los totales de la factura
      *
      */
-    @Override
     public synchronized void elemento5() {
         Cell cell = new Cell();
         getLineaSolida().escribir();
@@ -164,12 +153,12 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
 
         cargarTotales();
 
-        if(isExportacion()){
+        if (isExportacion()) {
             subTotalesExportacion();
-        }else {
+        } else {
             subTotales();
-        }       
-        
+        }
+
         getPanel().setListaDimensiones(64f, 36f);
 
         getForm().procesar();
@@ -195,7 +184,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Metodo para agregar informacion de la exportacion SRI.
      *
      */
-    @Override
     public synchronized void elemento6() {
         if (isExportacion()) {
             getLineaSolida().escribir();
@@ -228,7 +216,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Metodo para agregar informacion adicional.
      *
      */
-    @Override
     public synchronized void elemento7() {
         if (isExportacion())
             return;
@@ -268,7 +255,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Metodo para agregar Formas de pago
      *
      */
-    @Override
     public synchronized void elemento8() {
         int size = 0;
 
@@ -313,25 +299,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         }
     }
 
-    /**
-     * Metodo para agregar la informacion del cliente.
-     * 
-     * @param campo
-     * @param bundleKey
-     */
-    private void setCamposExtra(String campo, String bundleKey) {
-        if (campo == null || campo.isEmpty()) {
-            return;
-        }
-
-        getForm().setListaTitulos(bundle.getMessage(bundleKey));
-        getForm().setListaValores(campo);
-        getForm().setListaFormatos(Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(15f, 85f);
-        getForm().procesar();
-        getForm().escribir();
-        getForm().reset();
-    }
 
     /**
      * Metodo para inicializar los totales.

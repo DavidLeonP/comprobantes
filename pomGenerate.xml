@@ -9,8 +9,10 @@
     <packaging>pom</packaging>
     <description>Configuracion de Modulo para crear estructuras XSD</description>
     <modules>
+        <!--Generar autorizaciones-->
         <module>pom/pomAutorizacion.xml</module>
         <module>pom/pomAutorizacionComprobanteResponse.xml</module>
+        <!--Generar Documentos-->
         <module>pom/pomComprobanteRetencion1.0.0.xml</module>
         <module>pom/pomComprobanteRetencion2.0.0.xml</module>
         <module>pom/pomFactura1.0.0.xml</module>

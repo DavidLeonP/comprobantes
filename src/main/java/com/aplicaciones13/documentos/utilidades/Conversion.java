@@ -36,7 +36,7 @@ public class Conversion {
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             return type.cast(unmarshaller.unmarshal(fileXml));
         } catch (JAXBException e) {
-            log.error("Error al obtener archivo parseado {}", e);
+           // log.error("Error al obtener archivo parseado {}", e);
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class Conversion {
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             return type.cast(unmarshaller.unmarshal(readerXml));
         } catch (JAXBException e) {
-            log.error("Error al obtener un xml (string) parseado {}", e);
+          //  log.error("Error al obtener un xml (string) parseado {}", e);
         }
         return null;
     }

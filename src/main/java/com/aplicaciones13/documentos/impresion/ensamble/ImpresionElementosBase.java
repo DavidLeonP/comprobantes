@@ -25,6 +25,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
 
 /**
  * Clase base para la generación de elementos.
@@ -207,44 +208,12 @@ public class ImpresionElementosBase {
      * @param valor
      */
     public void imprimirElemento(int valor) {
-
-        switch (valor) {
-            case 0:
-                elemento0();
-                break;
-            case 1:
-                elemento1();
-                break;
-
-            case 2:
-                elemento2();
-                break;
-
-            case 3:
-                elemento3();
-                break;
-
-            case 4:
-                elemento4();
-                break;
-
-            case 5:
-                elemento5();
-                break;
-            case 6:
-                elemento6();
-                break;
-            case 7:
-                elemento7();
-                break;
-            case 8:
-                elemento8();
-                break;
-            case 9:
-                elemento9();
-                break;
-            default:
-                log.warn(".imprimirElemento() elemento no exite {} ", valor);
+        String methodName = "elemento" + valor;
+        try {
+            Method method = getClass().getMethod(methodName);
+            method.invoke(this);
+        } catch (Exception e) {
+            log.warn(".imprimirElemento() elemento {} no existe ", valor);
         }
     }
 
@@ -340,70 +309,6 @@ public class ImpresionElementosBase {
     }
 
     /**
-     * Metodo para imprimir el elemento 2.
-     *
-     */
-    public synchronized void elemento2() {
-        log.warn(".elemento2()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 3.
-     *
-     */
-    public synchronized void elemento3() {
-        log.warn(".elemento3()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 3.
-     *
-     */
-    public synchronized void elemento9() {
-        log.warn(".elemento9()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 4.
-     *
-     */
-    public synchronized void elemento4() {
-        log.warn(".elemento4()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 5.
-     *
-     */
-    public synchronized void elemento5() {
-        log.warn(".elemento5()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 6.
-     *
-     */
-    public synchronized void elemento6() {
-        log.warn(".elemento6()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 6.
-     *
-     */
-    public synchronized void elemento7() {
-        log.warn(".elemento7()");
-    }
-
-    /**
-     * Metodo para imprimir el elemento 8.
-     *
-     */
-    public synchronized void elemento8() {
-        log.warn(".elemento8()");
-    }
-
-    /**
      * @param documento
      */
     public void setDocumento(Document documento) {
@@ -418,8 +323,6 @@ public class ImpresionElementosBase {
     /**
      * Clase para contener la posicion current dentro de la escritura del
      * sistema.
-     *
-     *
      *
      * @author omargo33
      *

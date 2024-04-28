@@ -1,40 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="RespuestaAutorizacionComprobante">
+<xs:schema xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://ec.gob.sri.ws.autorizacion" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="AutorizacionComprobanteResponse01.xsd" namespace="http://ec.gob.sri.ws.autorizacion" />
+  <xs:element name="Envelope">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="claveAccesoConsultada" type="xs:string" />
-        <xs:element name="numeroComprobantes" type="xs:unsignedByte" />
-        <xs:element name="autorizaciones">
+        <xs:element name="Body">
           <xs:complexType>
             <xs:sequence>
-              <xs:element maxOccurs="unbounded" name="autorizacion">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="estado" type="xs:string" />
-                    <xs:element minOccurs="0" name="numeroAutorizacion" type="xs:string" />
-                    <xs:element name="fechaAutorizacion" type="xs:string" />
-                    <xs:element name="ambiente" type="xs:string" />
-                    <xs:element name="comprobante" type="xs:string" />
-                    <xs:element name="mensajes">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element maxOccurs="unbounded" name="mensaje">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="identificador" type="xs:string" />
-                                <xs:element name="mensaje" type="xs:string" />
-                                <xs:element name="tipo" type="xs:string" />
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
+              <xs:element ref="ns2:autorizacionComprobanteResponse" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

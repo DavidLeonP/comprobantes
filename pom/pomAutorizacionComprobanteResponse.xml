@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
     <groupId>com.aplicaciones13</groupId>
-    <artifactId>documentos-autorizacioncomprobanteresponse</artifactId>
+    <artifactId>documentos-autorizacioncomprobanteresponse.xsd</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <build>

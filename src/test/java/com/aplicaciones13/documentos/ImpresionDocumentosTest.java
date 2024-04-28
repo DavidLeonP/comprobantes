@@ -10,10 +10,13 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import com.aplicaciones13.documentos.estructuras.autorizacion.Autorizacion;
+import com.aplicaciones13.documentos.estructuras.comprobanteretencion.v1_0_0.ComprobanteRetencion;
 import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura;
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionITextBase;
+import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosComprobanteRetencion;
 import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosFactura;
 import com.aplicaciones13.documentos.utilidades.Conversion;
+import com.aplicaciones13.documentos.utilidades.Route;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,34 +28,60 @@ import java.io.File;
  */
 @Slf4j
 public class ImpresionDocumentosTest {
+    String pathUser = System.getProperty("user.dir");
 
     /**
      * Test of factura
      */
-    @Test
+    //@Test
     public void testFactura() {
-        String pathUser = System.getProperty("user.dir");
-        String claveAcceso="1312202301179001691900122011070002060400460006816";
-        
+
+        String claveAcceso = "1312202301179001691900122011070002060400460006816";
+
         try {
-            Map<String, String> mapa = new HashMap<>();
-            File documentoXml = new File(pathUser + "/recursos/facturaAutorizacion003.xml");
-            Autorizacion autorizacion = Conversion.xmlToPojo(documentoXml, Autorizacion.class);
+            Map<String, String> mapa = new HashMap<>();            
+            Autorizacion autorizacion =Route.getAutorizacion(pathUser + "/recursos/facturaAutorizacion003.xml");
             Factura factura = Conversion.xmlToPojo(autorizacion.getComprobante(), Factura.class);
 
             mapa.put("numeroAutorizacion", autorizacion.getNumeroAutorizacion());
             mapa.put("claveAccesoAutorizacion", claveAcceso);
-            mapa.put("fechaAutorizacion", autorizacion.getFechaAutorizacion());
+            mapa.put("fechaAutorizacion", String.valueOf(autorizacion.getFechaAutorizacion()));
             mapa.put("documentoDestino", pathUser + "/recursos/testFactura01.pdf");
             mapa.put("pathImagen", pathUser + "/recursos/logoRideHorizontal.png");
 
             ImpresionElementosFactura impresionFactura = new ImpresionElementosFactura();
             impresionFactura.setFactura(factura);
-            impresionFactura.setOrdenElementos(new int[] { 2, 3, 4, 5, 6, 7, 8 });            
+            impresionFactura.setOrdenElementos(new int[] { 2, 3, 4, 5, 6, 7, 8 });
             ImpresionITextBase impresionBaseIText = new ImpresionITextBase(impresionFactura);
             impresionBaseIText.ejecutar(18, 36, 30, 36, mapa);
         } catch (Exception e) {
             log.error("Test Factura {}", e.toString());
+        }
+    }
+
+    @Test
+    public void testComprobanteRetencion() {
+
+        String claveAcceso = "0707202207139170166700120010010000868170010699911";
+
+        try {
+            Map<String, String> mapa = new HashMap<>();
+            Autorizacion autorizacion =Route.getAutorizacion(pathUser + "/recursos/1391701667001-5-001-001-000081168.xml");
+            ComprobanteRetencion comprobanteRentecion = Conversion.xmlToPojo(autorizacion.getComprobante(), ComprobanteRetencion.class);
+
+            mapa.put("numeroAutorizacion", autorizacion.getNumeroAutorizacion());
+            mapa.put("claveAccesoAutorizacion", claveAcceso);
+            mapa.put("fechaAutorizacion", String.valueOf(autorizacion.getFechaAutorizacion()));
+            mapa.put("documentoDestino", pathUser + "/recursos/testComprobanteRetension01.pdf");
+            mapa.put("pathImagen", pathUser + "/recursos/logoRideHorizontal.png");
+
+            ImpresionElementosComprobanteRetencion impresionElementosComprobanteRetencion = new ImpresionElementosComprobanteRetencion();
+            impresionElementosComprobanteRetencion.setComprobanteRetencion(comprobanteRentecion);
+            impresionElementosComprobanteRetencion.setOrdenElementos(new int[] { 2, 3, 4, 5, 6});
+            ImpresionITextBase impresionBaseIText = new ImpresionITextBase(impresionElementosComprobanteRetencion);
+            impresionBaseIText.ejecutar(18, 36, 30, 36, mapa);
+        } catch (Exception e) {
+            log.error("Test Comprobante {}", e.toString());
         }
     }
 }

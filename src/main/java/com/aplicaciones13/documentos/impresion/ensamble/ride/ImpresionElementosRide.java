@@ -43,7 +43,6 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
      * Metodo para generar el panel superior en un formato semejante al SRI.
       *
      */
-    @Override
     public synchronized void elemento2() {
         getPanel().setListaDimensiones(50f);
         getPanel().getMapaAlineamiento().put(1, TextAlignment.CENTER);
@@ -182,4 +181,25 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         
         return listaLado;
     }
+
+        /**
+     * Metodo para agregar la informacion simple para el cliente.
+     * 
+     * @param campo
+     * @param bundleKey
+     */
+    public void escribirCamposSimples(String campo, String bundleKey) {
+        if (campo == null || campo.isEmpty()) {
+            return;
+        }
+
+        getForm().setListaTitulos(bundle.getMessage(bundleKey));
+        getForm().setListaValores(campo);
+        getForm().setListaFormatos(Elemento.FORMATO_STRING);
+        getForm().setListaDimensiones(15f, 85f);
+        getForm().procesar();
+        getForm().escribir();
+        getForm().reset();
+    }
+
 }

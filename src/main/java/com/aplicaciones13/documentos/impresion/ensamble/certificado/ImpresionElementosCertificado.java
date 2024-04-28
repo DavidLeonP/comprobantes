@@ -49,7 +49,6 @@ public class ImpresionElementosCertificado extends ImpresionElementosBase {
      * Imprime "en honor a la verdad"
      * Imprime "Atentamente"
      */
-    @Override
     public synchronized void elemento2() {
         getLineaSolida().escribir();
         getEspacio().escribir(4);
