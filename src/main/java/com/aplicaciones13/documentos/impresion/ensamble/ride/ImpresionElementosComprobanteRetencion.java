@@ -14,7 +14,6 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Objeto para crear un documento de Comprobante de Retencion.
@@ -23,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Data
-@Slf4j
 @EqualsAndHashCode(callSuper = false)
 public class ImpresionElementosComprobanteRetencion extends ImpresionElementosRide {
 
@@ -50,6 +48,8 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionElementosRi
         setContribuyenteEspecial(getComprobanteRetencion().getInfoCompRetencion().getContribuyenteEspecial());
         setObligadoContabilidad(getComprobanteRetencion().getInfoCompRetencion().getObligadoContabilidad().value());
         setClaveAccesoAutorizacion(getParametrosBusqueda().get("claveAccesoAutorizacion"));
+        setAgenteRetencion(getComprobanteRetencion().getInfoTributaria().getAgenteRetencion());
+        setContribuyenteRimpe(getComprobanteRetencion().getInfoTributaria().getContribuyenteRimpe());
         super.elemento2();
     }
 
@@ -105,7 +105,6 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionElementosRi
             filaValores[6] = String.format("%.2f", Double.valueOf(a.getPorcentajeRetener().doubleValue()));
             filaValores[7] = a.getValorRetenido();
             listaValores.add(filaValores);
-
             totalRetenido += a.getValorRetenido().doubleValue();
         }
 
@@ -146,17 +145,13 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionElementosRi
      * Metodo para escribir la sumatoria del comprobante.
      */
     public synchronized void elemento5() {
-
         Cell cell = new Cell();
 
         getForm().setListaTitulos(bundle.getMessage("com_013"));
-
         getForm().setListaValores(totalRetenido);
-
         getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
         getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
         getForm().setListaDimensiones(22f, 11f);
-        getForm().procesar();
 
         getPanel().setListaDimensiones(64f, 36f);
 
@@ -182,32 +177,31 @@ public class ImpresionElementosComprobanteRetencion extends ImpresionElementosRi
         }
 
         getEspacio().escribir(1);
-            getLineaSolida().escribir();
+        getLineaSolida().escribir();
 
-            int size = 0;
+        int size = 0;
 
-            getH2().setTexto(bundle.getMessage("com_014"));
-            getH2().escribir();
+        getH2().setTexto(bundle.getMessage("com_014"));
+        getH2().escribir();
 
-            for (ComprobanteRetencion.InfoAdicional.CampoAdicional a : getComprobanteRetencion()
-                    .getInfoAdicional()
-                    .getCampoAdicional()) {
-                getForm().getListaTitulos().add(a.getNombre());
-                getForm().getListaValores().add((a.getValue() == null) ? "" : String.valueOf(a.getValue()));
-                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
-                size++;
+        for (ComprobanteRetencion.InfoAdicional.CampoAdicional a : getComprobanteRetencion()
+                .getInfoAdicional()
+                .getCampoAdicional()) {
+            getForm().getListaTitulos().add(a.getNombre());
+            getForm().getListaValores().add((a.getValue() == null) ? "" : String.valueOf(a.getValue()));
+            getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+            size++;
+        }
+
+        if (size > 0) {
+            int total = 74 + (12 * size);
+            if (getCurrentPosition().getY() < total) {
+                getDocumento().add(new AreaBreak());
             }
-
-            if (size > 0) {
-                int total = 74 + (12 * size);
-                if (getCurrentPosition().getY() < total) {
-                    getDocumento().add(new AreaBreak());
-                }
-                getForm().setListaDimensiones(30f, 70f);
-                getForm().procesar();
-                getForm().escribir();
-                getForm().reset();
-            }
-
+            getForm().setListaDimensiones(30f, 70f);
+            getForm().procesar();
+            getForm().escribir();
+            getForm().reset();
+        }
     }
 }

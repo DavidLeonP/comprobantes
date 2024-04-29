@@ -201,7 +201,7 @@ public class Elemento {
         try {
             respuesta = format.valueToString(importe);
         } catch (ParseException e) {
-            log.warn(".formatearDouble() {}", e);
+            log.warn(".formatearDouble() {}", e.toString());
         }
         return respuesta;
     }
@@ -218,7 +218,7 @@ public class Elemento {
         try {
             respuesta = format.valueToString(importe);
         } catch (ParseException e) {
-            log.warn(".formatearInt() {}", e);
+            log.warn(".formatearInt() {}", e.toString());
         }
 
         return respuesta;

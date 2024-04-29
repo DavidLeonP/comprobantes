@@ -38,10 +38,12 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     String contribuyenteEspecial;
     String obligadoContabilidad;
     String claveAccesoAutorizacion;
+    String agenteRetencion;
+    String contribuyenteRimpe;
 
     /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
-      *
+     *
      */
     public synchronized void elemento2() {
         getPanel().setListaDimensiones(50f);
@@ -71,7 +73,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     private synchronized List<Object> informacionEmpresa() {
         List<Object> listaLadoIzquerdo = new ArrayList<>();
 
-        // Lado Izquierdo        
+        // Agregar imagen a la lista
         getImagen().setPathImagen(getParametrosBusqueda().get("pathImagen"));
         getImagen().setMaximoAncho(140);
         getImagen().setMaximoAlto(80);
@@ -81,8 +83,6 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         Cell cellimg = new Cell();
         cellimg.setPaddingBottom(5f);
         cellimg.add(getImagen().getImagen());
-
-        // Agregar imagen a la lista
         listaLadoIzquerdo.add(cellimg);
 
         // Nombre de la empresa
@@ -99,13 +99,35 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getForm().reset();
 
         // Informacion de contabilidad
-        getForm().setListaTitulos(bundle.getMessages("fac_003", "fac_004"));
-        getForm().setListaValores(getContribuyenteEspecial(), getObligadoContabilidad());
-        getForm().setListaFormatos(Elemento.FORMATO_STRING, Elemento.FORMATO_STRING);
-        getForm().setListaDimensiones(50f, 50f);
+        if (getContribuyenteEspecial() != null && !getContribuyenteEspecial().isEmpty()) {
+            getForm().getListaTitulos().add(bundle.getMessage("fac_003"));
+            getForm().getListaValores().add(getContribuyenteEspecial());
+            getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+        }
+
+        if (getObligadoContabilidad() != null && !getObligadoContabilidad().isEmpty()) {
+            getForm().getListaTitulos().add(bundle.getMessage("fac_004"));
+            getForm().getListaValores().add(getObligadoContabilidad());
+            getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+        }
+
+        if (getAgenteRetencion() != null && !getAgenteRetencion().isEmpty()) {
+            getForm().getListaTitulos().add(bundle.getMessage("fac_014"));
+            getForm().getListaValores().add(getAgenteRetencion());
+            getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+        }
+
+        getForm().setListaDimensiones(70f, 30f);
         getForm().procesar();
         listaLadoIzquerdo.add(getForm().getTabla());
         getForm().reset();
+
+        // Contribuyente Rimpe
+        if (getContribuyenteRimpe() != null && !getContribuyenteRimpe().isEmpty()) {
+            getTexto().setParagraph(getContribuyenteRimpe());
+            getTexto().getParagraph().setFontSize(P.TEXTO);
+            listaLadoIzquerdo.add(getTexto().getParagraph());
+        }
 
         return listaLadoIzquerdo;
     }
@@ -149,15 +171,15 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         listaLado.add(getTexto().getParagraph());
 
         // Ambiente
-        getForm().setListaTitulos(bundle.getMessages("fac_006","fac_010", "fac_011"));
+        getForm().setListaTitulos(bundle.getMessages("fac_006", "fac_010", "fac_011"));
         getForm().setListaValores(
                 getParametrosBusqueda().get("fechaAutorizacion"),
                 bundle.getMessage("tabla4_" + ambiente),
                 bundle.getMessage("tabla2_" + emision));
         getForm().setListaFormatos(
-            Elemento.FORMATO_STRING, 
-            Elemento.FORMATO_STRING,
-            Elemento.FORMATO_STRING);
+                Elemento.FORMATO_STRING,
+                Elemento.FORMATO_STRING,
+                Elemento.FORMATO_STRING);
         getForm().setListaDimensiones(50f, 50f);
         getForm().procesar();
         listaLado.add(getForm().getTabla());
@@ -167,7 +189,6 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getH3().setTexto(bundle.getMessage("fac_012"));
         listaLado.add(getH3().getParagraph());
 
-         
         Barcode128 barcode = new Barcode128(getDocumento().getPdfDocument());
         barcode.setCodeType(Barcode128.CODE128);
         barcode.setCode(getClaveAccesoAutorizacion());
@@ -178,11 +199,11 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
 
         Cell cell = new Cell().add(imagenBarcode);
         listaLado.add(cell);
-        
+
         return listaLado;
     }
 
-        /**
+    /**
      * Metodo para agregar la informacion simple para el cliente.
      * 
      * @param campo

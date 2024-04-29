@@ -18,7 +18,7 @@ import java.io.StringReader;
 @Slf4j
 public class Conversion {
 
-    private Conversion(){
+    private Conversion() {
         super();
     }
 
@@ -36,12 +36,11 @@ public class Conversion {
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             return type.cast(unmarshaller.unmarshal(fileXml));
         } catch (JAXBException e) {
-           // log.error("Error al obtener archivo parseado {}", e);
+            log.error("Error al obtener archivo parseado {}", e.toString());
         }
         return null;
     }
-    
-    
+
     /**
      * Metodo para obtener el documento parseado sobre los objetos de la estructura.
      * 
@@ -57,7 +56,7 @@ public class Conversion {
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             return type.cast(unmarshaller.unmarshal(readerXml));
         } catch (JAXBException e) {
-          //  log.error("Error al obtener un xml (string) parseado {}", e);
+            log.error("Error al obtener un xml (string) parseado {}", e.toString());
         }
         return null;
     }
