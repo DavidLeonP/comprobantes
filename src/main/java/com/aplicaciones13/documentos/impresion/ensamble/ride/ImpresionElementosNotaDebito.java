@@ -22,6 +22,10 @@ public class ImpresionElementosNotaDebito  extends ImpresionElementosRide {
         notaDebito = new NotaDebito();
     }
 
+    /**
+     * Metodo para poner en encabezado del documento.
+     * 
+     */
     @Override
     public synchronized void elemento2() {
         setRazonSocial(getNotaDebito().getInfoTributaria().getRazonSocial());
@@ -35,5 +39,10 @@ public class ImpresionElementosNotaDebito  extends ImpresionElementosRide {
         super.elemento2();
     }
 
-    
+    /**
+     * Metodo para escribir la informacion del cliente.
+     *
+     */
+    public synchronized void elemento3() {
+    }    
 }

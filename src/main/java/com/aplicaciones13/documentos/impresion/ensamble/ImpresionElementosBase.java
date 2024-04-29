@@ -213,7 +213,7 @@ public class ImpresionElementosBase {
             Method method = getClass().getMethod(methodName);
             method.invoke(this);
         } catch (Exception e) {
-            log.warn(".imprimirElemento() elemento {} no existe ", valor);
+            log.warn("elemento {} no existe ", valor);
         }
     }
 

@@ -170,7 +170,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getTexto().getParagraph().setFontSize(P.TEXTO);
         listaLado.add(getTexto().getParagraph());
 
-        // Ambiente
+        //Autorizacion, Ambiente y Emision
         getForm().setListaTitulos(bundle.getMessages("fac_006", "fac_010", "fac_011"));
         getForm().setListaValores(
                 getParametrosBusqueda().get("fechaAutorizacion"),
@@ -185,7 +185,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         listaLado.add(getForm().getTabla());
         getForm().reset();
 
-        // Clave de acceso
+        // Clave de acceso + codigo de barras
         getH3().setTexto(bundle.getMessage("fac_012"));
         listaLado.add(getH3().getParagraph());
 
@@ -204,7 +204,7 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     }
 
     /**
-     * Metodo para agregar la informacion simple para el cliente.
+     * Metodo para agregar la informacion simple para la informacion del cliente.
      * 
      * @param campo
      * @param bundleKey
@@ -222,5 +222,4 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getForm().escribir();
         getForm().reset();
     }
-
 }
