@@ -8,6 +8,7 @@ import com.itextpdf.barcodes.Barcode128;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
@@ -30,7 +31,7 @@ import java.util.List;
 public class ImpresionElementosRide extends ImpresionElementosBase {
 
     private static Bundle bundle = new Bundle("elementos-ride");
-
+    
     Border border = new SolidBorder(1f);
     String razonSocial;
     String direccionMatriz;
@@ -40,6 +41,14 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     String claveAccesoAutorizacion;
     String agenteRetencion;
     String contribuyenteRimpe;
+    List<InformacionAdicional> listaInformacionAdicional;
+
+    /**
+     * Constructor para el objeto.
+     */
+    public ImpresionElementosRide(){
+        setListaInformacionAdicional(null);
+    }
 
     /**
      * Metodo para generar el panel superior en un formato semejante al SRI.
@@ -221,5 +230,74 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
         getForm().procesar();
         getForm().escribir();
         getForm().reset();
+    }
+
+    /**
+     * Metodo para cargar inforamcion adicional.
+     * 
+     * @param nombre
+     * @param valor
+     */
+    public void cargarInformacionAdicional(String nombre, String valor) {
+        if (listaInformacionAdicional == null) {
+            listaInformacionAdicional = new ArrayList<>();
+        }
+
+        InformacionAdicional informacion = new InformacionAdicional();
+        informacion.setNombre(nombre);
+        informacion.setValor(valor);
+        listaInformacionAdicional.add(informacion);
+    }
+
+    /**
+     * Metodo para agregar informacion adicional.
+     *
+     */
+    public synchronized void elementoInformacionAdicional() {
+        if (isInformacionAdicional()) {
+            getEspacio().escribir(1);
+            getLineaSolida().escribir();
+
+            int size = 0;
+            getH2().setTexto(bundle.getMessage("gen_002"));
+            getH2().escribir();
+
+            for (InformacionAdicional a : getListaInformacionAdicional()) {
+                getForm().getListaTitulos().add(a.getNombre());
+                getForm().getListaValores().add((a.getValor() == null) ? "" : String.valueOf(a.getValor()));
+                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
+                size++;
+            }
+
+            if (size > 0) {
+                int total = 74 + (12 * size);
+                if (getCurrentPosition().getY() < total) {
+                    getDocumento().add(new AreaBreak());
+                }
+                getForm().setListaDimensiones(30f, 70f);
+                getForm().procesar();
+                getForm().escribir();
+                getForm().reset();
+            }
+        }
+    }
+
+    /**
+     * Metodo para conocer si la factura tiene informacion adicional.
+     * 
+     * @return
+     */
+    public boolean isInformacionAdicional() {
+        return (getListaInformacionAdicional() != null && getListaInformacionAdicional().size() > 0);
+    }
+
+    /** 
+     * Clase para presentear la informacion adicional 
+     * 
+     */
+    @Data    
+    public class InformacionAdicional {
+        private String nombre;
+        private String valor;
     }
 }

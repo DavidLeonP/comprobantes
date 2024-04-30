@@ -6,7 +6,6 @@ import com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura;
 
 import com.aplicaciones13.documentos.utilidades.Bundle;
 
-import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.properties.TextAlignment;
@@ -75,7 +74,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
             escribirCamposSimples(identificacion,
                     "tabla6_" + getFactura().getInfoFactura().getTipoIdentificacionComprador());
         } catch (Exception e) {
-            escribirCamposSimples(identificacion, "gen003");
+            escribirCamposSimples(identificacion, "gen_003");
         }
 
         String direccion = getFactura().getInfoFactura().getDireccionComprador();
@@ -112,9 +111,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
 
                 listaValores.add(filaValores);
             }
-
-            getTabla().setColorFondo(new DeviceRgb(223, 224, 226));
-
             getTabla().setListaTitulos(
                     bundle.getMessages("fac_017", "fac_018", "fac_019", "fac_020", "fac_021", "fac_022"));
             getTabla().setListaFormatos(
@@ -223,35 +219,11 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         if (isExportacion())
             return;
 
-        if (isInformacionAdicional()) {
-            getEspacio().escribir(1);
-            getLineaSolida().escribir();
-
-            int size = 0;
-
-            getH2().setTexto(bundle.getMessage("fac_036"));
-            getH2().escribir();
-
-            for (Factura.InfoAdicional.CampoAdicional a : getFactura()
-                    .getInfoAdicional()
-                    .getCampoAdicional()) {
-                getForm().getListaTitulos().add(a.getNombre());
-                getForm().getListaValores().add((a.getValue() == null) ? "" : String.valueOf(a.getValue()));
-                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
-                size++;
-            }
-
-            if (size > 0) {
-                int total = 74 + (12 * size);
-                if (getCurrentPosition().getY() < total) {
-                    getDocumento().add(new AreaBreak());
-                }
-                getForm().setListaDimensiones(30f, 70f);
-                getForm().procesar();
-                getForm().escribir();
-                getForm().reset();
-            }
+        for (Factura.InfoAdicional.CampoAdicional a : getFactura().getInfoAdicional().getCampoAdicional()) {
+            cargarInformacionAdicional(a.getNombre(), a.getValue());
         }
+
+        elementoInformacionAdicional();
     }
 
     /**
@@ -578,18 +550,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
     }
 
     /**
-     * Metodo para conocer si la factura tiene informacion adicional.
-     * 
-     * @return
-     */
-    private boolean isInformacionAdicional() {
-        return (getFactura().getInfoAdicional() != null && getFactura()
-                .getInfoAdicional()
-                .getCampoAdicional()
-                .size() > 0);
-    }
-
-    /**
      * Metodo para conocer si la factura es de exportacion.
      * 
      * @return
@@ -602,4 +562,5 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                         .trim()
                         .length() > 0);
     }
+
 }

@@ -32,7 +32,7 @@
         <contribuyenteEspecial>contribuyente</contribuyenteEspecial>
         <obligadoContabilidad>SI</obligadoContabilidad>
         <rise>rise0</rise>
-        <codDocModificado>00</codDocModificado>
+        <codDocModificado>01</codDocModificado>
         <numDocModificado>000-000-000000000</numDocModificado>
         <fechaEmisionDocSustento>01/01/2000</fechaEmisionDocSustento>
         <totalSinImpuestos>0.00</totalSinImpuestos>

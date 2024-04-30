@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aplicaciones13.documentos.impresion.elementos.compuestos;
 
 import com.itextpdf.kernel.colors.DeviceRgb;
@@ -20,6 +15,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import com.itextpdf.kernel.colors.Color;
+
 /**
  * Objeto presentar una tabla.
  *
@@ -33,9 +29,9 @@ import com.itextpdf.kernel.colors.Color;
 public class Tabla extends Conjunto implements ConjuntoInterface {
 
     private List<Object[]> listaValores;
-    private boolean sumatoria=false;
-    private boolean bandasPresentacion=false;
-    Color colorFondo = new DeviceRgb( 223, 224, 226  );
+    private boolean sumatoria = false;
+    private boolean bandasPresentacion = false;
+    Color colorFondo = new DeviceRgb(223, 224, 226);
 
     /**
      * Metodo para crear la clase. Inicializa SQLBase Limpia datos de la tabla.
@@ -51,7 +47,6 @@ public class Tabla extends Conjunto implements ConjuntoInterface {
      */
     private void initTabla() {
         this.listaValores = new ArrayList<>();
-        colorFondo = new DeviceRgb( 128, 128, 128  );
     }
 
     /**
@@ -99,15 +94,15 @@ public class Tabla extends Conjunto implements ConjuntoInterface {
                 Cell cell = new Cell();
                 cell.add(pValor.getParagraph());
                 cell.setBorder(Border.NO_BORDER);
-            
-                if(colorActivo && bandasPresentacion){
+
+                if (colorActivo && bandasPresentacion) {
                     cell.setBackgroundColor(colorFondo);
                 }
-            
+
                 cell.setTextAlignment(getAlineamientoColumna(columna, TextAlignment.LEFT));
                 getTabla().addCell(cell);
                 columna++;
             }
         }
-    }    
+    }
 }
