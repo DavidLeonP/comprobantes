@@ -6,9 +6,9 @@ import java.util.List;
 import com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.NotaDebito;
 import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
 import com.aplicaciones13.documentos.utilidades.Bundle;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.properties.TextAlignment;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,12 +27,15 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
 
     private NotaDebito notaDebito;
 
+    private Totales totales;
+
     /**
      * Constructor para el objeto.
      *
      */
     public ImpresionElementosNotaDebito() {
         notaDebito = new NotaDebito();
+        totales = new Totales();
     }
 
     /**
@@ -122,62 +125,57 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
      * Metodo para escribir totales de la nota de debito.
      */
     public synchronized void elemento5() {
+        Cell cell = new Cell();
+        getLineaSolida().escribir();
 
+        getPanel().setListaDimensiones(64f, 36f);
+
+        elementoTotales();
+        getPanel().setListaCeldas(cell, getForm().getTabla());
+        getForm().reset();
+
+        getPanel().procesar();
+        getPanel().escribir();
+
+        /*
+         * getPanel().setListaDimensiones(64f, 36f);
+         * 
+         * getForm().procesar();
+         * getForm().getTabla().setBorderTop(border);
+         * getPanel().setListaCeldas(cell, getForm().getTabla());
+         * getForm().reset();
+         * 
+         * getPanel().procesar();
+         * getPanel().escribir();
+         */
+    }
+
+    /**
+     * Metodo para generar los elementos de totalizacion de la nota de debito.
+     */
+    private void elementoTotales() {
         for (com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.Impuesto a : getNotaDebito()
                 .getInfoNotaDebito().getImpuestos().getImpuesto()) {
-            cargarImpuestos(a.getCodigo(), a.getCodigoPorcentaje(), a.getTarifa().toString(),
-                    a.getBaseImponible().toString(), a.getValor().toString());
+            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
+                    String.valueOf(a.getTarifa()),
+                    String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
         }
 
-        String[] arregloTitulos = bundle.getMessages(
-                "tabla21_2_2", "tabla21_2_10", "tabla21_2_3",
-                "tabla21_2_4", "tabla21_2_5", "tabla21_2_0",
-                "tabla21_2_6", "tabla21_2_7", "tabla21_2_8",
-                "tabla21_200", "tabla21_210", "tabla21_3",
-                "tabla21_5", "tabla21_20_2", "tabla21_20_10",
-                "tabla21_20_3", "tabla21_20_4", "tabla21_20_5",
-                "tabla21_20_8", "tabla21_9");
+        getTotales().setListaTitulosNoRequeridos("tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_5",
+                "tabla21_2_8", "tabla21_200", "tabla21_3", "tabla21_5", "tabla21_20_2",
+                "tabla21_20_10", "tabla21_20_3", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
+        getTotales().leerValores();
+        getTotales().procesar();
 
-        Object[] arregloValores = {
-                buscarCodigoYCodigoPorcentaje("2", "2").getBaseImponible(), 
-                buscarCodigoYCodigoPorcentaje("2", "10").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "3").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "4").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "5").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "0").getBaseImponible(), 
-                buscarCodigoYCodigoPorcentaje("2", "6").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "7").getBaseImponible(),
-                buscarCodigoYCodigoPorcentaje("2", "8").getBaseImponible(),
-                getNotaDebito().getInfoNotaDebito().getTotalSinImpuestos(),
-                "",// total descuento
-                buscarCodigo("3").getValor(),
-                buscarCodigo("5").getValor(),
-                buscarCodigoYCodigoPorcentaje("2", "2").getValor(), 
-                buscarCodigoYCodigoPorcentaje("2", "10").getValor(), 
-                buscarCodigoYCodigoPorcentaje("2", "3").getValor(),
-                buscarCodigoYCodigoPorcentaje("2", "4").getValor(),
-                buscarCodigoYCodigoPorcentaje("2", "5").getValor(),
-                buscarCodigoYCodigoPorcentaje("2", "8").getValor(), 
-                ""//propina
-        };
+        getForm().setListaTitulos(getTotales().getArregloTitulos());
+        getForm().setListaValores(getTotales().getArregloValores());
 
-        //TODO retirar si no hay valores en: 2_2, 2_10, 2_3, 2_4, 2_5, 2_8
-        //TODO retirar si no hay valores en: 20_2, 20_10, 20_3, 20_4, 20_5, 20_8
-        //Retirar "Total descuento" que es solo para factura
-        //Retirar "Propina" que es solo para factura
-        
-
-        getForm().setListaTitulos(arregloTitulos);
-        getForm().setListaValores(arregloValores);
-
-        for (int i = 0; i < arregloValores.length; i++) {
+        for (int i = 0; i < getTotales().getArregloValores().length; i++) {
             getForm().getListaFormatos().add(i, Elemento.FORMATO_MONEDA);
             getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
         }
         getForm().setListaDimensiones(35f, 15f);
         getForm().procesar();
-        getForm().escribir();
-        getForm().reset();
     }
 
     /**
@@ -189,59 +187,5 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
         }
 
         elementoInformacionAdicional();
-    }
-
-    public Impuesto buscarCodigo(String codigo) {
-        for (Impuesto impuesto : getListaImpuestos()) {
-            if (impuesto.getCodigo().equals(codigo)) {
-                return impuesto;
-            }
-        }
-        return new Impuesto();
-    }
-
-    public Impuesto buscarCodigoYCodigoPorcentaje(String codigo, String codigoPorcentaje) {
-        for (Impuesto impuesto : getListaImpuestos()) {
-            if (impuesto.getCodigo().equals(codigo) &&
-                    impuesto.getCodigoPorcentaje().equals(codigoPorcentaje)) {
-                return impuesto;
-            }
-        }
-        return new Impuesto();
-    }
-
-    List<Impuesto> listaImpuestos = new ArrayList<>();
-
-    /**
-     * Metodo para cargar inforamcion adicional.
-     * 
-     * @param codigo
-     * @param codigoPorcentaje
-     * @param tarifa
-     * @param baseImponible
-     * @param valor
-     */
-    public void cargarImpuestos(String codigo, String codigoPorcentaje, String tarifa, String baseImponible,
-            String valor) {
-        if (listaImpuestos == null) {
-            listaImpuestos = new ArrayList<>();
-        }
-
-        Impuesto impuesto = new Impuesto();
-        impuesto.setCodigo(codigo);
-        impuesto.setCodigoPorcentaje(codigoPorcentaje);
-        impuesto.setTarifa(tarifa);
-        impuesto.setBaseImponible(baseImponible);
-        impuesto.setValor(valor);
-        listaImpuestos.add(impuesto);
-    }
-
-    @Data
-    public class Impuesto {
-        String codigo;
-        String codigoPorcentaje;
-        String tarifa;
-        String baseImponible;
-        String valor;
     }
 }

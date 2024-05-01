@@ -30,11 +30,8 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
 
     private static Bundle bundle = new Bundle("elementos-ride");
 
-    private static String[] totalesPresentacion = {
-            "1", "1", "1 2", "1 2", "1", "1", "1", "1", "2", "2", "2", "2", "1 2" };
-
     private Factura factura;
-    List<TotalDocumentoFactura> totales;
+    private Totales totales;
 
     /**
      * Constructor para el objeto.
@@ -42,7 +39,7 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      */
     public ImpresionElementosFactura() {
         factura = new Factura();
-        totales = new ArrayList<>();
+        totales = new Totales();
     }
 
     @Override
@@ -180,6 +177,35 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
     }
 
     /**
+     * Metodo para generar los elementos de totalizacion de la nota de debito.
+     */
+    private void elementoTotales() {
+        for (com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Impuesto a : getFactura()
+                .getInfoFactura().getImpuestos().getImpuesto()) {
+            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
+                    String.valueOf(a.getTarifa()),
+                    String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
+        }
+
+        getTotales().setListaTitulosNoRequeridos("tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_5",
+                "tabla21_2_8", "tabla21_200", "tabla21_3", "tabla21_5", "tabla21_20_2",
+                "tabla21_20_10", "tabla21_20_3", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
+        getTotales().leerValores();
+        getTotales().procesar();
+
+        getForm().setListaTitulos(getTotales().getArregloTitulos());
+        getForm().setListaValores(getTotales().getArregloValores());
+
+        for (int i = 0; i < getTotales().getArregloValores().length; i++) {
+            getForm().getListaFormatos().add(i, Elemento.FORMATO_MONEDA);
+            getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
+        }
+        getForm().setListaDimensiones(35f, 15f);
+        getForm().procesar();
+    }
+
+
+    /**
      * Metodo para agregar informacion de la exportacion SRI.
      *
      */
@@ -278,236 +304,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                 getForm().reset();
             }
         }
-    }
-
-    /**
-     * Metodo para inicializar los totales.
-     *
-     */
-    public void inicializaTotales() {
-        setTotales(new ArrayList<TotalDocumentoFactura>());
-        TotalDocumentoFactura totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_023"));
-        getTotales().add(0, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_024"));
-        getTotales().add(1, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_025"));
-        getTotales().add(2, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_026"));
-        getTotales().add(3, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_027"));
-        getTotales().add(4, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_028"));
-        getTotales().add(5, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_029"));
-        getTotales().add(6, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_030"));
-        getTotales().add(7, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_031"));
-        getTotales().add(8, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_032"));
-        getTotales().add(9, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_033"));
-        getTotales().add(10, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_034"));
-        getTotales().add(11, totalFactura);
-
-        totalFactura = new TotalDocumentoFactura();
-        totalFactura.setTitulo(bundle.getMessage("fac_035"));
-        getTotales().add(12, totalFactura);
-    }
-
-    /**
-     * Metodo para cargar los totales que el sistema tiene.
-     *
-     * @param bus
-     */
-    public void cargarTotales() {
-        if (getFactura().getInfoFactura().getTotalConImpuestos() != null && getFactura().getInfoFactura()
-                .getTotalConImpuestos()
-                .getTotalImpuesto()
-                .size() > 0) {
-
-            for (Factura.InfoFactura.TotalConImpuestos.TotalImpuesto a : getFactura().getInfoFactura()
-                    .getTotalConImpuestos()
-                    .getTotalImpuesto()) {
-                if (a.getCodigo().compareTo("2") == 0) {
-
-                    switch (a.getCodigoPorcentaje()) {
-                        case "0":
-                            getTotales().get(1).setValor(a.getBaseImponible());
-                            break;
-                        case "2":
-                            getTotales().get(0).setTitulo(bundle.getMessage("fac_046"));
-                            getTotales().get(6).setTitulo(bundle.getMessage("fac_047"));
-                            getTotales().get(0).setValor(a.getBaseImponible());
-                            getTotales().get(6).setValor(a.getValor());
-                            break;
-                        case "3":
-                            getTotales().get(0).setTitulo(bundle.getMessage("fac_048"));
-                            getTotales().get(6).setTitulo(bundle.getMessage("fac_049"));
-                            getTotales().get(0).setValor(a.getBaseImponible());
-                            getTotales().get(6).setValor(a.getValor());
-                            break;
-
-                        case "4":
-                            getTotales().get(0).setTitulo(bundle.getMessage("fac_023"));
-                            getTotales().get(6).setTitulo(bundle.getMessage("fac_029"));
-                            getTotales().get(0).setValor(a.getBaseImponible());
-                            getTotales().get(6).setValor(a.getValor());
-                            break;
-
-                        case "5":
-                            getTotales().get(0).setTitulo(bundle.getMessage("fac_050"));
-                            getTotales().get(6).setTitulo(bundle.getMessage("fac_051"));
-                            getTotales().get(0).setValor(a.getBaseImponible());
-                            getTotales().get(6).setValor(a.getValor());
-                            break;
-
-                        case "6":
-                            getTotales().get(2).setValor(a.getBaseImponible());
-                            break;
-
-                        default:
-                            log.info("Codigo de impuesto no encontrado: {}", a.getCodigoPorcentaje());
-                            break;
-                    }
-
-                }
-
-                if (a.getCodigo().compareTo("3") == 0) {
-                    getTotales().get(5).setValor(a.getValor());
-                }
-            }
-        }
-
-        getTotales().get(3).setValor(getFactura().getInfoFactura().getTotalSinImpuestos());
-        getTotales().get(4).setValor(getFactura().getInfoFactura().getTotalDescuento());
-        getTotales().get(7).setValor(getFactura().getInfoFactura().getPropina());
-        getTotales().get(8).setValor(getFactura().getInfoFactura().getFleteInternacional());
-
-        getTotales().get(9).setValor(getFactura().getInfoFactura().getSeguroInternacional());
-        getTotales().get(10).setValor(getFactura().getInfoFactura().getGastosAduaneros());
-        getTotales().get(11).setValor(getFactura().getInfoFactura().getGastosTransporteOtros());
-        getTotales().get(12).setValor(getFactura().getInfoFactura().getImporteTotal());
-    }
-
-    /**
-     * Metodo para ejecutar los totales en una factura de exportacion.
-     *
-     */
-    private void subTotalesExportacion() {
-
-        int i = 0;
-        String[] totalesExportacion = {
-                "", "",
-                bundle.getMessage("fac_053"),
-                bundle.getMessage("fac_052"),
-                "", "", "", "",
-                bundle.getMessage("fac_054"),
-                bundle.getMessage("fac_055"),
-                bundle.getMessage("fac_056"),
-                bundle.getMessage("fac_057"),
-                bundle.getMessage("fac_035")
-        };
-
-        while (i < getTotales().size() - 1) {
-            TotalDocumentoFactura a = getTotales().get(i);
-
-            if (totalesPresentacion[i].indexOf("2") >= 0) {
-                getForm().getListaTitulos().add(totalesExportacion[i].trim());
-                getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
-                getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-            }
-            i++;
-        }
-
-        String tiuloPivot = getForm().getListaTitulos().get(0);
-        String valorPivot = String.valueOf(getForm().getListaValores().get(0));
-        getForm().getListaTitulos().remove(0);
-        getForm().getListaValores().remove(0);
-        getForm().getListaTitulos().add(tiuloPivot);
-        getForm().getListaValores().add(valorPivot);
-
-        for (int j = 0; j < getForm().getListaTitulos().size(); j++) {
-            getForm().getMapaAlineamiento().put(j + 1, TextAlignment.RIGHT);
-        }
-
-        getForm().setListaDimensiones(22f, 11f);
-        getForm().procesar();
-    }
-
-    /**
-     * Metodo para ejecutar los sub totales.
-     *
-     */
-    private void subTotales() {
-        int i = 0;
-        while (i < getTotales().size() - 1) {
-            TotalDocumentoFactura a = getTotales().get(i);
-            String valorString = (a.getValor() == null) ? "0" : a.getValor().toString();
-            double valor = Double.parseDouble(valorString);
-
-            if (i < 3)
-                valor = 1f;
-
-            if (valor > 0 && totalesPresentacion[i].indexOf("1") >= 0) {
-                getForm().getListaTitulos().add(a.getTitulo());
-                getForm().getListaValores().add((a.getValor() == null) ? "" : a.getValor().toString());
-                getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-            }
-            i++;
-        }
-
-        for (int j = 0; j < getForm().getListaTitulos().size(); j++) {
-            getForm().getMapaAlineamiento().put(j + 1, TextAlignment.RIGHT);
-        }
-
-        getForm().setListaDimensiones(22f, 11f);
-        getForm().procesar();
-    }
-
-    /**
-     * Metodo para ejecutar los totales.
-     *
-     */
-    private void totales() {
-        if (isExportacion())
-            getForm().getListaTitulos().add(bundle.getMessage("fac_052"));
-        else
-            getForm().getListaTitulos().add(getTotales().get(getTotales().size() - 1).getTitulo());
-
-        getForm().getListaValores()
-                .add((getTotales().get(getTotales().size() - 1).getValor() == null) ? ""
-                        : getTotales().get(getTotales().size() - 1)
-                                .getValor()
-                                .toString());
-        getForm().getListaFormatos().add(Elemento.FORMATO_MONEDA);
-        getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
-        getForm().setListaDimensiones(22f, 11f);
-        getForm().procesar();
     }
 
     /**
