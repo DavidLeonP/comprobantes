@@ -16,6 +16,7 @@ import com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.NotaDebito;
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionITextBase;
 import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosComprobanteRetencion;
 import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosFactura;
+import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosNotaDebito;
 //import com.aplicaciones13.documentos.impresion.ensamble.ride.ImpresionElementosNotaDebito;
 import com.aplicaciones13.documentos.utilidades.Conversion;
 import com.aplicaciones13.documentos.utilidades.Route;
@@ -84,7 +85,7 @@ public class ImpresionDocumentosTest {
         }
     }
 
-    /*@Test
+    @Test
     public void testNotaDebito() {
 
         String claveAcceso = "0707202205139170166700120010010000868170010699911";
@@ -108,5 +109,5 @@ public class ImpresionDocumentosTest {
         } catch (Exception e) {
             log.error("Test Nota Debito {}", e.toString());
         }
-    }*/
+    }
 }
