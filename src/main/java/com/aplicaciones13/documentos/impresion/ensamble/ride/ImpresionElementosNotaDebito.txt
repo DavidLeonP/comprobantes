@@ -1,0 +1,103 @@
+package com.aplicaciones13.documentos.impresion.ensamble.ride;
+
+import com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.NotaDebito;
+import com.aplicaciones13.documentos.utilidades.Bundle;
+import com.aplicaciones13.documentos.impresion.elementos.texto.Elemento;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class ImpresionElementosNotaDebito  extends ImpresionElementosRide {
+
+    private static Bundle bundle = new Bundle("elementos-ride");
+
+    private NotaDebito notaDebito;
+
+    /**
+     * Constructor para el objeto.
+     *
+     */
+    public ImpresionElementosNotaDebito() {
+        notaDebito = new NotaDebito();
+    }
+
+    /**
+     * Metodo para poner en encabezado del documento.
+     * 
+     */
+    @Override
+    public synchronized void elemento2() {
+        setRazonSocial(getNotaDebito().getInfoTributaria().getRazonSocial());
+        setDireccionMatriz(getNotaDebito().getInfoTributaria().getDirMatriz());
+        setDireccionEstablecimiento(getNotaDebito().getInfoNotaDebito().getDirEstablecimiento());
+        setContribuyenteEspecial(getNotaDebito().getInfoNotaDebito().getContribuyenteEspecial());
+        setObligadoContabilidad(getNotaDebito().getInfoNotaDebito().getObligadoContabilidad().value());
+        setClaveAccesoAutorizacion(getParametrosBusqueda().get("claveAccesoAutorizacion"));
+        setAgenteRetencion(getNotaDebito().getInfoTributaria().getAgenteRetencion());
+        setContribuyenteRimpe(getNotaDebito().getInfoTributaria().getContribuyenteRimpe());
+        super.elemento2();
+    }
+
+    /**
+     * Metodo para escribir la informacion del cliente.
+     *
+     */
+    public synchronized void elemento3() {
+    }    
+
+
+ 
+    private void informacionCliente1() {
+
+        getForm().setListaTitulos(TXT_6_10);
+        getForm().setListaValores(getNotaDebito().getInfoNotaDebito().getRazonSocialComprador(),
+                                  getNotaDebito().getInfoNotaDebito().getIdentificacionComprador(),
+                                  getNotaDebito().getInfoNotaDebito().getFechaEmision());
+        getForm().setListaFormatos(Elemento.FORMATO_STRING,
+                                   Elemento.FORMATO_STRING,
+                                   Elemento.FORMATO_STRING);
+        getForm().setListaDimensiones(25, 75);
+        getForm().setListaPaneles("3");
+    }
+
+    /** Metodo para crear la informacion del cliente
+     *
+     */
+    private void informacionCliente2() {
+        String TXT_6_10[] =
+        { "Raz\u00f3n Social", "RUC / CI.", "Fecha Emisi\u00f3n" };
+    
+        String TXT_6_11_1[] =
+        { "Comprobante (Modifica)", "N\u00famero", "Fecha", "RISE" };
+    
+        String TXT_6_11_2[] =
+        { "Comprobante (Modifica)", "N\u00famero", "Fecha" };
+
+        String rise = getNotaDebito().getInfoNotaDebito().getRise();
+        if (rise != null && rise.trim().length() > 0) {
+            getForm().setListaTitulos(TXT_6_11_1);
+            getForm().setListaValores(TablasSRI.Tabla4(getNotaDebito().getInfoNotaDebito().getCodDocModificado()),
+                                      getNotaDebito().getInfoNotaDebito().getNumDocModificado(),
+                                      getNotaDebito().getInfoNotaDebito().getFechaEmisionDocSustento(),
+                                      rise);
+            getForm().setListaFormatos(Elemento.FORMATO_STRING,
+                                       Elemento.FORMATO_STRING,
+                                       Elemento.FORMATO_STRING,
+                                       Elemento.FORMATO_STRING);
+            getForm().setListaDimensiones(25, 75);
+            getForm().setListaPaneles("4");
+        } else {
+            getForm().setListaTitulos(TXT_6_11_2);
+            getForm().setListaValores(TablasSRI.Tabla4(getNotaDebito().getInfoNotaDebito().getCodDocModificado()),
+                                      getNotaDebito().getInfoNotaDebito().getNumDocModificado(),
+                                      getNotaDebito().getInfoNotaDebito().getFechaEmisionDocSustento());
+            getForm().setListaFormatos(Elemento.FORMATO_STRING,
+                                       Elemento.FORMATO_STRING,                                       
+                                       Elemento.FORMATO_STRING);
+            getForm().setListaDimensiones("25", "75");
+            getForm().setListaPaneles("3");
+        }
+    }
+}
