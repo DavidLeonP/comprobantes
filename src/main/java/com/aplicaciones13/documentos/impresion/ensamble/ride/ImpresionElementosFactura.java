@@ -12,18 +12,17 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO revisar para una factura de exporacion.
 /**
  * Objeto para crear un documento de factura.
  *
  * @author omargo33
  *
  */
-@Slf4j
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ImpresionElementosFactura extends ImpresionElementosRide {
@@ -145,65 +144,21 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         Cell cell = new Cell();
         getLineaSolida().escribir();
 
-        inicializaTotales();
-
-        cargarTotales();
-
-        if (isExportacion()) {
-            subTotalesExportacion();
-        } else {
-            subTotales();
-        }
-
+        elementoSubTotales();
         getPanel().setListaDimensiones(64f, 36f);
-
-        getForm().procesar();
         getPanel().setListaCeldas(cell, getForm().getTabla());
         getForm().reset();
-
         getPanel().procesar();
         getPanel().escribir();
 
-        totales();
-        getPanel().setListaDimensiones(64f, 36f);
-
-        getForm().procesar();
+        elementoTotal();
+        getPanel().setListaDimensiones(64f, 36f);        
         getForm().getTabla().setBorderTop(border);
         getPanel().setListaCeldas(cell, getForm().getTabla());
         getForm().reset();
-
         getPanel().procesar();
         getPanel().escribir();
     }
-
-    /**
-     * Metodo para generar los elementos de totalizacion de la nota de debito.
-     */
-    private void elementoTotales() {
-        for (com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Impuesto a : getFactura()
-                .getInfoFactura().getImpuestos().getImpuesto()) {
-            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
-                    String.valueOf(a.getTarifa()),
-                    String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
-        }
-
-        getTotales().setListaTitulosNoRequeridos("tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_5",
-                "tabla21_2_8", "tabla21_200", "tabla21_3", "tabla21_5", "tabla21_20_2",
-                "tabla21_20_10", "tabla21_20_3", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
-        getTotales().leerValores();
-        getTotales().procesar();
-
-        getForm().setListaTitulos(getTotales().getArregloTitulos());
-        getForm().setListaValores(getTotales().getArregloValores());
-
-        for (int i = 0; i < getTotales().getArregloValores().length; i++) {
-            getForm().getListaFormatos().add(i, Elemento.FORMATO_MONEDA);
-            getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
-        }
-        getForm().setListaDimensiones(35f, 15f);
-        getForm().procesar();
-    }
-
 
     /**
      * Metodo para agregar informacion de la exportacion SRI.
@@ -346,6 +301,54 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
     }
 
     /**
+     * Metodo para generar los elementos de totalizacion de la nota de debito.
+     * 
+     * Se usa el objeto Totales para generar los elementos de totalizacion.
+     */
+    private void elementoSubTotales() {
+        getTotales().setPropina(getFactura().getInfoFactura().getPropina().toString());
+        getTotales().setTotalDescuento(getFactura().getInfoFactura().getTotalDescuento().toString());
+        getTotales().setSubTotal(getFactura().getInfoFactura().getTotalSinImpuestos().toString());
+
+        for (com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura.InfoFactura.TotalConImpuestos.TotalImpuesto a : getFactura()
+                .getInfoFactura().getTotalConImpuestos().getTotalImpuesto()) {
+            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
+                    String.valueOf(a.getTarifa()),
+                    String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
+        }
+
+        getTotales().setListaTitulosNoRequeridos(
+                "tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_4",
+                "tabla21_2_5", "tabla21_2_8", "tabla21_200", "tabla21_3",
+                "tabla21_5", "tabla21_20_2", "tabla21_20_10", "tabla21_20_3",
+                "tabla21_20_4", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
+        getTotales().leerValores();
+        getTotales().procesar();
+
+        getForm().setListaTitulos(getTotales().getArregloTitulos());
+        getForm().setListaValores(getTotales().getArregloValores());
+
+        for (int i = 0; i < getTotales().getArregloValores().length; i++) {
+            getForm().getListaFormatos().add(i, Elemento.FORMATO_MONEDA);
+            getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
+        }
+        getForm().setListaDimensiones(35f, 15f);
+        getForm().procesar();
+    }
+
+    /**
+     * Metodo para generar el elemento de total de la factura.
+     */
+    private void elementoTotal() {
+        getForm().setListaTitulos(bundle.getMessage("tabla21_10"));
+        getForm().setListaValores(getFactura().getInfoFactura().getImporteTotal());
+        getForm().getListaFormatos().add(0, Elemento.FORMATO_MONEDA);
+        getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
+        getForm().setListaDimensiones(35f, 15f);
+        getForm().procesar();
+    }
+
+    /**
      * Metodo para conocer si la factura es de exportacion.
      * 
      * @return
@@ -358,5 +361,4 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                         .trim()
                         .length() > 0);
     }
-
 }

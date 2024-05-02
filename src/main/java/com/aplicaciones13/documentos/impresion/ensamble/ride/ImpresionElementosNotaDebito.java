@@ -128,32 +128,28 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
         Cell cell = new Cell();
         getLineaSolida().escribir();
 
+        elementoSubTotales();
         getPanel().setListaDimensiones(64f, 36f);
-
-        elementoTotales();
         getPanel().setListaCeldas(cell, getForm().getTabla());
         getForm().reset();
-
         getPanel().procesar();
         getPanel().escribir();
 
-        /*
-         * getPanel().setListaDimensiones(64f, 36f);
-         * 
-         * getForm().procesar();
-         * getForm().getTabla().setBorderTop(border);
-         * getPanel().setListaCeldas(cell, getForm().getTabla());
-         * getForm().reset();
-         * 
-         * getPanel().procesar();
-         * getPanel().escribir();
-         */
+        elementoTotal();
+        getPanel().setListaDimensiones(64f, 36f);        
+        getForm().getTabla().setBorderTop(border);
+        getPanel().setListaCeldas(cell, getForm().getTabla());
+        getForm().reset();
+        getPanel().procesar();
+        getPanel().escribir();
     }
 
     /**
      * Metodo para generar los elementos de totalizacion de la nota de debito.
      */
-    private void elementoTotales() {
+    private void elementoSubTotales() {
+        getTotales().setSubTotal(getNotaDebito().getInfoNotaDebito().getTotalSinImpuestos().toString());
+
         for (com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.Impuesto a : getNotaDebito()
                 .getInfoNotaDebito().getImpuestos().getImpuesto()) {
             getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
@@ -161,9 +157,11 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
                     String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
         }
 
-        getTotales().setListaTitulosNoRequeridos("tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_5",
-                "tabla21_2_8", "tabla21_200", "tabla21_3", "tabla21_5", "tabla21_20_2",
-                "tabla21_20_10", "tabla21_20_3", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
+        getTotales().setListaTitulosNoRequeridos(
+            "tabla21_2_2", "tabla21_2_10", "tabla21_2_3", "tabla21_2_4",
+            "tabla21_2_5", "tabla21_2_8", "tabla21_200", "tabla21_3", 
+            "tabla21_5", "tabla21_20_2", "tabla21_20_10", "tabla21_20_3", 
+            "tabla21_20_4" , "tabla21_20_5", "tabla21_20_8", "tabla21_9");
         getTotales().leerValores();
         getTotales().procesar();
 
@@ -174,6 +172,18 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
             getForm().getListaFormatos().add(i, Elemento.FORMATO_MONEDA);
             getForm().getMapaAlineamiento().put(i + 1, TextAlignment.RIGHT);
         }
+        getForm().setListaDimensiones(35f, 15f);
+        getForm().procesar();
+    }
+
+    /**
+     * Metodo para generar el elemento de total de la factura.
+     */
+    private void elementoTotal() {
+        getForm().setListaTitulos(bundle.getMessage("tabla21_10"));
+        getForm().setListaValores(getNotaDebito().getInfoNotaDebito().getValorTotal());
+        getForm().getListaFormatos().add(0, Elemento.FORMATO_MONEDA);
+        getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
         getForm().setListaDimensiones(35f, 15f);
         getForm().procesar();
     }
