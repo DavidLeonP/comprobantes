@@ -42,6 +42,8 @@ public class ImpresionElementosRide extends ImpresionElementosBase {
     String agenteRetencion;
     String contribuyenteRimpe;
     List<InformacionAdicional> listaInformacionAdicional;
+    private Totales totales;
+    private FormasPago formasPago;
 
     /**
      * Constructor para el objeto.

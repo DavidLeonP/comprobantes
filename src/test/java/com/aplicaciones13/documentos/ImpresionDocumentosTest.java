@@ -41,7 +41,7 @@ public class ImpresionDocumentosTest {
 
         try {
             Map<String, String> mapa = new HashMap<>();            
-            Autorizacion autorizacion =Route.getAutorizacion(pathUser + "/recursos/facturaAutorizacion003.xml");
+            Autorizacion autorizacion =Route.getAutorizacion(pathUser + "/recursos/facturaAutorizacion000.xml");
             Factura factura = Conversion.xmlToPojo(autorizacion.getComprobante(), Factura.class);
 
             mapa.put("numeroAutorizacion", autorizacion.getNumeroAutorizacion());

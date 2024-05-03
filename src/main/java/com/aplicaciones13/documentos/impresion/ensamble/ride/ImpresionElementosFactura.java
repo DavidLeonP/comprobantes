@@ -30,7 +30,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
     private static Bundle bundle = new Bundle("elementos-ride");
 
     private Factura factura;
-    private Totales totales;
 
     /**
      * Constructor para el objeto.
@@ -38,7 +37,8 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      */
     public ImpresionElementosFactura() {
         factura = new Factura();
-        totales = new Totales();
+        setTotales(new Totales());
+        setFormasPago(new FormasPago());
     }
 
     @Override
@@ -100,10 +100,10 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                 filaValores = new Object[6];
                 filaValores[0] = a.getCodigoPrincipal();
                 filaValores[1] = generarDescripcion(a);
-                filaValores[2] = a.getCantidad().toString();
-                filaValores[3] = a.getPrecioUnitario().toString();
-                filaValores[4] = a.getDescuento().toString();
-                filaValores[5] = a.getPrecioTotalSinImpuesto().toString();
+                filaValores[2] = String.valueOf(a.getCantidad());
+                filaValores[3] = String.valueOf(a.getPrecioUnitario());
+                filaValores[4] = String.valueOf(a.getDescuento());
+                filaValores[5] = String.valueOf(a.getPrecioTotalSinImpuesto());
 
                 listaValores.add(filaValores);
             }
@@ -213,7 +213,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      */
     public synchronized void elemento8() {
         int size = 0;
-        String formaPagoDinamica = "";
 
         if (getFactura()
                 .getInfoFactura()
@@ -222,39 +221,23 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                         .getPagos()
                         .getPago()
                         .size() > 0) {
-            getEspacio().escribir(1);
-            getLineaSolida().escribir();
-
-            for (Pago a : getFactura().getInfoFactura().getPagos().getPago()) {
-                if (a.getPlazo() == null || a.getPlazo().intValue() <= 0) {
-                    formaPagoDinamica = bundle.getMessage("fac_061",
-                            bundle.getMessage("tabla24_" + a.getFormaPago()),
-                            a.getTotal());
-                } else {
-                    formaPagoDinamica = bundle.getMessage("fac_059",
-                            bundle.getMessage("tabla24_" + a.getFormaPago()),
-                            a.getPlazo(),
-                            a.getUnidadTiempo(),
-                            a.getTotal());
-                }
-
-                getForm().getListaTitulos().add(bundle.getMessage("fac_058", (size + 1)));
-                getForm().getListaValores().add(formaPagoDinamica);
-                getForm().getListaFormatos().add(Elemento.FORMATO_STRING);
-                size++;
-            }
-
-            if (size > 0) {
+            
+            elementosFormaPago();
+            
+            if (getFormasPago().getArregloTitulos().length > 0) {
                 int total = 74 + (12 * size);
                 if (getCurrentPosition().getY() < total) {
                     getDocumento().add(new AreaBreak());
                 }
-
+                getEspacio().escribir(1);
+                getLineaSolida().escribir();
+    
                 getH2().setTexto(bundle.getMessage("fac_045"));
                 getH2().escribir();
-
-                getForm().setListaDimensiones(15f, 85f);
-                getForm().procesar();
+    
+                getForm().setListaDimensiones(64f, 36f);
+                getForm().setListaValores(getFormasPago().getArregloValores());
+                getForm().setListaTitulos(getFormasPago().getArregloTitulos());
                 getForm().escribir();
                 getForm().reset();
             }
@@ -306,13 +289,13 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
      * Se usa el objeto Totales para generar los elementos de totalizacion.
      */
     private void elementoSubTotales() {
-        getTotales().setPropina(getFactura().getInfoFactura().getPropina().toString());
-        getTotales().setTotalDescuento(getFactura().getInfoFactura().getTotalDescuento().toString());
-        getTotales().setSubTotal(getFactura().getInfoFactura().getTotalSinImpuestos().toString());
+        getTotales().setPropina(String.valueOf(getFactura().getInfoFactura().getPropina()));
+        getTotales().setTotalDescuento(String.valueOf(getFactura().getInfoFactura().getTotalDescuento()));
+        getTotales().setSubTotal(String.valueOf(getFactura().getInfoFactura().getTotalSinImpuestos()));
 
         for (com.aplicaciones13.documentos.estructuras.factura.v2_1_0.Factura.InfoFactura.TotalConImpuestos.TotalImpuesto a : getFactura()
                 .getInfoFactura().getTotalConImpuestos().getTotalImpuesto()) {
-            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
+            getTotales().cargarData(a.getCodigo(), a.getCodigoPorcentaje(),
                     String.valueOf(a.getTarifa()),
                     String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
         }
@@ -322,7 +305,6 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
                 "tabla21_2_5", "tabla21_2_8", "tabla21_200", "tabla21_3",
                 "tabla21_5", "tabla21_20_2", "tabla21_20_10", "tabla21_20_3",
                 "tabla21_20_4", "tabla21_20_5", "tabla21_20_8", "tabla21_9");
-        getTotales().leerValores();
         getTotales().procesar();
 
         getForm().setListaTitulos(getTotales().getArregloTitulos());
@@ -345,6 +327,27 @@ public class ImpresionElementosFactura extends ImpresionElementosRide {
         getForm().getListaFormatos().add(0, Elemento.FORMATO_MONEDA);
         getForm().getMapaAlineamiento().put(1, TextAlignment.RIGHT);
         getForm().setListaDimensiones(35f, 15f);
+        getForm().procesar();
+    }
+
+    private void elementosFormaPago(){
+        for (Pago a : getFactura().getInfoFactura().getPagos().getPago()) {
+                getFormasPago().cargarData(
+                    a.getFormaPago(), 
+                    String.valueOf(a.getTotal()),
+                    String.valueOf(a.getPlazo()),
+                    a.getUnidadTiempo());
+        }
+        getFormasPago().procesar();
+
+        getForm().setListaTitulos(getFormasPago().getArregloTitulos());
+        getForm().setListaValores(getFormasPago().getArregloValores());
+
+        for (int i = 0; i < getFormasPago().getArregloValores().length; i++) {
+            getForm().getListaFormatos().add(i, Elemento.FORMATO_STRING);
+            getForm().getMapaAlineamiento().put(i + 1, TextAlignment.LEFT);
+        }
+        getForm().setListaDimensiones(15f, 85f);
         getForm().procesar();
     }
 

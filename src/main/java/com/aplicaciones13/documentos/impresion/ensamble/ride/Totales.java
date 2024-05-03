@@ -31,13 +31,13 @@ public class Totales {
     @Setter(AccessLevel.NONE)
     List<UnidadValor> listaUnidadesValor = new ArrayList<>();
 
-    String[] arregloTitulos;
-    List<String> listaTitulosNoRequeridos;
-    Object[] arregloValores;
     String subTotal = "0";
     String totalDescuento = "0";
     String propina = "0";
-
+    String[] arregloTitulos;
+    Object[] arregloValores;
+    List<String> listaTitulosNoRequeridos;
+    
     private static Bundle bundle = new Bundle("elementos-ride");
 
     /**
@@ -47,7 +47,7 @@ public class Totales {
      * ejecutar.
      * 
      */
-    public void leerValores() {
+    private void leerValores() {
         listaElementosTotales.put("tabla21_2_2",
                 buscarCodigoUnidadValorYCodigoPorcentaje("2", "2").getBaseImponible());
         listaElementosTotales.put("tabla21_2_10",
@@ -98,6 +98,8 @@ public class Totales {
      */
     public void procesar() {
         String valorEvaluar = "";
+        leerValores();
+
         for (String a : listaTitulosNoRequeridos) {
             valorEvaluar = listaElementosTotales.get(a);
             if (valorEvaluar == null || valorEvaluar.equals("0.00") || valorEvaluar.equals("0")) {
@@ -125,7 +127,7 @@ public class Totales {
      * @param baseImponible
      * @param valor
      */
-    public void cargarTotalesSubtotales(String codigo, String codigoPorcentaje, String tarifa, String baseImponible,
+    public void cargarData(String codigo, String codigoPorcentaje, String tarifa, String baseImponible,
             String valor) {
         if (listaUnidadesValor == null) {
             listaUnidadesValor = new ArrayList<>();

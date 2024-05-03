@@ -105,7 +105,7 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
         for (NotaDebito.Motivos.Motivo a : getNotaDebito().getMotivos().getMotivo()) {
             filaValores = new Object[2];
             filaValores[0] = a.getRazon();
-            filaValores[1] = a.getValor().toString();
+            filaValores[1] = String.valueOf(a.getValor());
             listaValores.add(filaValores);
         }
         getTabla().setListaTitulos(bundle.getMessages("nod_006", "nod_007"));
@@ -148,11 +148,11 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
      * Metodo para generar los elementos de totalizacion de la nota de debito.
      */
     private void elementoSubTotales() {
-        getTotales().setSubTotal(getNotaDebito().getInfoNotaDebito().getTotalSinImpuestos().toString());
+        getTotales().setSubTotal(String.valueOf(getNotaDebito().getInfoNotaDebito().getTotalSinImpuestos()));
 
         for (com.aplicaciones13.documentos.estructuras.notadebito.v1_0_0.Impuesto a : getNotaDebito()
                 .getInfoNotaDebito().getImpuestos().getImpuesto()) {
-            getTotales().cargarTotalesSubtotales(a.getCodigo(), a.getCodigoPorcentaje(),
+            getTotales().cargarData(a.getCodigo(), a.getCodigoPorcentaje(),
                     String.valueOf(a.getTarifa()),
                     String.valueOf(a.getBaseImponible()), String.valueOf(a.getValor()));
         }
@@ -162,7 +162,7 @@ public class ImpresionElementosNotaDebito extends ImpresionElementosRide {
             "tabla21_2_5", "tabla21_2_8", "tabla21_200", "tabla21_3", 
             "tabla21_5", "tabla21_20_2", "tabla21_20_10", "tabla21_20_3", 
             "tabla21_20_4" , "tabla21_20_5", "tabla21_20_8", "tabla21_9");
-        getTotales().leerValores();
+        
         getTotales().procesar();
 
         getForm().setListaTitulos(getTotales().getArregloTitulos());

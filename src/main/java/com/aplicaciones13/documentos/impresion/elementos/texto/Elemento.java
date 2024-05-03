@@ -146,7 +146,7 @@ public class Elemento {
 
                 break;
             case FORMATO_STRING:
-                respuesta = value.toString();
+                respuesta = String.valueOf(value);
                 break;
             default:
                 respuesta = "";

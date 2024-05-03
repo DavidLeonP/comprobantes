@@ -13,10 +13,13 @@ import com.aplicaciones13.documentos.impresion.elementos.presentacion.CenefaEstr
 import com.aplicaciones13.documentos.impresion.ensamble.ImpresionITextBase;
 import com.aplicaciones13.documentos.impresion.ensamble.certificado.ImpresionElementosCertificado;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  *
  * @author omarv
  */
+@Slf4j
 public class ImpresionCertificadoTest {
 
     /**
@@ -64,7 +67,7 @@ public class ImpresionCertificadoTest {
             impresionBaseIText.setCenefaEstructuraInferior(cenefaEstructuraInferior);
             impresionBaseIText.ejecutar(18, 36, 30, 36, mapa);
         } catch (Exception e) {            
-            System.err.println("data " + e.toString());
+            log.error(" Test Certificado {}", e.toString());
         }
     }
 }
